@@ -140,6 +140,19 @@ h2 { margin-bottom: 0; font-size: 1.05rem; letter-spacing: 0; }
 .switch input:checked + i::after { transform: translateX(18px); background: #08090a; }
 .automation-panel > p { margin: 12px 0; color: var(--muted); font-size: .73rem; line-height: 1.5; }
 .automation-wallet { width: 100%; border: 1px solid var(--line); background: #0a0c0e; color: var(--text); }
+.order-controls { display: grid; gap: 12px; margin: 18px 0; }
+.order-controls label { display: grid; grid-template-columns: 1fr auto; gap: 7px; color: var(--muted); font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+.order-controls label span { color: var(--text); }
+.order-controls input { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+.route-status { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding: 13px 0; font-size: .75rem; }
+.route-status span { color: var(--muted); }
+.route-status strong { color: var(--accent-2); }
+.route-status.error strong, .route-error { color: var(--danger); }
+.route-error { margin: -4px 0 12px; font-size: .72rem; line-height: 1.5; }
+.route-button, .execute-button { width: 100%; min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 4px; margin-bottom: 8px; font-size: .75rem; font-weight: 800; }
+.route-button { border: 1px solid var(--accent); background: transparent; color: var(--accent); }
+.execute-button { border: 1px solid var(--accent-2); background: var(--accent-2); color: #07100b; }
+.route-button:disabled, .execute-button:disabled { cursor: not-allowed; opacity: .38; }
 
 @media (max-width: 1120px) {
   .app-header { grid-template-columns: 1fr auto; }

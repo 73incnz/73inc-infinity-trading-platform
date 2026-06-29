@@ -107,6 +107,8 @@ function App() {
   const [scanState, setScanState] = useState({ status: "Connecting", error: "", scannedAt: null });
   const [wallet, setWallet] = useState({ detected: false, connected: false, publicKey: "" });
   const [autoTrade, setAutoTrade] = useState(false);
+  const [order, setOrder] = useState({ sizeSol: 0.1, takeProfitPercent: 25, stopLossPercent: 10 });
+  const [routeState, setRouteState] = useState({ status: "Idle", intentId: "", route: null, error: "" });
 
   const timeframe = scanWindows.find((item) => item.id === scanWindow) || scanWindows[0];
 
@@ -141,7 +143,28 @@ function App() {
       connected: Boolean(provider?.isConnected && provider?.publicKey),
       publicKey: provider?.publicKey?.toString?.() || "",
     });
+    if (!provider) return undefined;
+
+    const handleConnect = (publicKey) => setWallet({ detected: true, connected: true, publicKey: publicKey?.toString?.() || "" });
+    const handleDisconnect = () => {
+      setWallet({ detected: true, connected: false, publicKey: "" });
+      setAutoTrade(false);
+      setRouteState({ status: "Idle", intentId: "", route: null, error: "" });
+    };
+    const handleAccountChanged = (publicKey) => publicKey ? handleConnect(publicKey) : handleDisconnect();
+    provider.on?.("connect", handleConnect);
+    provider.on?.("disconnect", handleDisconnect);
+    provider.on?.("accountChanged", handleAccountChanged);
+    return () => {
+      provider.off?.("connect", handleConnect);
+      provider.off?.("disconnect", handleDisconnect);
+      provider.off?.("accountChanged", handleAccountChanged);
+    };
   }, []);
+
+  useEffect(() => {
+    setRouteState({ status: "Idle", intentId: "", route: null, error: "" });
+  }, [selectedAddress, order.sizeSol, order.takeProfitPercent, order.stopLossPercent]);
 
   const rankedTokens = useMemo(() => {
     const searchValue = query.trim().toLowerCase();
@@ -178,6 +201,75 @@ function App() {
       setWallet({ detected: true, connected: true, publicKey });
     } catch {
       setWallet((current) => ({ ...current, connected: false }));
+    }
+  }
+
+  function buildIntent() {
+    return {
+      wallet: wallet.publicKey,
+      mode: autoTrade ? "armed" : "paper",
+      token: {
+        symbol: selectedToken.symbol,
+        address: selectedToken.address,
+        score: selectedToken.score,
+      },
+      agent: { name: "73inc Signal Agent", confidence: selectedToken.score },
+      order: {
+        side: "buy",
+        sizeSol: order.sizeSol,
+        maxWalletExposureSol: order.sizeSol,
+        entryPrice: selectedToken.price,
+        takeProfitPercent: order.takeProfitPercent,
+        stopLossPercent: order.stopLossPercent,
+        slippageBps: 150,
+      },
+    };
+  }
+
+  async function preparePhotonRoute() {
+    if (!wallet.connected || !selectedToken) return;
+    setRouteState({ status: "Preparing", intentId: "", route: null, error: "" });
+    try {
+      const intent = buildIntent();
+      const intentResponse = await fetch(`${API_BASE}/api/trade/intent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(intent),
+      });
+      const intentResult = await intentResponse.json();
+      if (!intentResponse.ok) throw new Error(Array.isArray(intentResult.details) ? intentResult.details.join(" ") : intentResult.error);
+
+      const routeResponse = await fetch(`${API_BASE}/api/photon/route`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...intent, intentId: intentResult.intentId }),
+      });
+      const routeResult = await routeResponse.json();
+      if (!routeResponse.ok) throw new Error(routeResult.error || "Photon route failed.");
+      setRouteState({
+        status: routeResult.configured ? "Ready to sign" : "Simulation ready",
+        intentId: intentResult.intentId,
+        route: routeResult.route,
+        error: "",
+      });
+    } catch (error) {
+      setRouteState({ status: "Blocked", intentId: "", route: null, error: error.message || "Route preparation failed." });
+    }
+  }
+
+  async function signAndSendTrade() {
+    const provider = getPhantomProvider();
+    const message = routeState.route?.transactionMessage || routeState.route?.transactionBase58;
+    if (!provider || !autoTrade || !message) return;
+    try {
+      setRouteState((current) => ({ ...current, status: "Awaiting signature", error: "" }));
+      const result = await provider.request({
+        method: "signAndSendTransaction",
+        params: { message, options: { skipPreflight: false, preflightCommitment: "confirmed" } },
+      });
+      setRouteState((current) => ({ ...current, status: `Submitted ${shortKey(result?.signature || "")}` }));
+    } catch (error) {
+      setRouteState((current) => ({ ...current, status: "Signature cancelled", error: error.message || "Phantom rejected the transaction." }));
     }
   }
 
@@ -303,6 +395,15 @@ function App() {
           <div className="panel-heading"><div><p className="desk-kicker">Execution guard</p><h2>Automation</h2></div><ShieldCheck size={22} /></div>
           <div className="automation-status"><span><Bot size={20} /><span><strong>{autoTrade ? "Armed" : "Inactive"}</strong><small>{autoTrade ? "Wallet approval still required" : "Enable after connecting Phantom"}</small></span></span><label className="switch"><input type="checkbox" checked={autoTrade} disabled={!wallet.connected} onChange={(event) => setAutoTrade(event.target.checked)} /><i /></label></div>
           <p>Signals never submit a transaction silently. Phantom remains the final approval step for every live trade.</p>
+          <div className="order-controls">
+            <label>Order size <span>{order.sizeSol.toFixed(2)} SOL</span><input type="range" min="0.01" max="1" step="0.01" value={order.sizeSol} onChange={(event) => setOrder((current) => ({ ...current, sizeSol: Number(event.target.value) }))} /></label>
+            <label>Take profit <span>{order.takeProfitPercent}%</span><input type="range" min="5" max="100" value={order.takeProfitPercent} onChange={(event) => setOrder((current) => ({ ...current, takeProfitPercent: Number(event.target.value) }))} /></label>
+            <label>Stop loss <span>{order.stopLossPercent}%</span><input type="range" min="3" max="40" value={order.stopLossPercent} onChange={(event) => setOrder((current) => ({ ...current, stopLossPercent: Number(event.target.value) }))} /></label>
+          </div>
+          <div className={`route-status ${routeState.error ? "error" : ""}`}><span>Photon route</span><strong>{routeState.status}</strong></div>
+          {routeState.error ? <p className="route-error">{routeState.error}</p> : null}
+          <button type="button" className="route-button" disabled={!wallet.connected || !selectedToken || routeState.status === "Preparing"} onClick={preparePhotonRoute}><Zap size={17} />{routeState.status === "Preparing" ? "Preparing route" : "Prepare Photon route"}</button>
+          <button type="button" className="execute-button" disabled={!autoTrade || !(routeState.route?.transactionMessage || routeState.route?.transactionBase58)} onClick={signAndSendTrade}><ShieldCheck size={17} />Sign and send with Phantom</button>
           <button type="button" className="automation-wallet" onClick={connectPhantom}><Wallet size={17} />{wallet.connected ? `Connected ${shortKey(wallet.publicKey)}` : "Connect Phantom to arm"}</button>
         </section>
       </section>
