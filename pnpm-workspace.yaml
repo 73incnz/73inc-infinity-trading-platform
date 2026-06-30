@@ -1,4 +1,4 @@
 allowBuilds:
+  bufferutil: true
   esbuild: true
-onlyBuiltDependencies:
-  - esbuild
+  utf-8-validate: true
