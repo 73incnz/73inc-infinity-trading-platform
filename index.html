@@ -270,7 +270,7 @@
     </div>
   </div>
 </div>
-</div><div class="tab-content hidden" id="tab-portfolio"><div class="portfolio-header"><h2>💼 My Portfolio</h2><button class="btn-refresh" onclick="loadPortfolio()">↻ Refresh</button></div><div class="portfolio-summary"><div class="port-stat"><span class="stat-label">Total Value</span><span class="stat-val" id="port-total">$0.00</span></div><div class="port-stat"><span class="stat-label">SOL Balance</span><span class="stat-val" id="port-sol">0.000 SOL</span></div><div class="port-stat"><span class="stat-label">Tokens</span><span class="stat-val" id="port-count">0</span></div><div class="port-stat"><span class="stat-label">24h P&amp;L</span><span class="stat-val" id="port-pnl">$0.00</span></div></div><div id="portfolio-list" class="portfolio-list"></div><div id="portfolio-empty" class="empty-state" style="display:none"><p>Connect Phantom wallet to view your portfolio.</p></div></div><div id="tab-pumpfun" class="tab-content" style="display: flex;">
+</div><div class="tab-content hidden" id="tab-portfolio"><div class="portfolio-header"><h2>💼 My Portfolio</h2><button class="btn-refresh" onclick="loadPortfolio()">↻ Refresh</button></div><div class="portfolio-summary"><div class="port-stat"><span class="stat-label">Total Value</span><span class="stat-val" id="port-total">$0.00</span></div><div class="port-stat"><span class="stat-label">SOL Balance</span><span class="stat-val" id="port-sol">0.000 SOL</span></div><div class="port-stat"><span class="stat-label">Tokens</span><span class="stat-val" id="port-count">0</span></div><div class="port-stat"><span class="stat-label">24h P&amp;L</span><span class="stat-val" id="port-pnl">$0.00</span></div></div><div id="portfolio-list" class="portfolio-list"></div><div id="portfolio-empty" class="empty-state" style="display:none"><p>Connect Phantom wallet to view your portfolio.</p></div></div><div id="tab-pumpfun" class="tab-content hidden">
 <div class="pf-layout">
   <!-- LEFT PANEL: Controls -->
   <div class="pf-sidebar"><div id="pf-wallet-section" class="pf-wallet-section">
@@ -887,7 +887,9 @@
   </div>
 </div>
 </div>
-<div id="toast" class="toast"></div></div>
+</div>
+<div id="toast" class="toast"></div>
+</div>
 
 <script>
 
@@ -1292,13 +1294,32 @@ if(INF.agent.running)INF.agent._timer=setTimeout(agentCycle,30000);}
 
 function toggleAgent(){var btn=document.getElementById('agent-start-btn');if(INF.agent.running){INF.agent.running=false;clearTimeout(INF.agent._timer);agentLog('Agent stopped by user','info');if(btn){btn.textContent='▶ Start Agent';btn.className='btn-agent-start';}}else{var mode=document.getElementById('agent-mode')?document.getElementById('agent-mode').value:'simulation';var trigger=document.getElementById('agent-trigger')?document.getElementById('agent-trigger').value:'STRONG BUY';INF.agent.mode=mode;INF.agent.trigger=trigger;if(mode==='live'){if(!INF.wallet){showToast('Connect Phantom wallet first for live trading!','error');return;}var ok=confirm('⚠️ LIVE TRADING — Real SOL will be spent!\n\nWallet: '+formatAddr(INF.wallet)+'\nTrade size: '+(document.getElementById('agent-size')?document.getElementById('agent-size').value:'0.01')+' SOL each\nTrigger: '+trigger+'\n\nConfirm?');if(!ok)return;}INF.agent.running=true;agentLog('Agent started | Mode: '+mode.toUpperCase()+' | Trigger: '+trigger,'info');if(btn){btn.textContent='■ Stop Agent';btn.className='btn-agent-stop';}agentCycle();}updateAgentStats();}
 
-function switchTab(tab){INF.currentTab=tab;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===tab);});document.querySelectorAll('.tab-content').forEach(function(c){c.classList.add('hidden');c.style.display='';});var t=document.getElementById('tab-'+tab);if(t){t.classList.remove('hidden');if(tab==='pumpfun'||tab==='phantom'||tab==='photon')t.style.display='flex';}
-if(tab==='scanner')loadScanner();
-else if(tab==='trending')loadTrending();
-else if(tab==='watchlist')renderWatchlist();
-else if(tab==='portfolio')loadPortfolio();
-else if(tab==='phantom'){updatePhantomTabUI();loadPhantomTokens();}
-else if(tab==='photon'){updatePhotonTabUI();loadPhotonTokens();}}
+function switchTab(tab){
+  INF.currentTab=tab;
+  // Update nav active state
+  document.querySelectorAll('.nav-btn').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-tab')===tab);
+  });
+  // Hide all tab contents - remove inline styles and add hidden class
+  document.querySelectorAll('.tab-content').forEach(function(c){
+    c.classList.add('hidden');
+    c.style.display='';
+  });
+  // Show selected tab
+  var t=document.getElementById('tab-'+tab);
+  if(t){
+    t.classList.remove('hidden');
+    // pumpfun needs explicit flex, others inherit from .tab-content CSS
+    if(tab==='pumpfun') t.style.display='flex';
+  }
+  // Run tab-specific logic
+  if(tab==='scanner')loadScanner();
+  else if(tab==='trending')loadTrending();
+  else if(tab==='watchlist')renderWatchlist();
+  else if(tab==='portfolio')loadPortfolio();
+  else if(tab==='phantom'){updatePhantomTabUI();loadPhantomTokens();}
+  else if(tab==='photon'){updatePhotonTabUI();loadPhotonTokens();}
+}
 
 
 // ===== CLOUD WATCHLIST SYNC =====
