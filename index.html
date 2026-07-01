@@ -178,21 +178,9 @@
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 </head>
 <body>
-<!-- Login Overlay -->
-<div id="login-overlay" style="position:fixed;inset:0;background:#0a0a0f;z-index:9999;display:flex;align-items:center;justify-content:center;">
-  <div style="background:#13131a;border:1.5px solid #ff6b00;border-radius:16px;padding:40px 36px;width:340px;text-align:center;box-shadow:0 0 40px rgba(255,107,0,0.3);">
-    <div style="font-size:32px;margin-bottom:12px;">⚡</div>
-    <h1 style="color:#ff6b00;font-size:22px;margin-bottom:6px;">73incInfinity</h1>
-    <p style="color:#888;font-size:12px;margin-bottom:28px;">Solana Trading Platform</p>
-    <input type="text" id="login-user" placeholder="Username" autocomplete="username" style="width:100%;background:#1a1a24;border:1px solid #333;border-radius:8px;color:#e8e8f0;padding:10px 14px;font-size:14px;margin-bottom:14px;box-sizing:border-box;outline:none;display:block;">
-    <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password" style="width:100%;background:#1a1a24;border:1px solid #333;border-radius:8px;color:#e8e8f0;padding:10px 14px;font-size:14px;margin-bottom:14px;box-sizing:border-box;outline:none;display:block;">
-    <button onclick="doLogin()" style="width:100%;background:#ff6b00;border:none;color:#fff;padding:12px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;">LOGIN</button>
-    <div id="login-error" style="color:#ff4444;font-size:12px;margin-top:10px;display:none;">Invalid credentials</div>
-    <p style="color:#555;font-size:10px;margin-top:16px;">Your data stays private and syncs across devices</p>
-  </div>
-</div>
-<div id="app"><header class="header"><div class="logo">⚡ 73inc<span>Infinity</span></div><nav class="nav"><button class="nav-btn active" data-tab="scanner">🔍 Scanner</button><button class="nav-btn" data-tab="trending">🔥 Trending</button><button class="nav-btn" data-tab="watchlist">⭐ Watchlist</button><button class="nav-btn" data-tab="agent">🤖 AI Agent</button><button class="nav-btn" data-tab="portfolio">💼 Portfolio</button>
-<button class="nav-btn" data-tab="pumpfun" onclick="switchTab('pumpfun')">🚀 Pump.fun</button></nav><div class="header-right"><span class="live-dot">● LIVE</span><div class="wallet-group"><button class="btn-phantom-connect" id="phantom-connect-btn" onclick="connectPhantom()">🦊 Connect Phantom</button><button class="btn-phantom-connected" id="phantom-status-btn" style="display:none" onclick="connectPhantom()">✓ <span id="wallet-addr-short"></span></button><button class="btn-phantom-disconnect" id="phantom-disconnect-btn" style="display:none" onclick="disconnectPhantom()">✕</button></div><div class="photon-group"><button class="btn-photon-connect" id="photon-connect-btn" onclick="connectPhoton()">⚡ Photon</button><button class="btn-photon-disconnect" id="photon-disconnect-btn" style="display:none" onclick="disconnectPhoton()">✕ Photon</button></div></div></header><div class="tab-content" id="tab-scanner"><div class="filters-bar"><select id="f-chain"><option value="any">All Chains</option><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="bsc">BSC</option></select><select id="f-signal"><option value="any">Any Signal</option><option value="STRONG BUY">Strong Buy</option><option value="BUY">Buy</option><option value="NEUTRAL">Neutral</option><option value="SELL">Sell</option></select><select id="f-age"><option value="any">Any Age</option><option value="1">&lt; 1h</option><option value="6">&lt; 6h</option><option value="24">&lt; 24h</option></select><select id="f-liq"><option value="any">Any Liquidity</option><option value="10000">$10k+</option><option value="50000">$50k+</option><option value="100000">$100k+</option></select><select id="f-vol"><option value="any">Any Volume</option><option value="50000">$50k+</option><option value="100000">$100k+</option><option value="500000">$500k+</option></select><select id="f-mcap"><option value="any">Any MCap</option><option value="100000">$100k+</option><option value="1000000">$1M+</option><option value="10000000">$10M+</option></select><button class="btn-refresh" onclick="loadScanner()">↻ Refresh</button></div><div id="custom-filter-section">
+<div id="app"><header class="header"><div class="logo">⚡ 73inc<span>Infinity</span></div><nav class="nav"><button class="nav-btn active" data-tab="scanner">🔍 Scanner</button><button class="nav-btn" data-tab="trending">🔥 Trending</button><button class="nav-btn" data-tab="watchlist">⭐ Watchlist</button><button class="nav-btn" data-tab="phantom" onclick="switchTab('phantom')">👻 Phantom</button><button class="nav-btn" data-tab="portfolio">💼 Portfolio</button>
+<button class="nav-btn" data-tab="pumpfun" onclick="switchTab('pumpfun')">🚀 Pump.fun</button>
+<button class="nav-btn" data-tab="photon" onclick="switchTab('photon')">⚡ Photon</button></nav><div class="header-right"><span class="live-dot">● LIVE</span><div class="wallet-group"><button class="btn-phantom-connect" id="phantom-connect-btn" onclick="connectPhantom()">🦊 Connect Phantom</button><button class="btn-phantom-connected" id="phantom-status-btn" style="display:none" onclick="connectPhantom()">✓ <span id="wallet-addr-short"></span></button><button class="btn-phantom-disconnect" id="phantom-disconnect-btn" style="display:none" onclick="disconnectPhantom()">✕</button></div><div class="photon-group"><button class="btn-photon-connect" id="photon-connect-btn" onclick="connectPhoton()">⚡ Photon</button><button class="btn-photon-disconnect" id="photon-disconnect-btn" style="display:none" onclick="disconnectPhoton()">✕ Photon</button></div></div></header><div class="tab-content" id="tab-scanner"><div class="filters-bar"><select id="f-chain"><option value="any">All Chains</option><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="bsc">BSC</option></select><select id="f-signal"><option value="any">Any Signal</option><option value="STRONG BUY">Strong Buy</option><option value="BUY">Buy</option><option value="NEUTRAL">Neutral</option><option value="SELL">Sell</option></select><select id="f-age"><option value="any">Any Age</option><option value="1">&lt; 1h</option><option value="6">&lt; 6h</option><option value="24">&lt; 24h</option></select><select id="f-liq"><option value="any">Any Liquidity</option><option value="10000">$10k+</option><option value="50000">$50k+</option><option value="100000">$100k+</option></select><select id="f-vol"><option value="any">Any Volume</option><option value="50000">$50k+</option><option value="100000">$100k+</option><option value="500000">$500k+</option></select><select id="f-mcap"><option value="any">Any MCap</option><option value="100000">$100k+</option><option value="1000000">$1M+</option><option value="10000000">$10M+</option></select><button class="btn-refresh" onclick="loadScanner()">↻ Refresh</button></div><div id="custom-filter-section">
 <div class="cf-header">
 <div><div class="cf-title">&#127919; 1H Candle Filter &#8212; Solana New Tokens</div>
 <div class="cf-subtitle">Age: 1&#8211;2h &nbsp;|&nbsp; Range A: $0.00011&#8211;$0.00013 &nbsp;|&nbsp; Range B: $0.000077&#8211;$0.00008 &nbsp;|&nbsp; Auto-scan every 30s</div></div>
@@ -205,12 +193,93 @@
 </div>
 <hr class="cf-divider">
 <div class="all-tokens-hdr">&#128202; All Scanner Tokens</div>
-<div id="scanner-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-trending"><div class="period-bar"><button class="period-btn active" data-period="h1">1H</button><button class="period-btn" data-period="h6">6H</button><button class="period-btn" data-period="h24">24H</button><button class="period-btn" data-period="d7">7D</button></div><div id="trending-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-watchlist"><div class="watchlist-header"><h2>⭐ My Watchlist</h2><span id="watchlist-count">0 tokens</span></div><div id="watchlist-grid" class="token-grid"></div><div id="watchlist-empty" class="empty-state"><p>No tokens in watchlist yet.</p><p>Click ☆ Watch on any scanner token to add it here.</p></div></div><div class="tab-content hidden" id="tab-agent"><div class="agent-panel"><div class="agent-header"><h2>🤖 AI Trading Agent</h2><div class="agent-mode-row"><label>Mode:</label><select id="agent-mode"><option value="simulation">📊 Simulation</option><option value="live">⚡ Live Trading</option></select><label>Trigger:</label><select id="agent-trigger"><option value="STRONG BUY">Strong Buy Only</option><option value="BUY">Buy &amp; Strong Buy</option></select><label>Size (SOL):</label><input type="number" id="agent-size" value="0.01" min="0.001" max="1" step="0.001" style="width:80px"><label style="margin-left:8px">TP%:</label><input type="number" id="agent-tp" value="20" min="5" max="200" step="5" style="width:55px;margin-left:4px" title="Take Profit %"><label style="margin-left:8px">SL%:</label><input type="number" id="agent-sl" value="15" min="5" max="50" step="5" style="width:55px;margin-left:4px" title="Stop Loss %"><button id="agent-start-btn" class="btn-agent-start" onclick="toggleAgent()">▶ Start Agent</button></div></div><div class="agent-stats"><div class="stat-box"><span class="stat-label">Status</span><span class="stat-val" id="agent-status">Stopped</span></div><div class="stat-box"><span class="stat-label">Trades</span><span class="stat-val" id="agent-trades">0</span></div><div class="stat-box"><span class="stat-label">Win Rate</span><span class="stat-val" id="agent-winrate">0%</span></div><div class="stat-box"><span class="stat-label">P&amp;L (SOL)</span><span class="stat-val" id="agent-pnl">0.000</span></div><div class="stat-box"><span class="stat-label">Positions</span><span class="stat-val" id="agent-positions">0/3</span></div></div><div class="agent-log" id="agent-log"><div class="log-entry">Agent ready. Configure settings and press Start.</div></div></div></div><div class="tab-content hidden" id="tab-portfolio"><div class="portfolio-header"><h2>💼 My Portfolio</h2><button class="btn-refresh" onclick="loadPortfolio()">↻ Refresh</button></div><div class="portfolio-summary"><div class="port-stat"><span class="stat-label">Total Value</span><span class="stat-val" id="port-total">$0.00</span></div><div class="port-stat"><span class="stat-label">SOL Balance</span><span class="stat-val" id="port-sol">0.000 SOL</span></div><div class="port-stat"><span class="stat-label">Tokens</span><span class="stat-val" id="port-count">0</span></div><div class="port-stat"><span class="stat-label">24h P&amp;L</span><span class="stat-val" id="port-pnl">$0.00</span></div></div><div id="portfolio-list" class="portfolio-list"></div><div id="portfolio-empty" class="empty-state" style="display:none"><p>Connect Phantom wallet to view your portfolio.</p></div></div><div id="tab-pumpfun" class="tab-content" style="display: flex;">
+
+<!-- Phantom Tokens Section -->
+<div class="platform-section" id="phantom-section" style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:#1a1428;border-radius:8px;border-left:3px solid #ab9ff2;">
+    <span style="color:#ab9ff2;font-weight:700;font-size:0.9rem;">👻 Phantom Tokens</span>
+    <span id="phantom-count-badge" style="background:#2a1f4a;color:#ab9ff2;font-size:0.75rem;padding:2px 8px;border-radius:12px;font-weight:600;">0</span>
+  </div>
+  <div id="phantom-scanner-grid" class="token-grid"></div>
+  <div id="phantom-no-tokens" style="text-align:center;color:#555;padding:20px;font-size:0.85rem;">No Phantom tokens found yet</div>
+</div>
+
+<!-- Pump.fun Tokens Section -->
+<div class="platform-section" id="pumpfun-section" style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:#1a0f00;border-radius:8px;border-left:3px solid #ff6b00;">
+    <span style="color:#ff6b00;font-weight:700;font-size:0.9rem;">🚀 Pump.fun Tokens</span>
+    <span id="pumpfun-count-badge" style="background:#2a1500;color:#ff6b00;font-size:0.75rem;padding:2px 8px;border-radius:12px;font-weight:600;">0</span>
+  </div>
+  <div id="pumpfun-scanner-grid" class="token-grid"></div>
+  <div id="pumpfun-no-tokens" style="text-align:center;color:#555;padding:20px;font-size:0.85rem;">No Pump.fun tokens found yet</div>
+</div>
+
+<!-- Photon Tokens Section -->
+<div class="platform-section" id="photon-section" style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:#001a2e;border-radius:8px;border-left:3px solid #00c2ff;">
+    <span style="color:#00c2ff;font-weight:700;font-size:0.9rem;">⚡ Photon Tokens</span>
+    <span id="photon-count-badge" style="background:#001428;color:#00c2ff;font-size:0.75rem;padding:2px 8px;border-radius:12px;font-weight:600;">0</span>
+  </div>
+  <div id="photon-scanner-grid" class="token-grid"></div>
+  <div id="photon-no-tokens" style="text-align:center;color:#555;padding:20px;font-size:0.85rem;">No Photon tokens found yet</div>
+</div>
+
+<div id="scanner-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-trending"><div class="period-bar"><button class="period-btn active" data-period="h1">1H</button><button class="period-btn" data-period="h6">6H</button><button class="period-btn" data-period="h24">24H</button><button class="period-btn" data-period="d7">7D</button></div><div id="trending-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-watchlist"><div class="watchlist-header"><h2>⭐ My Watchlist</h2><span id="watchlist-count">0 tokens</span></div><div id="watchlist-grid" class="token-grid"></div><div id="watchlist-empty" class="empty-state"><p>No tokens in watchlist yet.</p><p>Click ☆ Watch on any scanner token to add it here.</p></div></div><div class="tab-content hidden" id="tab-phantom">
+<div class="phantom-page" style="max-width:900px;margin:0 auto;padding:20px;">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+    <div style="width:48px;height:48px;background:#ab9ff2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;">👻</div>
+    <div>
+      <h2 style="color:#fff;font-size:1.4rem;margin:0;">Phantom Wallet</h2>
+      <p style="color:#888;font-size:0.85rem;margin:4px 0 0;">Connect your Phantom wallet to scan and trade Solana tokens</p>
+    </div>
+  </div>
+
+  <!-- Wallet Connection Card -->
+  <div style="background:#13131a;border:1px solid #2e2e3e;border-radius:12px;padding:24px;margin-bottom:20px;">
+    <h3 style="color:#ab9ff2;margin:0 0 16px;font-size:1rem;">Wallet Connection</h3>
+    <div id="phantom-tab-status" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <div id="phantom-tab-dot" style="width:10px;height:10px;border-radius:50%;background:#555;"></div>
+      <span id="phantom-tab-addr" style="color:#888;font-size:0.9rem;">Not connected</span>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="connectPhantom()" id="phantom-tab-login-btn" style="background:#ab9ff2;color:#fff;border:none;padding:12px 24px;border-radius:10px;cursor:pointer;font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:8px;transition:all .2s;">
+        <svg width="18" height="18" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="128" height="128" rx="64" fill="#AB9FF2"></rect><path d="M110.584 65.27H99.142c0-27.81-22.598-50.357-50.484-50.357-27.563 0-49.961 22.13-50.483 49.537-.538 27.995 23.178 51.55 51.22 51.55h3.639c25.411 0 57.006-20.49 62.47-47.002a5.17 5.17 0 00-5.02-3.728h.1zm-61.926 29.4h-3.639c-20.19 0-37.25-16.507-36.827-36.663.416-19.648 16.64-35.444 36.338-35.444 20.015 0 36.29 16.22 36.29 36.19v.28H63.673a12.74 12.74 0 00-12.738 12.705v.004a12.74 12.74 0 0012.738 12.705h17.147C74.9 91.1 63.83 94.67 48.658 94.67z" fill="#fff"></path></svg>
+        Log on to Phantom
+      </button>
+      <button onclick="disconnectPhantom()" id="phantom-tab-logout-btn" style="background:#c0392b;color:#fff;border:none;padding:12px 24px;border-radius:10px;cursor:pointer;font-size:0.95rem;font-weight:700;display:none;align-items:center;gap:8px;transition:all .2s;">
+        🔌 Log off Phantom
+      </button>
+    </div>
+    <p style="color:#555;font-size:0.78rem;margin:12px 0 0;">Phantom wallet connects directly — no separate account required. Your wallet address is your Phantom address.</p>
+  </div>
+
+  <!-- Phantom Token Scanner Section -->
+  <div style="background:#13131a;border:1px solid #2e2e3e;border-radius:12px;padding:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="color:#ab9ff2;margin:0;font-size:1rem;">👻 Phantom — Scanned Tokens</h3>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="phantom-scan-count" style="color:#888;font-size:0.8rem;">0 tokens</span>
+        <button onclick="loadPhantomTokens()" style="background:#1e1e2e;color:#ab9ff2;border:1px solid #ab9ff2;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:0.8rem;font-weight:600;">↺ Refresh</button>
+      </div>
+    </div>
+    <div id="phantom-token-list" style="display:flex;flex-direction:column;gap:10px;">
+      <div style="text-align:center;color:#555;padding:40px 20px;">
+        <div style="font-size:32px;margin-bottom:8px;">👻</div>
+        <div>Connect Phantom to see scanned tokens</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><div class="tab-content hidden" id="tab-portfolio"><div class="portfolio-header"><h2>💼 My Portfolio</h2><button class="btn-refresh" onclick="loadPortfolio()">↻ Refresh</button></div><div class="portfolio-summary"><div class="port-stat"><span class="stat-label">Total Value</span><span class="stat-val" id="port-total">$0.00</span></div><div class="port-stat"><span class="stat-label">SOL Balance</span><span class="stat-val" id="port-sol">0.000 SOL</span></div><div class="port-stat"><span class="stat-label">Tokens</span><span class="stat-val" id="port-count">0</span></div><div class="port-stat"><span class="stat-label">24h P&amp;L</span><span class="stat-val" id="port-pnl">$0.00</span></div></div><div id="portfolio-list" class="portfolio-list"></div><div id="portfolio-empty" class="empty-state" style="display:none"><p>Connect Phantom wallet to view your portfolio.</p></div></div><div id="tab-pumpfun" class="tab-content" style="display: flex;">
 <div class="pf-layout">
   <!-- LEFT PANEL: Controls -->
   <div class="pf-sidebar"><div id="pf-wallet-section" class="pf-wallet-section">
-  <div class="pf-wallet-title">
-    <span>🔑</span> Pump.fun Wallet
+  <div class="pf-wallet-title" style="display:flex;align-items:center;justify-content:space-between;">
+    <span><span>🔑</span> Pump.fun Wallet</span>
+    <div style="display:flex;gap:6px;">
+      <button onclick="pfLogOnWallet()" id="pf-logon-top-btn" style="background:#ff6b00;color:#fff;border:none;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:0.78rem;font-weight:700;">Log on to Pump.fun</button>
+      <button onclick="pfLogOffWallet()" id="pf-logoff-top-btn" style="background:#c0392b;color:#fff;border:none;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:0.78rem;font-weight:700;">Log off Pump.fun</button>
+    </div>
   </div>
 
   <!-- Mode badge -->
@@ -772,6 +841,52 @@
   </div>
 </div>
 </div>
+<div class="tab-content hidden" id="tab-photon">
+<div class="photon-page" style="max-width:900px;margin:0 auto;padding:20px;">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+    <div style="width:48px;height:48px;background:#00c2ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;">⚡</div>
+    <div>
+      <h2 style="color:#fff;font-size:1.4rem;margin:0;">Photon Trading</h2>
+      <p style="color:#888;font-size:0.85rem;margin:4px 0 0;">Scan and trade Solana tokens via Photon — wallet-only token platform</p>
+    </div>
+  </div>
+
+  <!-- Wallet Connection Card -->
+  <div style="background:#13131a;border:1px solid #2e2e3e;border-radius:12px;padding:24px;margin-bottom:20px;">
+    <h3 style="color:#00c2ff;margin:0 0 16px;font-size:1rem;">Wallet Connection</h3>
+    <div id="photon-tab-status" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <div id="photon-tab-dot" style="width:10px;height:10px;border-radius:50%;background:#555;"></div>
+      <span id="photon-tab-addr" style="color:#888;font-size:0.9rem;">Not connected</span>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="connectPhotonTab()" id="photon-tab-login-btn" style="background:#00c2ff;color:#000;border:none;padding:12px 24px;border-radius:10px;cursor:pointer;font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:8px;transition:all .2s;">
+        ⚡ Log on to Photon
+      </button>
+      <button onclick="disconnectPhotonTab()" id="photon-tab-logout-btn" style="background:#c0392b;color:#fff;border:none;padding:12px 24px;border-radius:10px;cursor:pointer;font-size:0.95rem;font-weight:700;display:none;align-items:center;gap:8px;transition:all .2s;">
+        🔌 Log off Photon
+      </button>
+    </div>
+    <p style="color:#555;font-size:0.78rem;margin:12px 0 0;">Photon connects using your Phantom wallet address. Make sure Phantom is connected first before logging on to Photon.</p>
+  </div>
+
+  <!-- Photon Token Scanner Section -->
+  <div style="background:#13131a;border:1px solid #2e2e3e;border-radius:12px;padding:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="color:#00c2ff;margin:0;font-size:1rem;">⚡ Photon — Scanned Tokens</h3>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="photon-scan-count" style="color:#888;font-size:0.8rem;">0 tokens</span>
+        <button onclick="loadPhotonTokens()" style="background:#1e1e2e;color:#00c2ff;border:1px solid #00c2ff;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:0.8rem;font-weight:600;">↺ Refresh</button>
+      </div>
+    </div>
+    <div id="photon-token-list" style="display:flex;flex-direction:column;gap:10px;">
+      <div style="text-align:center;color:#555;padding:40px 20px;">
+        <div style="font-size:32px;margin-bottom:8px;">⚡</div>
+        <div>Connect Photon to see scanned tokens</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <div id="toast" class="toast"></div></div>
 
 <script>
@@ -834,19 +949,190 @@ function signalClass(sig){if(sig==='STRONG BUY')return'signal-strong-buy';if(sig
 function calcSignal(pc,vol,liq){var s=0;if(pc>20)s+=3;else if(pc>10)s+=2;else if(pc>5)s+=1;else if(pc<-10)s-=2;else if(pc<-5)s-=1;if(vol>500000)s+=2;else if(vol>100000)s+=1;if(liq>100000)s+=1;if(s>=4)return'STRONG BUY';if(s>=2)return'BUY';if(s<=-2)return'STRONG SELL';if(s<=-1)return'SELL';return'NEUTRAL';}
 function updatePhantomUI(){var cb=document.getElementById('phantom-connect-btn');var sb=document.getElementById('phantom-status-btn');var db=document.getElementById('phantom-disconnect-btn');var as=document.getElementById('wallet-addr-short');if(!cb)return;if(INF.wallet){cb.style.display='none';sb.style.display='inline-flex';db.style.display='inline-flex';if(as)as.textContent=formatAddr(INF.wallet);}else{cb.style.display='inline-flex';sb.style.display='none';db.style.display='none';}}
 function updatePhotonUI(){var cb=document.getElementById('photon-connect-btn');var db=document.getElementById('photon-disconnect-btn');if(!cb)return;if(INF.photonConnected){cb.style.display='none';db.style.display='inline-flex';}else{cb.style.display='inline-flex';db.style.display='none';}}
-async function connectPhantom(){try{if(!window.solana||!window.solana.isPhantom){showToast('Phantom not installed. Get it at phantom.app','error');window.open('https://phantom.app','_blank');return;}var r=await window.solana.connect();INF.wallet=r.publicKey.toString();updatePhantomUI();showToast('Phantom connected: '+formatAddr(INF.wallet),'success');loadPortfolio();}catch(e){showToast('Phantom failed: '+e.message,'error');}}
-async function disconnectPhantom(){try{if(window.solana&&window.solana.disconnect)await window.solana.disconnect();}catch(e){}INF.wallet=null;updatePhantomUI();showToast('Phantom disconnected','info');var pl=document.getElementById('portfolio-list');if(pl)pl.innerHTML='';var pt=document.getElementById('port-total');if(pt)pt.textContent='$0.00';var ps=document.getElementById('port-sol');if(ps)ps.textContent='0.000 SOL';var pc2=document.getElementById('port-count');if(pc2)pc2.textContent='0';}
+async async function connectPhantom(){
+  try{
+    if(!window.solana||!window.solana.isPhantom){
+      showToast('Phantom not installed. Get it at phantom.app','error');
+      window.open('https://phantom.app','_blank');
+      return;
+    }
+    // Force a fresh connection (handles reconnect after disconnect)
+    var r;
+    try {
+      r = await window.solana.connect({onlyIfTrusted: false});
+    } catch(e2) {
+      // If onlyIfTrusted fails, try without
+      r = await window.solana.connect();
+    }
+    INF.wallet=r.publicKey.toString();
+    updatePhantomUI();
+    updatePhantomTabUI();
+    showToast('Phantom connected: '+formatAddr(INF.wallet),'success');
+    loadPortfolio();
+    loadPhantomTokens();
+  }catch(e){
+    showToast('Phantom connection failed: '+e.message,'error');
+  }
+}
+async function disconnectPhantom(){try{if(window.solana&&window.solana.disconnect)await window.solana.disconnect();}catch(e){}INF.wallet=null;updatePhantomUI();updatePhantomTabUI();showToast('Phantom disconnected','info');var pl=document.getElementById('portfolio-list');if(pl)pl.innerHTML='';var pt=document.getElementById('port-total');if(pt)pt.textContent='$0.00';var ps=document.getElementById('port-sol');if(ps)ps.textContent='0.000 SOL';var pc2=document.getElementById('port-count');if(pc2)pc2.textContent='0';}
 function connectPhoton(){var url=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+INF.wallet:'https://photon-sol.tinyastro.io';window.open(url,'_blank');INF.photonConnected=true;updatePhotonUI();showToast('Photon opened'+(INF.wallet?' with wallet':''),'success');}
-function disconnectPhoton(){INF.photonConnected=false;updatePhotonUI();showToast('Photon disconnected','info');}
+
+function disconnectPhoton(){INF.photonConnected=false;updatePhotonUI();updatePhotonTabUI();showToast('Photon disconnected','info');}
+
+// ===== PHANTOM TAB UI HELPERS =====
+function updatePhantomTabUI(){
+  var loginBtn=document.getElementById('phantom-tab-login-btn');
+  var logoutBtn=document.getElementById('phantom-tab-logout-btn');
+  var dot=document.getElementById('phantom-tab-dot');
+  var addrSpan=document.getElementById('phantom-tab-addr');
+  if(!loginBtn)return;
+  if(INF.wallet){
+    loginBtn.style.display='none';
+    logoutBtn.style.display='flex';
+    if(dot)dot.style.background='#00ff88';
+    if(addrSpan){addrSpan.textContent='Connected: '+formatAddr(INF.wallet);addrSpan.style.color='#00ff88';}
+  } else {
+    loginBtn.style.display='flex';
+    logoutBtn.style.display='none';
+    if(dot)dot.style.background='#555';
+    if(addrSpan){addrSpan.textContent='Not connected';addrSpan.style.color='#888';}
+  }
+}
+
+// ===== PHOTON TAB UI HELPERS =====
+function connectPhotonTab(){
+  var url=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+INF.wallet:'https://photon-sol.tinyastro.io';
+  window.open(url,'_blank');
+  INF.photonConnected=true;
+  updatePhotonUI();
+  updatePhotonTabUI();
+  showToast('Photon opened'+(INF.wallet?' with wallet':''),'success');
+  loadPhotonTokens();
+}
+function disconnectPhotonTab(){
+  INF.photonConnected=false;
+  updatePhotonUI();
+  updatePhotonTabUI();
+  showToast('Photon disconnected','info');
+}
+function updatePhotonTabUI(){
+  var loginBtn=document.getElementById('photon-tab-login-btn');
+  var logoutBtn=document.getElementById('photon-tab-logout-btn');
+  var dot=document.getElementById('photon-tab-dot');
+  var addrSpan=document.getElementById('photon-tab-addr');
+  if(!loginBtn)return;
+  if(INF.photonConnected){
+    loginBtn.style.display='none';
+    logoutBtn.style.display='flex';
+    if(dot)dot.style.background='#00c2ff';
+    if(addrSpan){addrSpan.textContent='Connected'+(INF.wallet?' via '+formatAddr(INF.wallet):'');addrSpan.style.color='#00c2ff';}
+    loadPhotonTokens();
+  } else {
+    loginBtn.style.display='flex';
+    logoutBtn.style.display='none';
+    if(dot)dot.style.background='#555';
+    if(addrSpan){addrSpan.textContent='Not connected';addrSpan.style.color='#888';}
+  }
+}
+
+// ===== PHANTOM TOKEN LOADER =====
+async function loadPhantomTokens(){
+  var list=document.getElementById('phantom-token-list');
+  var countEl=document.getElementById('phantom-scan-count');
+  if(!list)return;
+  if(!INF.wallet){
+    list.innerHTML='<div style="text-align:center;color:#555;padding:40px 20px;"><div style="font-size:32px;margin-bottom:8px;">👻</div><div>Connect Phantom to see scanned tokens</div></div>';
+    if(countEl)countEl.textContent='0 tokens';
+    return;
+  }
+  list.innerHTML='<div style="text-align:center;color:#888;padding:20px;">Loading Phantom tokens...</div>';
+  try {
+    // Use DexScreener Solana tokens sorted by recent
+    var resp = await fetch('https://api.dexscreener.com/latest/dex/search/?q=SOL');
+    var data = await resp.json();
+    var pairs = (data.pairs||[]).filter(function(p){return p.chainId==='solana';}).slice(0,20);
+    pairs.forEach(function(p){p._source='Phantom';});
+    renderPlatformTokens(pairs, list, countEl, 'Phantom');
+    distributeToPlatformSections(pairs, 'phantom');
+  } catch(e){
+    list.innerHTML='<div style="text-align:center;color:#ff4444;padding:20px;">Failed to load: '+e.message+'</div>';
+  }
+}
+
+// ===== PHOTON TOKEN LOADER =====
+async function loadPhotonTokens(){
+  var list=document.getElementById('photon-token-list');
+  var countEl=document.getElementById('photon-scan-count');
+  if(!list)return;
+  if(!INF.photonConnected){
+    list.innerHTML='<div style="text-align:center;color:#555;padding:40px 20px;"><div style="font-size:32px;margin-bottom:8px;">⚡</div><div>Connect Photon to see scanned tokens</div></div>';
+    if(countEl)countEl.textContent='0 tokens';
+    return;
+  }
+  list.innerHTML='<div style="text-align:center;color:#888;padding:20px;">Loading Photon tokens...</div>';
+  try {
+    var resp = await fetch('https://api.dexscreener.com/latest/dex/search/?q=new+solana');
+    var data = await resp.json();
+    var pairs = (data.pairs||[]).filter(function(p){return p.chainId==='solana';}).slice(0,20);
+    pairs.forEach(function(p){p._source='Photon';p._photon=true;});
+    renderPlatformTokens(pairs, list, countEl, 'Photon');
+    distributeToPlatformSections(pairs, 'photon');
+  } catch(e){
+    list.innerHTML='<div style="text-align:center;color:#ff4444;padding:20px;">Failed to load: '+e.message+'</div>';
+  }
+}
+
+// ===== RENDER PLATFORM TOKEN LIST =====
+function renderPlatformTokens(pairs, container, countEl, platform){
+  if(!container)return;
+  if(!pairs||pairs.length===0){
+    container.innerHTML='<div style="text-align:center;color:#555;padding:30px;font-size:0.85rem;">No tokens found for '+platform+'</div>';
+    if(countEl)countEl.textContent='0 tokens';
+    return;
+  }
+  container.innerHTML='';
+  pairs.forEach(function(p){
+    var card=buildCard(p);
+    container.appendChild(card);
+  });
+  if(countEl)countEl.textContent=pairs.length+' tokens';
+}
+
+// ===== DISTRIBUTE SCANNER TOKENS BY PLATFORM =====
+function distributeToPlatformSections(pairs, platform){
+  var gridId=platform+'-scanner-grid';
+  var countId=platform+'-count-badge';
+  var noTokensId=platform+'-no-tokens';
+  var grid=document.getElementById(gridId);
+  var countBadge=document.getElementById(countId);
+  var noTokens=document.getElementById(noTokensId);
+  if(!grid)return;
+  grid.innerHTML='';
+  if(!pairs||pairs.length===0){
+    if(noTokens)noTokens.style.display='block';
+    if(countBadge)countBadge.textContent='0';
+    return;
+  }
+  if(noTokens)noTokens.style.display='none';
+  if(countBadge)countBadge.textContent=pairs.length;
+  pairs.forEach(function(p){
+    var card=buildCard(p);
+    grid.appendChild(card);
+  });
+}
+
+// ===== PUMP.FUN WALLET LOG ON / OFF =====
+function pfLogOnWallet(){pfConnectWallet();}
+function pfLogOffWallet(){pfDisconnectWallet();}
 function buildCard(p){var sym=(p.baseToken&&p.baseToken.symbol)?p.baseToken.symbol:'???';var name=(p.baseToken&&p.baseToken.name)?p.baseToken.name:sym;var addr=(p.baseToken&&p.baseToken.address)?p.baseToken.address:'';var price=parseFloat(p.priceUsd||0);var pd=price===0?'$0':price<0.000001?price.toExponential(2):price<0.0001?price.toFixed(8):price<0.01?price.toFixed(6):price.toFixed(4);var ch1=parseFloat((p.priceChange&&p.priceChange.h1)?p.priceChange.h1:0);var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);var vol24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);var liq=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);var mcap=parseFloat(p.marketCap||p.fdv||0);var chain=p.chainId||'solana';var pairAddr=p.pairAddress||addr;var sig=calcSignal(ch24,vol24,liq);var ageMs=p.pairCreatedAt?(Date.now()-p.pairCreatedAt):0;var ageH=ageMs/3600000;var ageD=ageH<1?Math.round(ageMs/60000)+'m':ageH<24?ageH.toFixed(1)+'h':(ageH/24).toFixed(1)+'d';
 var card=document.createElement('div');card.className='token-card';card.setAttribute('data-addr',addr);var hdr=document.createElement('div');hdr.className='card-header';var ti=document.createElement('div');ti.className='token-info';var ts=document.createElement('span');ts.className='token-sym';ts.textContent=sym;var tn=document.createElement('span');tn.className='token-name';tn.textContent=name;ti.appendChild(ts);ti.appendChild(tn);var sb=document.createElement('span');sb.className='signal-badge '+signalClass(sig);sb.textContent=sig;hdr.appendChild(ti);hdr.appendChild(sb);
 var met=document.createElement('div');met.className='card-metrics';var ms=[['Price','$'+pd],['1h',(ch1>=0?'+':'')+ch1.toFixed(1)+'%','m-val '+(ch1>=0?'pos':'neg')],['24h',(ch24>=0?'+':'')+ch24.toFixed(1)+'%','m-val '+(ch24>=0?'pos':'neg')],['Vol','$'+formatNum(vol24)],['Liq','$'+formatNum(liq)],['MCap','$'+formatNum(mcap)],['Age',ageD],['Chain',chain.toUpperCase()]];ms.forEach(function(m){var d=document.createElement('div');d.className='metric';var lb=document.createElement('span');lb.className='m-label';lb.textContent=m[0];var vl=document.createElement('span');vl.className=m[2]||'m-val';vl.textContent=m[1];d.appendChild(lb);d.appendChild(vl);met.appendChild(d);});
-var act=document.createElement('div');act.className='card-actions';var isW=INF.watchlist.some(function(w){return w.address===addr;});var wb=document.createElement('button');wb.className='btn-card'+(isW?' btn-watched':'');wb.textContent=isW?'★ Watched':'☆ Watch';wb.onclick=function(){toggleWatch(p,wb);};var db=document.createElement('button');db.className='btn-card btn-dex';db.textContent='📊 Chart';db.onclick=function(){window.open('https://dexscreener.com/'+chain+'/'+pairAddr,'_blank');};var dtb=document.createElement('button');dtb.className='btn-card btn-dextools';dtb.textContent='🛠 DexTools';dtb.onclick=function(){var dc=chain==='solana'?'solana':chain==='bsc'?'bnb':chain;window.open('https://www.dextools.io/app/en/'+dc+'/pair-explorer/'+pairAddr,'_blank');};var rb=document.createElement('button');rb.className='btn-card btn-rug';rb.textContent='🛡 RugCheck';rb.onclick=function(){window.open('https://rugcheck.xyz/tokens/'+addr,'_blank');};var pb=document.createElement('button');pb.className='btn-card btn-photon';pb.textContent='⚡ Photon';pb.onclick=function(){var ph=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr+'?wallet='+INF.wallet:'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr;window.open(ph,'_blank');};act.appendChild(wb);act.appendChild(db);act.appendChild(dtb);act.appendChild(rb);act.appendChild(pb);if(p.url&&p.url.includes('pump.fun')){var pumb=document.createElement('button');pumb.className='btn-card btn-pump';pumb.textContent='🚀 Pump';pumb.onclick=function(){window.open('https://pump.fun/coin/'+addr,'_blank');};act.appendChild(pumb);}
+var act=document.createElement('div');act.className='card-actions';var isW=INF.watchlist.some(function(w){return w.address===addr;});var wb=document.createElement('button');wb.className='btn-card'+(isW?' btn-watched':'');wb.textContent=isW?'★ Watched':'☆ Watch';wb.title='Add to watchlist';wb.onclick=function(){toggleWatch(p,wb);};var db=document.createElement('button');db.className='btn-card btn-dex';db.textContent='Dexscreener';db.title='View on Dexscreener';db.onclick=function(){window.open('https://dexscreener.com/'+chain+'/'+pairAddr,'_blank');};var dtb=document.createElement('button');dtb.className='btn-card btn-dextools';dtb.textContent='DEXTools';dtb.title='View on DEXTools';dtb.onclick=function(){var dc=chain==='solana'?'solana':chain==='bsc'?'bnb':chain;window.open('https://www.dextools.io/app/en/'+dc+'/pair-explorer/'+pairAddr,'_blank');};var rb=document.createElement('button');rb.className='btn-card btn-rug';rb.textContent='RugCheck';rb.title='Check on RugCheck';rb.onclick=function(){window.open('https://rugcheck.xyz/tokens/'+addr,'_blank');};var pb=document.createElement('button');pb.className='btn-card btn-photon';pb.textContent='Buy';pb.title='Buy via Photon';pb.onclick=function(){var ph=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr+'?wallet='+INF.wallet:'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr;window.open(ph,'_blank');};act.appendChild(wb);act.appendChild(db);act.appendChild(dtb);act.appendChild(rb);act.appendChild(pb);if(p.url&&p.url.includes('pump.fun')){var pumb=document.createElement('button');pumb.className='btn-card btn-pump';pumb.textContent='Pump.fun';pumb.title='View on Pump.fun';pumb.onclick=function(){window.open('https://pump.fun/coin/'+addr,'_blank');};act.appendChild(pumb);}
 // Phantom buy button
 if(addr){
   var phbtn=document.createElement('button');
   phbtn.className='btn-card btn-phantom';
-  phbtn.textContent='👻 Buy';
+  phbtn.textContent='Phantom Buy';phbtn.title='Buy via Phantom';
   phbtn.onclick=function(){
     var url='https://phantom.app/ul/swap?inputMint=So11111111111111111111111111111111111111112&outputMint='+addr+'&referral='+INF.wallet;
     if(INF.wallet){url='https://phantom.app/ul/swap?inputMint=So11111111111111111111111111111111111111112&outputMint='+addr;}
@@ -854,11 +1140,30 @@ if(addr){
   };
   act.appendChild(phbtn);
 }
+// Platform Source badge
+var srcBadge=document.createElement('div');
+srcBadge.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:6px;border-top:1px solid #1e1e2e;';
+var srcLabel=document.createElement('span');srcLabel.style.cssText='color:#555;font-size:0.72rem;';srcLabel.textContent='Source:';
+var srcVal=document.createElement('span');srcVal.style.cssText='font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:4px;';
+var src='Phantom';
+if(p.url&&p.url.includes('pump.fun')){src='Pump.fun';srcVal.style.background='#1a0f00';srcVal.style.color='#ff6b00';}
+else if(p._photon){src='Photon';srcVal.style.background='#001a2e';srcVal.style.color='#00c2ff';}
+else{srcVal.style.background='#1a1428';srcVal.style.color='#ab9ff2';}
+srcVal.textContent=src;
+srcBadge.appendChild(srcLabel);srcBadge.appendChild(srcVal);
+act.appendChild(srcBadge);
 card.appendChild(hdr);card.appendChild(met);card.appendChild(act);return card;}
 function toggleWatch(p,btn){var addr=p.baseToken&&p.baseToken.address?p.baseToken.address:'';var idx=INF.watchlist.findIndex(function(w){return w.address===addr;});if(idx>=0){INF.watchlist.splice(idx,1);btn.className='btn-card';btn.textContent='☆ Watch';showToast('Removed from watchlist','info');}else{INF.watchlist.push({address:addr,symbol:p.baseToken&&p.baseToken.symbol?p.baseToken.symbol:'?',pair:p});btn.className='btn-card btn-watched';btn.textContent='★ Watched';showToast('Added to watchlist!','success');}localStorage.setItem('inf_watchlist',JSON.stringify(INF.watchlist));
 cloudSaveWatchlist();
 if(INF.currentTab==='watchlist')renderWatchlist();}
-async function loadScanner(){var grid=document.getElementById('scanner-grid');if(!grid)return;grid.innerHTML='<div class="loading">🔍 Scanning live tokens...</div>';try{var queries=['solana pump.fun','solana raydium','solana jupiter','solana new'];var all=[];for(var qi=0;qi<queries.length;qi++){try{var r=await fetch('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(queries[qi]));if(r.ok){var d=await r.json();if(d.pairs&&d.pairs.length)all=all.concat(d.pairs.slice(0,30));}}catch(e2){}}try{var rb=await fetch('https://api.dexscreener.com/token-boosts/latest/v1');if(rb.ok){var db=await rb.json();var ba=Array.isArray(db)?db.slice(0,20).map(function(b){return b.tokenAddress;}):[];if(ba.length){var r3=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+ba.join(','));if(r3.ok){var d3=await r3.json();if(Array.isArray(d3))all=all.concat(d3);}}}}catch(e3){}var seen={};var unique=[];all.forEach(function(p){var k=p.pairAddress||(p.baseToken&&p.baseToken.address);if(k&&!seen[k]){seen[k]=1;unique.push(p);}});var chain=document.getElementById('f-chain')?document.getElementById('f-chain').value:'any';var signal=document.getElementById('f-signal')?document.getElementById('f-signal').value:'any';var age=document.getElementById('f-age')?document.getElementById('f-age').value:'any';var liq=document.getElementById('f-liq')?document.getElementById('f-liq').value:'any';var vol=document.getElementById('f-vol')?document.getElementById('f-vol').value:'any';var mcap=document.getElementById('f-mcap')?document.getElementById('f-mcap').value:'any';var filtered=unique.filter(function(p){if(chain!=='any'&&p.chainId!==chain)return false;var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);var v24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);var lu=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);var mu=parseFloat(p.marketCap||p.fdv||0);var sig=calcSignal(ch24,v24,lu);if(signal!=='any'&&sig!==signal)return false;if(age!=='any'&&p.pairCreatedAt){var ah=(Date.now()-p.pairCreatedAt)/3600000;if(ah>parseFloat(age))return false;}if(liq!=='any'&&lu<parseFloat(liq))return false;if(vol!=='any'&&v24<parseFloat(vol))return false;if(mcap!=='any'&&mu<parseFloat(mcap))return false;return true;});INF.tokens=filtered;grid.innerHTML='';if(!filtered.length){grid.innerHTML='<div class="empty-state"><p>No tokens match current filters.</p></div>';return;}filtered.slice(0,60).forEach(function(p){grid.appendChild(buildCard(p));});}catch(e){grid.innerHTML='<div class="empty-state"><p>Scanner error: '+e.message+'</p></div>';}}
+async function loadScanner(){var grid=document.getElementById('scanner-grid');if(!grid)return;grid.innerHTML='<div class="loading">🔍 Scanning live tokens...</div>';try{var queries=['solana pump.fun','solana raydium','solana jupiter','solana new'];var all=[];for(var qi=0;qi<queries.length;qi++){try{var r=await fetch('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(queries[qi]));if(r.ok){var d=await r.json();if(d.pairs&&d.pairs.length)all=all.concat(d.pairs.slice(0,30));}}catch(e2){}}try{var rb=await fetch('https://api.dexscreener.com/token-boosts/latest/v1');if(rb.ok){var db=await rb.json();var ba=Array.isArray(db)?db.slice(0,20).map(function(b){return b.tokenAddress;}):[];if(ba.length){var r3=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+ba.join(','));if(r3.ok){var d3=await r3.json();if(Array.isArray(d3))all=all.concat(d3);}}}}catch(e3){}var seen={};var unique=[];all.forEach(function(p){var k=p.pairAddress||(p.baseToken&&p.baseToken.address);if(k&&!seen[k]){seen[k]=1;unique.push(p);}});var chain=document.getElementById('f-chain')?document.getElementById('f-chain').value:'any';var signal=document.getElementById('f-signal')?document.getElementById('f-signal').value:'any';var age=document.getElementById('f-age')?document.getElementById('f-age').value:'any';var liq=document.getElementById('f-liq')?document.getElementById('f-liq').value:'any';var vol=document.getElementById('f-vol')?document.getElementById('f-vol').value:'any';var mcap=document.getElementById('f-mcap')?document.getElementById('f-mcap').value:'any';var filtered=unique.filter(function(p){if(chain!=='any'&&p.chainId!==chain)return false;var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);var v24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);var lu=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);var mu=parseFloat(p.marketCap||p.fdv||0);var sig=calcSignal(ch24,v24,lu);if(signal!=='any'&&sig!==signal)return false;if(age!=='any'&&p.pairCreatedAt){var ah=(Date.now()-p.pairCreatedAt)/3600000;if(ah>parseFloat(age))return false;}if(liq!=='any'&&lu<parseFloat(liq))return false;if(vol!=='any'&&v24<parseFloat(vol))return false;if(mcap!=='any'&&mu<parseFloat(mcap))return false;return true;});INF.tokens=filtered;grid.innerHTML='';if(!filtered.length){grid.innerHTML='<div class="empty-state"><p>No tokens match current filters.</p></div>';return;}filtered.slice(0,60).forEach(function(p){grid.appendChild(buildCard(p));});
+// Distribute to platform sections
+var phantomPairs=filtered.filter(function(p){return !p._photon&&(!p.url||!p.url.includes('pump.fun'));});
+var pumpPairs=filtered.filter(function(p){return p.url&&p.url.includes('pump.fun');});
+var photonPairs=filtered.filter(function(p){return !!p._photon;});
+distributeToPlatformSections(phantomPairs,'phantom');
+distributeToPlatformSections(pumpPairs,'pumpfun');
+distributeToPlatformSections(photonPairs,'photon');}catch(e){grid.innerHTML='<div class="empty-state"><p>Scanner error: '+e.message+'</p></div>';}}
 async function loadTrending(){var grid=document.getElementById('trending-grid');if(!grid)return;grid.innerHTML='<div class="loading">🔥 Loading trending...</div>';try{var rb=await fetch('https://api.dexscreener.com/token-boosts/latest/v1');var bp=[];if(rb.ok){var db=await rb.json();var addrs=Array.isArray(db)?db.slice(0,30).map(function(b){return b.tokenAddress;}).filter(Boolean):[];if(addrs.length){try{var r2=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+addrs.join(','));if(r2.ok){var d2=await r2.json();if(Array.isArray(d2))bp=d2;}}catch(e2){}}}var r3=await fetch('https://api.dexscreener.com/latest/dex/search?q=solana+trending');var sp=[];if(r3.ok){var d3=await r3.json();sp=d3.pairs||[];}var all=bp.concat(sp);var seen={};var unique=[];all.forEach(function(p){var k=p.pairAddress||(p.baseToken&&p.baseToken.address);if(k&&!seen[k]){seen[k]=1;unique.push(p);}});var per=INF.period;unique.sort(function(a,b){var av=parseFloat((a.priceChange&&a.priceChange[per])?a.priceChange[per]:0);var bv=parseFloat((b.priceChange&&b.priceChange[per])?b.priceChange[per]:0);return bv-av;});grid.innerHTML='';if(!unique.length){grid.innerHTML='<div class="empty-state"><p>No trending data.</p></div>';return;}unique.slice(0,40).forEach(function(p){grid.appendChild(buildCard(p));});}catch(e){grid.innerHTML='<div class="empty-state"><p>Trending error: '+e.message+'</p></div>';}}
 function renderWatchlist(){var grid=document.getElementById('watchlist-grid');var empty=document.getElementById('watchlist-empty');var cnt=document.getElementById('watchlist-count');if(!grid)return;if(cnt)cnt.textContent=INF.watchlist.length+' token'+(INF.watchlist.length!==1?'s':'');if(!INF.watchlist.length){grid.innerHTML='';if(empty)empty.style.display='block';return;}if(empty)empty.style.display='none';grid.innerHTML='';INF.watchlist.forEach(function(w){if(w.pair)grid.appendChild(buildCard(w.pair));});}
 async function loadPortfolio(){var listEl=document.getElementById('portfolio-list');var emptyEl=document.getElementById('portfolio-empty');var totalEl=document.getElementById('port-total');var solEl=document.getElementById('port-sol');var cntEl=document.getElementById('port-count');var pnlEl=document.getElementById('port-pnl');if(!listEl)return;if(!INF.wallet){if(emptyEl)emptyEl.style.display='block';listEl.innerHTML='';return;}if(emptyEl)emptyEl.style.display='none';listEl.innerHTML='<div class="loading">Loading portfolio...</div>';
@@ -987,7 +1292,13 @@ if(INF.agent.running)INF.agent._timer=setTimeout(agentCycle,30000);}
 
 function toggleAgent(){var btn=document.getElementById('agent-start-btn');if(INF.agent.running){INF.agent.running=false;clearTimeout(INF.agent._timer);agentLog('Agent stopped by user','info');if(btn){btn.textContent='▶ Start Agent';btn.className='btn-agent-start';}}else{var mode=document.getElementById('agent-mode')?document.getElementById('agent-mode').value:'simulation';var trigger=document.getElementById('agent-trigger')?document.getElementById('agent-trigger').value:'STRONG BUY';INF.agent.mode=mode;INF.agent.trigger=trigger;if(mode==='live'){if(!INF.wallet){showToast('Connect Phantom wallet first for live trading!','error');return;}var ok=confirm('⚠️ LIVE TRADING — Real SOL will be spent!\n\nWallet: '+formatAddr(INF.wallet)+'\nTrade size: '+(document.getElementById('agent-size')?document.getElementById('agent-size').value:'0.01')+' SOL each\nTrigger: '+trigger+'\n\nConfirm?');if(!ok)return;}INF.agent.running=true;agentLog('Agent started | Mode: '+mode.toUpperCase()+' | Trigger: '+trigger,'info');if(btn){btn.textContent='■ Stop Agent';btn.className='btn-agent-stop';}agentCycle();}updateAgentStats();}
 
-function switchTab(tab){INF.currentTab=tab;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===tab);});document.querySelectorAll('.tab-content').forEach(function(c){c.classList.add('hidden');});var t=document.getElementById('tab-'+tab);if(t)t.classList.remove('hidden');if(tab==='scanner')loadScanner();else if(tab==='trending')loadTrending();else if(tab==='watchlist')renderWatchlist();else if(tab==='portfolio')loadPortfolio();}
+function switchTab(tab){INF.currentTab=tab;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===tab);});document.querySelectorAll('.tab-content').forEach(function(c){c.classList.add('hidden');c.style.display='';});var t=document.getElementById('tab-'+tab);if(t){t.classList.remove('hidden');if(tab==='pumpfun'||tab==='phantom'||tab==='photon')t.style.display='flex';}
+if(tab==='scanner')loadScanner();
+else if(tab==='trending')loadTrending();
+else if(tab==='watchlist')renderWatchlist();
+else if(tab==='portfolio')loadPortfolio();
+else if(tab==='phantom'){updatePhantomTabUI();loadPhantomTokens();}
+else if(tab==='photon'){updatePhotonTabUI();loadPhotonTokens();}}
 
 
 // ===== CLOUD WATCHLIST SYNC =====
@@ -1086,25 +1397,12 @@ function loadApp(user){
 function init(){document.querySelectorAll('.nav-btn').forEach(function(btn){btn.addEventListener('click',function(){switchTab(btn.getAttribute('data-tab'));});});document.querySelectorAll('.period-btn').forEach(function(btn){btn.addEventListener('click',function(){INF.period=btn.getAttribute('data-period');document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');loadTrending();});});['f-chain','f-signal','f-age','f-liq','f-vol','f-mcap'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',loadScanner);});if(window.solana&&window.solana.isPhantom){window.solana.connect({onlyIfTrusted:true}).then(function(r){INF.wallet=r.publicKey.toString();updatePhantomUI();showToast('Phantom connected: '+formatAddr(INF.wallet),'success');loadPortfolio();}).catch(function(){});window.solana.on('disconnect',function(){INF.wallet=null;updatePhantomUI();});window.solana.on('accountChanged',function(pk){INF.wallet=pk?pk.toString():null;updatePhantomUI();if(INF.wallet)loadPortfolio();});}updatePhantomUI();updatePhotonUI();loadScanner();setInterval(function(){if(INF.currentTab==='scanner')loadScanner();},60000);setInterval(function(){if(INF.currentTab==='trending')loadTrending();},60000);}
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded', function(){
-    // Check if already authenticated in this session
-    const storedUser = sessionStorage.getItem('73inc_auth');
-    if(storedUser){
-      INF.currentUser = storedUser;
-      const overlay = document.getElementById('login-overlay');
-      if(overlay) overlay.style.display='none';
-    }
     init();
-    if(storedUser) loadApp(storedUser);
+    loadApp('default');
   });
 }else{
-  const storedUser = sessionStorage.getItem('73inc_auth');
-  if(storedUser){
-    INF.currentUser = storedUser;
-    const overlay = document.getElementById('login-overlay');
-    if(overlay) overlay.style.display='none';
-  }
   init();
-  if(storedUser) loadApp(storedUser);
+  loadApp('default');
 }
 
 
@@ -2057,12 +2355,18 @@ window.pfConnectWallet = async function() {
     }
     // Connect Phantom (which IS the Pump.fun wallet)
     let pubkey;
-    if (provider.isConnected && provider.publicKey) {
-      pubkey = provider.publicKey.toString();
-      pfLog('🔑 Phantom already connected, using existing session', 'info');
-    } else {
-      const resp = await provider.connect();
+    // Always request a fresh connection to handle reconnect after disconnect
+    try {
+      const resp = await provider.connect({onlyIfTrusted: false});
       pubkey = resp.publicKey.toString();
+    } catch(eConn) {
+      // Fallback: if user previously approved, try trusted connect
+      if (provider.isConnected && provider.publicKey) {
+        pubkey = provider.publicKey.toString();
+        pfLog('🔑 Phantom already connected, using existing session', 'info');
+      } else {
+        throw eConn;
+      }
     }
     const [balance, price] = await Promise.all([
       window.pfGetSolBalance(pubkey),
@@ -2126,6 +2430,10 @@ window.pfDisconnectWallet = function() {
   window.pfState.wallet = null;
   window.pfWalletState = { connected: false, pubkey: null, solBalance: null, solPrice: null };
   pfUpdateWalletUI(false, null, null, null);
+  // Also clear main app wallet state so reconnect works cleanly
+  INF.wallet = null;
+  updatePhantomUI();
+  updatePhantomTabUI();
   pfLog('🔌 Wallet disconnected. Switched to simulation mode.', 'info');
 };
 
