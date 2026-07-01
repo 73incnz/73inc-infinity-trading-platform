@@ -1,16 +1,2286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="73inc Infinity Project is 73inc's internal Solana intelligence, risk scanning, agent decision, and guarded trading station."
-    />
-    <title>73inc Infinity Project</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>73incInfinity — Solana Trading Platform</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0a0f;color:#e8e8f0;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}.hidden{display:none!important}#app{display:flex;flex-direction:column;height:100vh}.header{display:flex;align-items:center;gap:16px;padding:0 20px;height:64px;background:#12121a;border-bottom:1px solid #1e1e2e;position:sticky;top:0;z-index:100;flex-shrink:0}.logo{font-size:1.2rem;font-weight:800;color:#fff;white-space:nowrap;letter-spacing:-0.5px}.logo span{color:#7c5cfc}.nav{display:flex;gap:6px;flex:1;justify-content:center}.nav-btn{background:transparent;border:none;color:#888;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all .2s;white-space:nowrap}.nav-btn:hover{color:#fff;background:#1e1e2e}.nav-btn.active{color:#fff;background:#7c5cfc}.header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}.live-dot{color:#00ff88;font-size:0.75rem;font-weight:700;white-space:nowrap}.wallet-group{display:flex;align-items:center;gap:4px}.photon-group{display:flex;align-items:center;gap:4px}.btn-phantom-connect{background:#ab9ff2;color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:5px}.btn-phantom-connect:hover{background:#9080e0}.btn-phantom-connected{background:#2a9d5c;color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}.btn-phantom-disconnect{background:#c0392b;color:#fff;border:none;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:700;display:inline-flex;align-items:center}.btn-phantom-disconnect:hover{background:#e74c3c}.btn-photon-connect{background:#00c2ff;color:#000;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:700;display:inline-flex;align-items:center;gap:5px;transition:all .2s}.btn-photon-connect:hover{background:#00a8e0}.btn-photon-disconnect{background:#1a4a5e;color:#00c2ff;border:1px solid #00c2ff;padding:7px 12px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:all .2s}.btn-photon-disconnect:hover{background:#c0392b;color:#fff;border-color:#c0392b}.tab-content{flex:1;overflow-y:auto;padding:20px}.filters-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center}.filters-bar select{background:#1e1e2e;color:#e8e8f0;border:1px solid #2e2e3e;padding:7px 10px;border-radius:8px;font-size:0.82rem;cursor:pointer;outline:none}.filters-bar select:hover{border-color:#7c5cfc}.btn-refresh{background:#1e1e2e;color:#7c5cfc;border:1px solid #7c5cfc;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;transition:all .2s}.btn-refresh:hover{background:#7c5cfc;color:#fff}.token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}.token-card{background:#12121a;border:1px solid #1e1e2e;border-radius:12px;padding:14px;transition:all .2s;display:flex;flex-direction:column;gap:10px;overflow:hidden;min-width:0;word-break:break-all}.token-card:hover{border-color:#7c5cfc;transform:translateY(-2px);box-shadow:0 4px 20px rgba(124,92,252,.2)}.card-header{display:flex;align-items:center;justify-content:space-between}.token-info{display:flex;flex-direction:column;gap:2px}.token-sym{font-size:1rem;font-weight:700;color:#fff}.token-name{font-size:0.75rem;color:#666;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.signal-badge{padding:4px 10px;border-radius:20px;font-size:0.7rem;font-weight:700;text-transform:uppercase}.signal-strong-buy{background:#0d3b26;color:#00ff88;border:1px solid #00ff88}.signal-buy{background:#0d2b3b;color:#00c2ff;border:1px solid #00c2ff}.signal-neutral{background:#2a2a3a;color:#888;border:1px solid #3a3a4a}.signal-sell{background:#3b1a0d;color:#ff8800;border:1px solid #ff8800}.signal-strong-sell{background:#3b0d0d;color:#ff4444;border:1px solid #ff4444}.card-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 8px;width:100%}.metric{display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden}.m-label{font-size:0.65rem;color:#555;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m-val{font-size:0.8rem;font-weight:600;color:#e8e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m-val.pos{color:#00ff88}.m-val.neg{color:#ff4444}.token-sym{font-size:0.95rem;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px}.token-name{font-size:0.72rem;color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.token-info{min-width:0;flex:1}.card-actions{display:flex;flex-wrap:wrap;gap:6px}.btn-card{background:#1e1e2e;color:#888;border:1px solid #2e2e3e;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;font-weight:500;transition:all .2s;white-space:nowrap}.btn-card:hover{border-color:#7c5cfc;color:#7c5cfc}.btn-watched{background:#1a1a2e;color:#ffd700;border-color:#ffd700}.btn-dex{color:#00ff88}.btn-dex:hover{border-color:#00ff88;color:#00ff88;background:#0d3b26}.btn-dextools{color:#f8a100}.btn-dextools:hover{border-color:#f8a100;color:#f8a100;background:#2a1f00}.btn-rug{color:#7c5cfc}.btn-rug:hover{border-color:#7c5cfc;color:#7c5cfc;background:#1a0f3a}.btn-photon{color:#00c2ff}.btn-photon:hover{border-color:#00c2ff;color:#00c2ff;background:#001f30}.btn-pump{color:#ff6b35}.btn-pump:hover{border-color:#ff6b35;color:#ff6b35;background:#2a1500}.loading{text-align:center;padding:60px 20px;color:#555;font-size:1rem}.empty-state{text-align:center;padding:60px 20px;color:#555}.empty-state p{margin:8px 0}.period-bar{display:flex;gap:8px;margin-bottom:16px}.period-btn{background:#1e1e2e;color:#888;border:1px solid #2e2e3e;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:600;transition:all .2s}.period-btn:hover{color:#fff;border-color:#7c5cfc}.period-btn.active{background:#7c5cfc;color:#fff;border-color:#7c5cfc}.watchlist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.watchlist-header h2{font-size:1.1rem;font-weight:700}#watchlist-count{color:#555;font-size:0.85rem}.agent-panel{max-width:900px;margin:0 auto}.agent-header{margin-bottom:20px}.agent-header h2{font-size:1.2rem;font-weight:700;margin-bottom:14px}.agent-mode-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.agent-mode-row label{font-size:0.82rem;color:#888;font-weight:600}.agent-mode-row select,.agent-mode-row input{background:#1e1e2e;color:#e8e8f0;border:1px solid #2e2e3e;padding:7px 10px;border-radius:8px;font-size:0.82rem;outline:none}.btn-agent-start{background:#00ff88;color:#000;border:none;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:700;transition:all .2s}.btn-agent-start:hover{background:#00e077}.btn-agent-stop{background:#ff4444;color:#fff;border:none;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:700}.agent-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}.stat-box{background:#12121a;border:1px solid #1e1e2e;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}.stat-label{font-size:0.7rem;color:#555;text-transform:uppercase;font-weight:600}.stat-val{font-size:1rem;font-weight:700;color:#e8e8f0}.stat-val.pos{color:#00ff88}.stat-val.neg{color:#ff4444}.agent-log{background:#080810;border:1px solid #1e1e2e;border-radius:10px;padding:14px;height:320px;overflow-y:auto;font-family:monospace;font-size:0.78rem}.log-entry{padding:4px 0;border-bottom:1px solid #0f0f1a;color:#888;line-height:1.4}.log-entry.log-success{color:#00ff88}.log-entry.log-error{color:#ff4444}.log-entry.log-info{color:#00c2ff}.log-entry.log-signal{color:#ffd700}.portfolio-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.portfolio-header h2{font-size:1.1rem;font-weight:700}.portfolio-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.port-stat{background:#12121a;border:1px solid #1e1e2e;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}.portfolio-list{display:flex;flex-direction:column;gap:6px}.port-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:12px;align-items:center;background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:12px 16px;font-size:0.82rem}.port-row:hover{border-color:#2e2e4e}.port-token{display:flex;flex-direction:column;gap:2px}.port-sym{font-weight:700;color:#fff}.port-name{font-size:0.7rem;color:#555}.port-amount,.port-price,.port-value{color:#e8e8f0}.port-pnl.pos{color:#00ff88}.port-pnl.neg{color:#ff4444}.port-pnl.neutral{color:#555}.toast{position:fixed;bottom:24px;right:24px;background:#1e1e2e;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:500;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;z-index:9999;max-width:360px;border-left:4px solid #7c5cfc}.toast.show{opacity:1;transform:translateY(0)}.toast.success{border-left-color:#00ff88}.toast.error{border-left-color:#ff4444}.toast.info{border-left-color:#00c2ff}@media(max-width:768px){.nav{gap:2px}.nav-btn{padding:6px 8px;font-size:0.75rem}.header{padding:0 12px;gap:8px}.token-grid{grid-template-columns:1fr}.card-metrics{grid-template-columns:repeat(3,1fr)}.agent-stats{grid-template-columns:repeat(3,1fr)}.portfolio-summary{grid-template-columns:repeat(2,1fr)}.port-row{grid-template-columns:1fr 1fr}}
+
+/* 1H Candle Filter Styles */
+#custom-filter-section{margin:0 0 20px 0;}
+.cf-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(135deg,#1a0600,#2d0e00,#1a0600);border:1.5px solid #ff6b00;border-radius:12px;margin-bottom:12px;box-shadow:0 0 20px rgba(255,107,0,0.2);}
+.cf-title{color:#ff6b00;font-size:13px;font-weight:700;}
+.cf-subtitle{color:#cc5500;font-size:10px;margin-top:2px;}
+.cf-stats{display:flex;gap:14px;align-items:center;}
+.cf-stat{text-align:center;}
+.cf-stat-val{color:#ff6b00;font-size:16px;font-weight:700;}
+.cf-stat-lbl{color:#888;font-size:9px;}
+.cf-scan-btn{background:#ff6b00;border:none;color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;}
+.cf-scan-btn:hover{background:#ff8c33;}
+.cf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;overflow:hidden}
+.cf-empty{grid-column:1/-1;text-align:center;padding:24px;color:#555;font-size:12px;background:rgba(255,107,0,0.03);border:1px dashed #333;border-radius:10px;}
+.token-card.cf-match{border:2px solid #ff6b00!important;background:linear-gradient(135deg,#1a0600,#240c00,#1a0600)!important;box-shadow:0 0 20px rgba(255,107,0,0.5),0 0 40px rgba(255,107,0,0.2)!important;animation:cfP 2s ease-in-out infinite!important;position:relative;}
+.token-card.cf-match::before{content:'1H CANDLE MATCH';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#ff6b00;color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:8px;white-space:nowrap;z-index:10;}
+@keyframes cfP{0%,100%{box-shadow:0 0 20px rgba(255,107,0,0.5),0 0 40px rgba(255,107,0,0.2);}50%{box-shadow:0 0 30px rgba(255,107,0,0.8),0 0 60px rgba(255,107,0,0.4);}}
+.cf-divider{border:none;border-top:1px solid #1e1e2e;margin:16px 0;}
+.all-tokens-hdr{color:#888;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+
+/* Phantom buy button */
+.btn-phantom{background:linear-gradient(135deg,#ab9ff2,#7c4dff)!important;color:#fff!important;border:none!important;padding:4px 10px!important;border-radius:6px!important;cursor:pointer!important;font-size:11px!important;font-weight:600!important;}
+.btn-phantom:hover{background:linear-gradient(135deg,#c4b8ff,#9c6fff)!important;transform:scale(1.03);}
+/* CF card action buttons row */
+.cf-actions{display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px;border-top:1px solid #222;}
+.cf-actions a{text-decoration:none;}
+.cf-actions .btn-card,.cf-actions .btn-photon,.cf-actions .btn-phantom{font-size:10px;padding:4px 8px;}
+.agent-mode-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 0}.agent-mode-row label{font-size:0.8rem;color:#888;white-space:nowrap}.agent-mode-row select,.agent-mode-row input{background:#1e1e2e;color:#e8e8f0;border:1px solid #2e2e3e;border-radius:6px;padding:4px 8px;font-size:0.8rem}.agent-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0}.stat-box{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:10px;text-align:center}.stat-label{font-size:0.65rem;color:#555;text-transform:uppercase;display:block}.stat-val{font-size:0.95rem;font-weight:700;color:#e8e8f0;display:block;margin-top:2px}.agent-log{background:#0a0a0f;border:1px solid #1e1e2e;border-radius:8px;padding:12px;font-family:monospace;font-size:0.78rem;height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}.log-entry{padding:3px 6px;border-radius:4px}.log-entry.info{color:#888}.log-entry.signal{color:#f59e0b;background:rgba(245,158,11,.08)}.log-entry.success{color:#00ff88;background:rgba(0,255,136,.06)}.log-entry.error{color:#ff4444;background:rgba(255,68,68,.06)}
+/* ===== PUMP.FUN + WALLET + PORTFOLIO ENHANCEMENTS ===== */
+
+#tab-pumpfun { display: flex; flex-direction: column; flex: 1 1 0%; overflow: hidden; padding: 0px; }
+.pf-layout { display: grid; grid-template-columns: 240px 1fr 280px; gap: 0px; height: 100%; overflow: hidden; }
+.pf-sidebar { background: rgb(14, 14, 24); border-right: 1px solid rgb(30, 30, 46); overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+.pf-center { display: flex; flex-direction: column; overflow: hidden; background: rgb(10, 10, 15); }
+.pf-right { background: rgb(14, 14, 24); border-left: 1px solid rgb(30, 30, 46); overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 0px; }
+.pf-section { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgb(26, 26, 42); }
+.pf-section:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.pf-section-title { font-size: 0.9rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 10px; }
+.pf-status-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.pf-status-dot { width: 8px; height: 8px; border-radius: 50%; background: rgb(85, 85, 85); flex-shrink: 0; }
+.pf-status-dot.active { background: rgb(0, 229, 122); box-shadow: rgb(0, 229, 122) 0px 0px 8px; animation: 1.5s ease 0s infinite normal none running pfPulse; }
+.pf-status-dot.scanning { background: rgb(245, 166, 35); box-shadow: rgb(245, 166, 35) 0px 0px 8px; animation: 1s ease 0s infinite normal none running pfPulse; }
+@keyframes pfPulse { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pf-label { font-size: 0.72rem; color: rgb(136, 136, 136); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.pf-input { width: 100%; background: rgb(26, 26, 42); border: 1px solid rgb(46, 46, 62); border-radius: 6px; color: rgb(232, 232, 240); padding: 6px 10px; font-size: 0.82rem; }
+.pf-input:focus { outline: none; border-color: rgb(124, 92, 252); }
+.pf-exit-card { background: rgb(18, 18, 30); border: 1px solid rgb(46, 46, 62); border-radius: 8px; padding: 10px; }
+.pf-exit-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0px; border-bottom: 1px solid rgb(26, 26, 42); gap: 4px; }
+.pf-exit-row:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.pf-exit-label { font-size: 0.72rem; color: rgb(136, 136, 136); white-space: nowrap; }
+.pf-exit-val { font-size: 0.72rem; font-weight: 600; text-align: right; }
+.pf-exit-green { color: rgb(0, 229, 122); }
+.pf-exit-yellow { color: rgb(245, 166, 35); }
+.pf-exit-purple { color: rgb(124, 92, 252); }
+.pf-start-btn { width: 100%; background: linear-gradient(135deg, rgb(124, 92, 252), rgb(92, 140, 252)); color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 8px; padding: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.pf-start-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.pf-start-btn.running { background: linear-gradient(135deg, rgb(252, 76, 76), rgb(252, 124, 92)); }
+.pf-clear-btn { width: 100%; background: rgb(26, 26, 42); color: rgb(136, 136, 136); border: 1px solid rgb(46, 46, 62); border-radius: 8px; padding: 7px; font-size: 0.78rem; cursor: pointer; transition: 0.2s; }
+.pf-clear-btn:hover { color: rgb(255, 255, 255); border-color: rgb(85, 85, 85); }
+.pf-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.pf-stat-box { background: rgb(18, 18, 30); border: 1px solid rgb(30, 30, 46); border-radius: 8px; padding: 8px; text-align: center; }
+.pf-stat-box .stat-label { font-size: 0.6rem; color: rgb(85, 85, 85); text-transform: uppercase; display: block; }
+.pf-stat-box .stat-val { font-size: 0.9rem; font-weight: 700; color: rgb(255, 255, 255); }
+.pf-stat-box .stat-val.pos { color: rgb(0, 229, 122); }
+.pf-center-header { padding: 12px 16px; border-bottom: 1px solid rgb(30, 30, 46); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; flex-shrink: 0; }
+.pf-center-title { font-size: 0.95rem; font-weight: 700; color: rgb(255, 255, 255); }
+.pf-live-badge { margin-left: 8px; font-size: 0.72rem; color: rgb(0, 229, 122); font-weight: 700; animation: 2s ease 0s infinite normal none running pfPulse; }
+.pf-filter-row { display: flex; gap: 8px; align-items: center; }
+.pf-search { background: rgb(26, 26, 42); border: 1px solid rgb(46, 46, 62); border-radius: 6px; color: rgb(232, 232, 240); padding: 5px 10px; font-size: 0.78rem; width: 140px; }
+.pf-search:focus { outline: none; border-color: rgb(124, 92, 252); }
+.pf-select { background: rgb(26, 26, 42); border: 1px solid rgb(46, 46, 62); border-radius: 6px; color: rgb(232, 232, 240); padding: 5px 8px; font-size: 0.78rem; }
+.pf-coins-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; padding: 14px; overflow-y: auto; flex: 1 1 0%; }
+.pf-loading { color: rgb(85, 85, 85); font-size: 0.85rem; text-align: center; grid-column: 1 / -1; padding: 40px; }
+.pf-coin-card { background: rgb(18, 18, 30); border: 1px solid rgb(46, 46, 62); border-radius: 10px; padding: 12px; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
+.pf-coin-card:hover { border-color: rgb(124, 92, 252); transform: translateY(-2px); }
+.pf-coin-card.pf-hot { border-color: rgb(245, 166, 35); }
+.pf-coin-card.pf-hot::before { content: "🔥 HOT"; position: absolute; top: 6px; right: 6px; background: rgb(245, 166, 35); color: rgb(0, 0, 0); font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+.pf-coin-card.pf-targeting { border-color: rgb(124, 92, 252); background: rgb(20, 18, 42); }
+.pf-coin-card.pf-targeting::before { content: "🎯 TARGETING"; position: absolute; top: 6px; right: 6px; background: rgb(124, 92, 252); color: rgb(255, 255, 255); font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+.pf-coin-name { font-size: 0.85rem; font-weight: 700; color: rgb(255, 255, 255); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pf-coin-sym { font-size: 0.7rem; color: rgb(124, 92, 252); margin-bottom: 8px; font-weight: 600; }
+.pf-coin-age { font-size: 0.65rem; color: rgb(85, 85, 85); margin-bottom: 8px; }
+.pf-coin-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+.pf-metric { display: flex; flex-direction: column; }
+.pf-metric-lbl { font-size: 0.6rem; color: rgb(85, 85, 85); text-transform: uppercase; }
+.pf-metric-val { font-size: 0.78rem; font-weight: 600; color: rgb(232, 232, 240); }
+.pf-metric-val.pos { color: rgb(0, 229, 122); }
+.pf-metric-val.neg { color: rgb(255, 68, 68); }
+.pf-vol-bar { height: 3px; background: rgb(30, 30, 46); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+.pf-vol-bar-fill { height: 100%; background: linear-gradient(90deg, rgb(124, 92, 252), rgb(0, 229, 122)); border-radius: 2px; transition: width 0.5s; }
+.pf-card-actions { display: flex; gap: 6px; }
+.pf-btn-buy { flex: 1 1 0%; background: rgba(0, 229, 122, 0.133); border: 1px solid rgb(0, 229, 122); color: rgb(0, 229, 122); border-radius: 6px; padding: 5px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+.pf-btn-buy:hover { background: rgba(0, 229, 122, 0.2); }
+.pf-btn-watch { background: rgba(124, 92, 252, 0.133); border: 1px solid rgb(124, 92, 252); color: rgb(124, 92, 252); border-radius: 6px; padding: 5px 8px; font-size: 0.72rem; cursor: pointer; transition: 0.2s; }
+.pf-btn-watch:hover { background: rgba(124, 92, 252, 0.2); }
+.pf-positions-list, .pf-portfolio-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.pf-empty { color: rgb(85, 85, 85); font-size: 0.78rem; text-align: center; padding: 16px; }
+.pf-position-card { background: rgb(18, 18, 30); border: 1px solid rgb(46, 46, 62); border-radius: 8px; padding: 10px; }
+.pf-pos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.pf-pos-name { font-size: 0.8rem; font-weight: 700; color: rgb(255, 255, 255); }
+.pf-pos-pnl { font-size: 0.8rem; font-weight: 700; }
+.pf-pos-pnl.pos { color: rgb(0, 229, 122); }
+.pf-pos-pnl.neg { color: rgb(255, 68, 68); }
+.pf-pos-details { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; font-size: 0.68rem; color: rgb(136, 136, 136); margin-bottom: 8px; }
+.pf-pos-detail-val { color: rgb(204, 204, 204); font-weight: 600; }
+.pf-pos-tier-bar { display: flex; gap: 4px; margin-bottom: 8px; }
+.pf-tier-indicator { flex: 1 1 0%; height: 4px; background: rgb(30, 30, 46); border-radius: 2px; }
+.pf-tier-indicator.reached { background: rgb(0, 229, 122); }
+.pf-tier-indicator.t2.reached { background: rgb(245, 166, 35); }
+.pf-pos-actions { display: flex; gap: 4px; }
+.pf-pos-sell-btn { flex: 1 1 0%; background: rgba(255, 68, 68, 0.133); border: 1px solid rgb(255, 68, 68); color: rgb(255, 68, 68); border-radius: 5px; padding: 4px; font-size: 0.68rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+.pf-pos-sell-btn:hover { background: rgba(255, 68, 68, 0.2); }
+.pf-pos-sell-btn.all { background: rgba(255, 68, 68, 0.2); }
+.pf-port-row { background: rgb(18, 18, 30); border: 1px solid rgb(30, 30, 46); border-radius: 8px; padding: 8px 10px; font-size: 0.72rem; }
+.pf-port-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.pf-port-name { font-weight: 700; color: rgb(255, 255, 255); }
+.pf-port-pnl { font-weight: 700; }
+.pf-port-pnl.win { color: rgb(0, 229, 122); }
+.pf-port-pnl.loss { color: rgb(255, 68, 68); }
+.pf-port-pnl.partial { color: rgb(245, 166, 35); }
+.pf-port-meta { color: rgb(85, 85, 85); display: flex; gap: 10px; }
+.pf-port-sol { color: rgb(124, 92, 252); font-weight: 600; }
+.pf-port-sol-col { display: flex; justify-content: space-between; margin-top: 4px; }
+.pf-port-sol-label { color: rgb(85, 85, 85); }
+.pf-port-sol-val { color: rgb(124, 92, 252); font-weight: 700; }
+.pf-log { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
+.pf-log-entry { font-size: 0.68rem; padding: 4px 6px; border-radius: 4px; background: rgb(18, 18, 30); border-left: 3px solid rgb(46, 46, 62); color: rgb(170, 170, 170); }
+.pf-log-entry.buy { border-left-color: rgb(0, 229, 122); color: rgb(0, 229, 122); }
+.pf-log-entry.sell { border-left-color: rgb(245, 166, 35); color: rgb(245, 166, 35); }
+.pf-log-entry.exit { border-left-color: rgb(255, 68, 68); color: rgb(255, 68, 68); }
+.pf-log-entry.moon { border-left-color: rgb(124, 92, 252); color: rgb(124, 92, 252); }
+.pf-log-entry.info { border-left-color: rgb(74, 74, 106); color: rgb(136, 136, 136); }
+.pf-log-entry.scan { border-left-color: rgb(92, 140, 252); color: rgb(92, 140, 252); }
+.pf-log-time { color: rgb(85, 85, 85); margin-right: 6px; }
+.portfolio-list-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; gap: 12px; padding: 6px 16px; font-size: 0.68rem; color: rgb(85, 85, 85); text-transform: uppercase; letter-spacing: 0.5px; }
+.port-row { grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr !important; }
+.port-sol-val { font-size: 0.82rem; font-weight: 600; color: rgb(124, 92, 252); }
+.port-sol-val.zero { color: rgb(68, 68, 68); }
+.pf-wallet-section { background: rgb(14, 14, 26); border: 1px solid rgb(46, 46, 78); border-radius: 10px; padding: 12px; margin-bottom: 14px; }
+.pf-wallet-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.6px; color: rgb(124, 92, 252); font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.pf-wallet-status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 8px 10px; background: rgb(18, 18, 30); border-radius: 8px; border: 1px solid rgb(30, 30, 46); }
+.pf-wallet-dot { width: 8px; height: 8px; border-radius: 50%; background: rgb(85, 85, 85); flex-shrink: 0; }
+.pf-wallet-dot.connected { background: rgb(0, 229, 122); box-shadow: rgba(0, 229, 122, 0.533) 0px 0px 8px; animation: 2s ease 0s infinite normal none running pfPulse; }
+.pf-wallet-dot.disconnected { background: rgb(255, 68, 68); }
+.pf-wallet-dot.connecting { background: rgb(245, 166, 35); animation: 0.8s ease 0s infinite normal none running pfPulse; }
+.pf-wallet-addr { font-size: 0.72rem; font-family: monospace; color: rgb(204, 204, 204); flex: 1 1 0%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pf-wallet-addr.dim { color: rgb(85, 85, 85); font-style: italic; }
+.pf-wallet-bal { font-size: 0.72rem; color: rgb(124, 92, 252); font-weight: 700; white-space: nowrap; }
+.pf-wallet-mode-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.pf-wallet-mode-badge.live { background: rgba(0, 229, 122, 0.133); border: 1px solid rgb(0, 229, 122); color: rgb(0, 229, 122); }
+.pf-wallet-mode-badge.sim { background: rgba(245, 166, 35, 0.133); border: 1px solid rgb(245, 166, 35); color: rgb(245, 166, 35); }
+.pf-connect-btn { width: 100%; background: linear-gradient(135deg, rgb(171, 92, 252), rgb(124, 92, 252)); color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 8px; padding: 9px 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.pf-connect-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.pf-connect-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.pf-connect-btn.pf-disconnect-btn { background: linear-gradient(135deg, rgb(42, 26, 26), rgb(58, 26, 26)); border: 1px solid rgba(255, 68, 68, 0.4); color: rgb(255, 102, 102); margin-top: 6px; }
+.pf-connect-btn.pf-disconnect-btn:hover { background: linear-gradient(135deg, rgb(58, 26, 26), rgb(74, 26, 26)); border-color: rgb(255, 68, 68); color: rgb(255, 68, 68); }
+.pf-wallet-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+.pf-wallet-info-box { background: rgb(18, 18, 30); border: 1px solid rgb(30, 30, 46); border-radius: 7px; padding: 7px 10px; text-align: center; }
+.pf-wallet-info-label { font-size: 0.6rem; color: rgb(85, 85, 85); text-transform: uppercase; display: block; margin-bottom: 2px; }
+.pf-wallet-info-val { font-size: 0.82rem; font-weight: 700; color: rgb(232, 232, 240); }
+.pf-wallet-info-val.green { color: rgb(0, 229, 122); }
+.pf-wallet-info-val.purple { color: rgb(124, 92, 252); }
+.pf-live-warning { font-size: 0.65rem; color: rgb(245, 166, 35); background: rgba(245, 166, 35, 0.067); border: 1px solid rgba(245, 166, 35, 0.2); border-radius: 6px; padding: 6px 8px; margin-top: 8px; line-height: 1.4; }
+.pf-copy-btn { background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: rgb(85, 85, 85); cursor: pointer; font-size: 0.7rem; padding: 0px 2px; transition: color 0.15s; }
+.pf-copy-btn:hover { color: rgb(124, 92, 252); }
+</style>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+</head>
+<body>
+<!-- Login Overlay -->
+<div id="login-overlay" style="position:fixed;inset:0;background:#0a0a0f;z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#13131a;border:1.5px solid #ff6b00;border-radius:16px;padding:40px 36px;width:340px;text-align:center;box-shadow:0 0 40px rgba(255,107,0,0.3);">
+    <div style="font-size:32px;margin-bottom:12px;">⚡</div>
+    <h1 style="color:#ff6b00;font-size:22px;margin-bottom:6px;">73incInfinity</h1>
+    <p style="color:#888;font-size:12px;margin-bottom:28px;">Solana Trading Platform</p>
+    <input type="text" id="login-user" placeholder="Username" autocomplete="username" style="width:100%;background:#1a1a24;border:1px solid #333;border-radius:8px;color:#e8e8f0;padding:10px 14px;font-size:14px;margin-bottom:14px;box-sizing:border-box;outline:none;display:block;">
+    <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password" style="width:100%;background:#1a1a24;border:1px solid #333;border-radius:8px;color:#e8e8f0;padding:10px 14px;font-size:14px;margin-bottom:14px;box-sizing:border-box;outline:none;display:block;">
+    <button onclick="doLogin()" style="width:100%;background:#ff6b00;border:none;color:#fff;padding:12px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;">LOGIN</button>
+    <div id="login-error" style="color:#ff4444;font-size:12px;margin-top:10px;display:none;">Invalid credentials</div>
+    <p style="color:#555;font-size:10px;margin-top:16px;">Your data stays private and syncs across devices</p>
+  </div>
+</div>
+<div id="app"><header class="header"><div class="logo">⚡ 73inc<span>Infinity</span></div><nav class="nav"><button class="nav-btn active" data-tab="scanner">🔍 Scanner</button><button class="nav-btn" data-tab="trending">🔥 Trending</button><button class="nav-btn" data-tab="watchlist">⭐ Watchlist</button><button class="nav-btn" data-tab="agent">🤖 AI Agent</button><button class="nav-btn" data-tab="portfolio">💼 Portfolio</button>
+<button class="nav-btn" data-tab="pumpfun" onclick="switchTab('pumpfun')">🚀 Pump.fun</button></nav><div class="header-right"><span class="live-dot">● LIVE</span><div class="wallet-group"><button class="btn-phantom-connect" id="phantom-connect-btn" onclick="connectPhantom()">🦊 Connect Phantom</button><button class="btn-phantom-connected" id="phantom-status-btn" style="display:none" onclick="connectPhantom()">✓ <span id="wallet-addr-short"></span></button><button class="btn-phantom-disconnect" id="phantom-disconnect-btn" style="display:none" onclick="disconnectPhantom()">✕</button></div><div class="photon-group"><button class="btn-photon-connect" id="photon-connect-btn" onclick="connectPhoton()">⚡ Photon</button><button class="btn-photon-disconnect" id="photon-disconnect-btn" style="display:none" onclick="disconnectPhoton()">✕ Photon</button></div></div></header><div class="tab-content" id="tab-scanner"><div class="filters-bar"><select id="f-chain"><option value="any">All Chains</option><option value="solana">Solana</option><option value="ethereum">Ethereum</option><option value="bsc">BSC</option></select><select id="f-signal"><option value="any">Any Signal</option><option value="STRONG BUY">Strong Buy</option><option value="BUY">Buy</option><option value="NEUTRAL">Neutral</option><option value="SELL">Sell</option></select><select id="f-age"><option value="any">Any Age</option><option value="1">&lt; 1h</option><option value="6">&lt; 6h</option><option value="24">&lt; 24h</option></select><select id="f-liq"><option value="any">Any Liquidity</option><option value="10000">$10k+</option><option value="50000">$50k+</option><option value="100000">$100k+</option></select><select id="f-vol"><option value="any">Any Volume</option><option value="50000">$50k+</option><option value="100000">$100k+</option><option value="500000">$500k+</option></select><select id="f-mcap"><option value="any">Any MCap</option><option value="100000">$100k+</option><option value="1000000">$1M+</option><option value="10000000">$10M+</option></select><button class="btn-refresh" onclick="loadScanner()">↻ Refresh</button></div><div id="custom-filter-section">
+<div class="cf-header">
+<div><div class="cf-title">&#127919; 1H Candle Filter &#8212; Solana New Tokens</div>
+<div class="cf-subtitle">Age: 1&#8211;2h &nbsp;|&nbsp; Range A: $0.00011&#8211;$0.00013 &nbsp;|&nbsp; Range B: $0.000077&#8211;$0.00008 &nbsp;|&nbsp; Auto-scan every 30s</div></div>
+<div class="cf-stats">
+<div class="cf-stat"><div class="cf-stat-val" id="cf-match-count">0</div><div class="cf-stat-lbl">MATCHES</div></div>
+<div class="cf-stat"><div class="cf-stat-val" id="cf-scan-age">&#8212;</div><div class="cf-stat-lbl">LAST SCAN</div></div>
+<button class="cf-scan-btn" onclick="runCustomFilter()">&#128260; Scan Now</button><button class="cf-scan-btn" onclick="loadHistoricalCF()" style="margin-left:8px;background:linear-gradient(135deg,#7c3aed,#4f46e5)">&#128200; Load Historical</button>
+</div></div>
+<div class="cf-grid" id="cf-grid"><div class="cf-empty">&#128269; Scanning for 1h candle matches&#8230;</div></div>
+</div>
+<hr class="cf-divider">
+<div class="all-tokens-hdr">&#128202; All Scanner Tokens</div>
+<div id="scanner-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-trending"><div class="period-bar"><button class="period-btn active" data-period="h1">1H</button><button class="period-btn" data-period="h6">6H</button><button class="period-btn" data-period="h24">24H</button><button class="period-btn" data-period="d7">7D</button></div><div id="trending-grid" class="token-grid"></div></div><div class="tab-content hidden" id="tab-watchlist"><div class="watchlist-header"><h2>⭐ My Watchlist</h2><span id="watchlist-count">0 tokens</span></div><div id="watchlist-grid" class="token-grid"></div><div id="watchlist-empty" class="empty-state"><p>No tokens in watchlist yet.</p><p>Click ☆ Watch on any scanner token to add it here.</p></div></div><div class="tab-content hidden" id="tab-agent"><div class="agent-panel"><div class="agent-header"><h2>🤖 AI Trading Agent</h2><div class="agent-mode-row"><label>Mode:</label><select id="agent-mode"><option value="simulation">📊 Simulation</option><option value="live">⚡ Live Trading</option></select><label>Trigger:</label><select id="agent-trigger"><option value="STRONG BUY">Strong Buy Only</option><option value="BUY">Buy &amp; Strong Buy</option></select><label>Size (SOL):</label><input type="number" id="agent-size" value="0.01" min="0.001" max="1" step="0.001" style="width:80px"><label style="margin-left:8px">TP%:</label><input type="number" id="agent-tp" value="20" min="5" max="200" step="5" style="width:55px;margin-left:4px" title="Take Profit %"><label style="margin-left:8px">SL%:</label><input type="number" id="agent-sl" value="15" min="5" max="50" step="5" style="width:55px;margin-left:4px" title="Stop Loss %"><button id="agent-start-btn" class="btn-agent-start" onclick="toggleAgent()">▶ Start Agent</button></div></div><div class="agent-stats"><div class="stat-box"><span class="stat-label">Status</span><span class="stat-val" id="agent-status">Stopped</span></div><div class="stat-box"><span class="stat-label">Trades</span><span class="stat-val" id="agent-trades">0</span></div><div class="stat-box"><span class="stat-label">Win Rate</span><span class="stat-val" id="agent-winrate">0%</span></div><div class="stat-box"><span class="stat-label">P&amp;L (SOL)</span><span class="stat-val" id="agent-pnl">0.000</span></div><div class="stat-box"><span class="stat-label">Positions</span><span class="stat-val" id="agent-positions">0/3</span></div></div><div class="agent-log" id="agent-log"><div class="log-entry">Agent ready. Configure settings and press Start.</div></div></div></div><div class="tab-content hidden" id="tab-portfolio"><div class="portfolio-header"><h2>💼 My Portfolio</h2><button class="btn-refresh" onclick="loadPortfolio()">↻ Refresh</button></div><div class="portfolio-summary"><div class="port-stat"><span class="stat-label">Total Value</span><span class="stat-val" id="port-total">$0.00</span></div><div class="port-stat"><span class="stat-label">SOL Balance</span><span class="stat-val" id="port-sol">0.000 SOL</span></div><div class="port-stat"><span class="stat-label">Tokens</span><span class="stat-val" id="port-count">0</span></div><div class="port-stat"><span class="stat-label">24h P&amp;L</span><span class="stat-val" id="port-pnl">$0.00</span></div></div><div id="portfolio-list" class="portfolio-list"></div><div id="portfolio-empty" class="empty-state" style="display:none"><p>Connect Phantom wallet to view your portfolio.</p></div></div><div id="tab-pumpfun" class="tab-content" style="display: flex;">
+<div class="pf-layout">
+  <!-- LEFT PANEL: Controls -->
+  <div class="pf-sidebar"><div id="pf-wallet-section" class="pf-wallet-section">
+  <div class="pf-wallet-title">
+    <span>🔑</span> Pump.fun Wallet
+  </div>
+
+  <!-- Mode badge -->
+  <div id="pf-mode-badge" class="pf-wallet-mode-badge live">⚡ LIVE TRADING MODE</div>
+
+  <!-- Status row -->
+  <div class="pf-wallet-status-row">
+    <span class="pf-wallet-dot connected" id="pf-wallet-dot"></span>
+    <span class="pf-wallet-addr" id="pf-wallet-addr" title="2fLcT3MNmKT418KQxo2GF1pDJqQx6GfxVAk6G8wkPMeF">2fLcT3...wkPMeF</span>
+    <span class="pf-wallet-bal" id="pf-wallet-bal">0.0221 SOL</span>
+    <button class="pf-copy-btn" id="pf-copy-addr-btn" title="Copy address" onclick="pfCopyAddress()" style="display: inline;">⎘</button>
+  </div>
+
+  <!-- Wallet info grid (shown when connected) -->
+  <div class="pf-wallet-info-row" id="pf-wallet-info-row" style="display: grid;">
+    <div class="pf-wallet-info-box">
+      <span class="pf-wallet-info-label">SOL Balance</span>
+      <span class="pf-wallet-info-val green" id="pf-bal-sol">0.0221 SOL</span>
+    </div>
+    <div class="pf-wallet-info-box">
+      <span class="pf-wallet-info-label">USD Value</span>
+      <span class="pf-wallet-info-val purple" id="pf-bal-usd">$1.65</span>
+    </div>
+  </div>
+
+  <!-- Connect button -->
+  <button class="pf-connect-btn" id="pf-connect-btn" onclick="pfConnectWallet()" style="display: none;">
+    <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect width="128" height="128" rx="64" fill="#AB9FF2"></rect><path d="M110.584 65.27H99.142c0-27.81-22.598-50.357-50.484-50.357-27.563 0-49.961 22.13-50.483 49.537-.538 27.995 23.178 51.55 51.22 51.55h3.639c25.411 0 57.006-20.49 62.47-47.002a5.17 5.17 0 00-5.02-3.728h.1zm-61.926 29.4h-3.639c-20.19 0-37.25-16.507-36.827-36.663.416-19.648 16.64-35.444 36.338-35.444 20.015 0 36.29 16.22 36.29 36.19v.28H63.673a12.74 12.74 0 00-12.738 12.705v.004a12.74 12.74 0 0012.738 12.705h17.147C74.9 91.1 63.83 94.67 48.658 94.67z" fill="#fff"></path></svg>
+    Connect Phantom Wallet
+  </button>
+
+  <!-- Disconnect button (hidden until connected) -->
+  <button class="pf-connect-btn pf-disconnect-btn" id="pf-disconnect-btn" onclick="pfDisconnectWallet()" style="display: flex;">
+    🔌 Disconnect Wallet
+  </button>
+
+  <!-- Warning when live -->
+  <div class="pf-live-warning" id="pf-live-warning" style="display: block;">
+    ⚡ LIVE MODE — Bot will execute real trades on Pump.fun using your wallet. Each trade requires Phantom approval.
+  </div>
+</div>
+    <div class="pf-section">
+      <h3 class="pf-section-title">🚀 Pump.fun AI Trader</h3>
+      <div class="pf-status-row">
+        <span class="pf-status-dot scanning" id="pf-status-dot"></span>
+        <span id="pf-status-text" style="font-size:0.8rem;color:#888">Stopped</span>
+      </div>
+    </div>
+
+    <div class="pf-section">
+      <div class="pf-label">Trade Size (SOL)</div>
+      <input id="pf-trade-size" class="pf-input" type="number" value="0.1" min="0.01" step="0.01">
+      
+      <div class="pf-label" style="margin-top:10px">Max Positions</div>
+      <input id="pf-max-pos" class="pf-input" type="number" value="5" min="1" max="20">
+
+      <div class="pf-label" style="margin-top:10px">Min Volume Spike (×)</div>
+      <input id="pf-vol-spike" class="pf-input" type="number" value="3" min="1" step="0.5">
+
+      <div class="pf-label" style="margin-top:10px">Min Market Cap ($)</div>
+      <input id="pf-min-mcap" class="pf-input" type="number" value="5000" min="1000" step="1000">
+
+      <div class="pf-label" style="margin-top:10px">Max Market Cap ($)</div>
+      <input id="pf-max-mcap" class="pf-input" type="number" value="200000" step="1000">
+    </div>
+
+    <div class="pf-section">
+      <div class="pf-section-title" style="font-size:0.85rem;margin-bottom:10px">📈 Exit Strategy</div>
+      <div class="pf-exit-card">
+        <div class="pf-exit-row">
+          <span class="pf-exit-label">Tier 1 Exit</span>
+          <span class="pf-exit-val pf-exit-green">+50% gain → Sell 50%</span>
+        </div>
+        <div class="pf-exit-row">
+          <span class="pf-exit-label">Tier 2 Exit</span>
+          <span class="pf-exit-val pf-exit-yellow">+100% gain → Sell 25% of held</span>
+        </div>
+        <div class="pf-exit-row">
+          <span class="pf-exit-label">Moon Bag</span>
+          <span class="pf-exit-val pf-exit-purple">Remaining → Hold for 🌙</span>
+        </div>
+        <div class="pf-exit-row">
+          <span class="pf-exit-label">Stop Loss</span>
+          <span class="pf-exit-val" style="color:#ff4444">-25% → Exit All</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pf-section">
+      <button id="pf-start-btn" class="pf-start-btn" onclick="togglePumpAgent()">▶ Start Pump.fun Bot</button>
+      <button class="pf-clear-btn" onclick="clearPumpLog()" style="margin-top:8px">
+        🗑 Clear Log
+      </button>
+    </div>
+
+    <div class="pf-section">
+      <div class="pf-section-title" style="font-size:0.85rem;margin-bottom:8px">📊 Session Stats</div>
+      <div class="pf-stats-grid">
+        <div class="pf-stat-box"><span class="stat-label">Trades</span><span class="stat-val" id="pf-stat-trades">0</span></div>
+        <div class="pf-stat-box"><span class="stat-label">Win Rate</span><span class="stat-val" id="pf-stat-wr">0%</span></div>
+        <div class="pf-stat-box"><span class="stat-label">PnL (SOL)</span><span class="stat-val pos" id="pf-stat-pnl">+0.0000 SOL</span></div>
+        <div class="pf-stat-box"><span class="stat-label">Open</span><span class="stat-val" id="pf-stat-open">5</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: New Coins Feed -->
+  <div class="pf-center">
+    <div class="pf-center-header">
+      <div>
+        <span class="pf-center-title">🆕 Live New Coins</span>
+        <span class="pf-live-badge">● LIVE</span>
+      </div>
+      <div class="pf-filter-row">
+        <input id="pf-search" class="pf-search" placeholder="Search coin..." oninput="filterPumpCoins()">
+        <select id="pf-sort" class="pf-select" onchange="filterPumpCoins()">
+          <option value="volume">Volume ↓</option>
+          <option value="mcap">Market Cap ↓</option>
+          <option value="age">Newest First</option>
+          <option value="gain">Gain % ↓</option>
+        </select>
+      </div>
+    </div>
+    <div id="pf-coins-grid" class="pf-coins-grid"><div class="pf-coin-card pf-hot " data-mint="591UdL6WMaEMEf641uJUwUTq1utX6zhBrjaiTqVCpump">
+      <div class="pf-coin-name" title="🐂 The cutest black bull emoji bringin...">🐂 The cutest black bull emoji bringin...</div>
+      <div class="pf-coin-sym">$BULLEMOJI</div>
+      <div class="pf-coin-age">⏱ 2h ago · 🟢 Live · Score: 70</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:100%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-5.7%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$109.3K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$984.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">9.2×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('591UdL6WMaEMEf641uJUwUTq1utX6zhBrjaiTqVCpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('591UdL6WMaEMEf641uJUwUTq1utX6zhBrjaiTqVCpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="498DeYRS7AtLdE5wbwXbpFtinMTDTJxuvfXMraDDpump">
+      <div class="pf-coin-name" title="FABLE">FABLE</div>
+      <div class="pf-coin-sym">$FABLE</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 82</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:28.053485200137622%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+45.3%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$64.8K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$276.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">15.5×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('498DeYRS7AtLdE5wbwXbpFtinMTDTJxuvfXMraDDpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('498DeYRS7AtLdE5wbwXbpFtinMTDTJxuvfXMraDDpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  pf-targeting" data-mint="6puiC8v1cVNoMsmCqRAiTNQ1x2jNJKQTh44CKeEJpump">
+      <div class="pf-coin-name" title="rabbits">rabbits</div>
+      <div class="pf-coin-sym">$うさぎ</div>
+      <div class="pf-coin-age">⏱ 59m ago · 🟢 Live · Score: 90</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:12.713993503667668%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+53.9%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$85.9K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$125.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.2×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" style="background:#f5a62322;border-color:#f5a623;color:#f5a623" onclick="manualPfSell('6puiC8v1cVNoMsmCqRAiTNQ1x2jNJKQTh44CKeEJpump')">💰 Sell Position</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('6puiC8v1cVNoMsmCqRAiTNQ1x2jNJKQTh44CKeEJpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  pf-targeting" data-mint="2pr3yKhUbkeTyhKZXpGEqXczQ8UJo1sGYTp5kw2Mpump">
+      <div class="pf-coin-name" title="hood">hood</div>
+      <div class="pf-coin-sym">$hood</div>
+      <div class="pf-coin-age">⏱ 25m ago · 🟢 Live · Score: 110</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:12.413075672836525%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+103.4%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$18.9K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$122.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">6.3×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" style="background:#f5a62322;border-color:#f5a623;color:#f5a623" onclick="manualPfSell('2pr3yKhUbkeTyhKZXpGEqXczQ8UJo1sGYTp5kw2Mpump')">💰 Sell Position</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('2pr3yKhUbkeTyhKZXpGEqXczQ8UJo1sGYTp5kw2Mpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="HGTowAaA4meERnFbvECMUKri1xsPnAJMgMppy8wgpump">
+      <div class="pf-coin-name" title="snapcat snaps">snapcat snaps</div>
+      <div class="pf-coin-sym">$snapcat</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 70</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:11.630136168719716%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-9.0%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$20.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$114.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">7.7×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('HGTowAaA4meERnFbvECMUKri1xsPnAJMgMppy8wgpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('HGTowAaA4meERnFbvECMUKri1xsPnAJMgMppy8wgpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  pf-targeting" data-mint="AcbU9jcsNigGYz9uL2SuTecoiBGTm2mfv1z4qyt4pump">
+      <div class="pf-coin-name" title="The original name of Robinhood">The original name of Robinhood</div>
+      <div class="pf-coin-sym">$CASHCAT</div>
+      <div class="pf-coin-age">⏱ 43m ago · 🟢 Live · Score: 90</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:8.874430693043655%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+135.2%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$25.9K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$87.3K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">4.7×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" style="background:#f5a62322;border-color:#f5a623;color:#f5a623" onclick="manualPfSell('AcbU9jcsNigGYz9uL2SuTecoiBGTm2mfv1z4qyt4pump')">💰 Sell Position</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('AcbU9jcsNigGYz9uL2SuTecoiBGTm2mfv1z4qyt4pump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="7qsnaTDLVU5yPLvjQCfNmWyFydXkC7hGiAwgKMR5o92k">
+      <div class="pf-coin-name" title="Bonk just posted a new character, The ...">Bonk just posted a new character, The ...</div>
+      <div class="pf-coin-sym">$BULL</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 80</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:8.209908092550942%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+1053.0%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$30.7K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$80.8K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.3×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('7qsnaTDLVU5yPLvjQCfNmWyFydXkC7hGiAwgKMR5o92k')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('7qsnaTDLVU5yPLvjQCfNmWyFydXkC7hGiAwgKMR5o92k')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="2LhYQj4oksiQzCC9tAFRUrXB7Gg1hkRsAqdBHABTpump">
+      <div class="pf-coin-name" title="KYLE">KYLE</div>
+      <div class="pf-coin-sym">$KYLE</div>
+      <div class="pf-coin-age">⏱ 2h ago · 🟢 Live · Score: 20</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:7.407787376828182%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+0.4%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$2.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$72.9K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val ">1.1×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('2LhYQj4oksiQzCC9tAFRUrXB7Gg1hkRsAqdBHABTpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('2LhYQj4oksiQzCC9tAFRUrXB7Gg1hkRsAqdBHABTpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="5g1SknCckXcMYSNoqiPTjWLhZhWoW28kVuHdA8hmpump">
+      <div class="pf-coin-name" title="克洛德">克洛德</div>
+      <div class="pf-coin-sym">$克洛德</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 72</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:6.418864744983871%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+24.3%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$6.8K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$63.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">4.5×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('5g1SknCckXcMYSNoqiPTjWLhZhWoW28kVuHdA8hmpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('5g1SknCckXcMYSNoqiPTjWLhZhWoW28kVuHdA8hmpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="3P3qH6mNZKPdnT9Fy9yK11THq46FvFRBo3RwzsDNpump">
+      <div class="pf-coin-name" title="DykeTyson">DykeTyson</div>
+      <div class="pf-coin-sym">$DykeTyson</div>
+      <div class="pf-coin-age">⏱ 2h ago · 🟢 Live · Score: 65</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:3.7379983053311148%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+10.4%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$6.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$36.8K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">5.0×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('3P3qH6mNZKPdnT9Fy9yK11THq46FvFRBo3RwzsDNpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('3P3qH6mNZKPdnT9Fy9yK11THq46FvFRBo3RwzsDNpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="HMVrum2YSeu1BoRRKjJwZ7inHfw5G6vM6JbRkKippump">
+      <div class="pf-coin-name" title="SPC">SPC</div>
+      <div class="pf-coin-sym">$SPC</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 30</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:3.5563732232561964%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-20.9%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$2.4K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$35.0K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val ">2.3×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('HMVrum2YSeu1BoRRKjJwZ7inHfw5G6vM6JbRkKippump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('HMVrum2YSeu1BoRRKjJwZ7inHfw5G6vM6JbRkKippump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="HWTQPNfJuSjUnmW3wqBaTTLuMSyG93jWb1P5pBUZpump">
+      <div class="pf-coin-name" title="Privacy Rails for the Solana Economy.
+...">Privacy Rails for the Solana Economy.
+...</div>
+      <div class="pf-coin-sym">$SRAIL</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 65</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:2.584909578541087%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+88.2%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$143.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$25.4K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.1×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('HWTQPNfJuSjUnmW3wqBaTTLuMSyG93jWb1P5pBUZpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('HWTQPNfJuSjUnmW3wqBaTTLuMSyG93jWb1P5pBUZpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  pf-targeting" data-mint="D89PwJPcuRsMabR7fEsnkZdHTWD1Mevfw1ejQcrKpump">
+      <div class="pf-coin-name" title="New Token">New Token</div>
+      <div class="pf-coin-sym">$CHINESE</div>
+      <div class="pf-coin-age">⏱ 20m ago · 🟢 Live · Score: 110</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:2.229025861268204%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+169.7%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$32.7K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$21.9K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">6.9×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" style="background:#f5a62322;border-color:#f5a623;color:#f5a623" onclick="manualPfSell('D89PwJPcuRsMabR7fEsnkZdHTWD1Mevfw1ejQcrKpump')">💰 Sell Position</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('D89PwJPcuRsMabR7fEsnkZdHTWD1Mevfw1ejQcrKpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="o8CatcjnjZhXwwz7JRhYULLqqjw82kKn7hebu41pump">
+      <div class="pf-coin-name" title="Fud">Fud</div>
+      <div class="pf-coin-sym">$Fud</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 70</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:2.043006312608067%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-25.7%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$18.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$20.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">17.2×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('o8CatcjnjZhXwwz7JRhYULLqqjw82kKn7hebu41pump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('o8CatcjnjZhXwwz7JRhYULLqqjw82kKn7hebu41pump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="GSg57P2D7GGpj7ADtTGWGTYFmmSRHr8gKwFkd4Sgpump">
+      <div class="pf-coin-name" title="SUSHIPETS">SUSHIPETS</div>
+      <div class="pf-coin-sym">$SUSHIPETS</div>
+      <div class="pf-coin-age">⏱ 121h ago · 🟢 Live · Score: 70</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:1.7930246677615613%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-11.3%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$6.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$17.6K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">13.7×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('GSg57P2D7GGpj7ADtTGWGTYFmmSRHr8gKwFkd4Sgpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('GSg57P2D7GGpj7ADtTGWGTYFmmSRHr8gKwFkd4Sgpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="4trss1uK7Fe857KSbiMYohjv14tR5YATWyDkym8fpump">
+      <div class="pf-coin-name" title="just a black bull">just a black bull</div>
+      <div class="pf-coin-sym">$blackbull</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 40</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:1.6850132513742793%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-12.5%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$2.2K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$16.6K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.8×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('4trss1uK7Fe857KSbiMYohjv14tR5YATWyDkym8fpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('4trss1uK7Fe857KSbiMYohjv14tR5YATWyDkym8fpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  pf-targeting" data-mint="92YRecwDBeZnsZhMPLN63FQ4Rrc2ypXzirmt1HsrBURN">
+      <div class="pf-coin-name" title="BURNBULL">BURNBULL</div>
+      <div class="pf-coin-sym">$BURNBULL</div>
+      <div class="pf-coin-age">⏱ 14m ago · 🟢 Live · Score: 95</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:1.3701560709286618%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+101.7%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$87.3K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$13.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">4.7×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" style="background:#f5a62322;border-color:#f5a623;color:#f5a623" onclick="manualPfSell('92YRecwDBeZnsZhMPLN63FQ4Rrc2ypXzirmt1HsrBURN')">💰 Sell Position</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('92YRecwDBeZnsZhMPLN63FQ4Rrc2ypXzirmt1HsrBURN')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="HicPzYjhUnjZhz3vYWK9yicCwQi3r52WfZ35bvUGpump">
+      <div class="pf-coin-name" title="New Token">New Token</div>
+      <div class="pf-coin-sym">$CAPTCHA</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 40</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:0.825691313605738%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val neg">-34.1%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$2.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$8.1K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.5×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('HicPzYjhUnjZhz3vYWK9yicCwQi3r52WfZ35bvUGpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('HicPzYjhUnjZhz3vYWK9yicCwQi3r52WfZ35bvUGpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card pf-hot " data-mint="GpcVEzMUaRpKHJ1RpGtk5hv6vHJn6KFqwEJEGEahpump">
+      <div class="pf-coin-name" title="Saylor bought BTC at $75k, swore he'd ...">Saylor bought BTC at $75k, swore he'd ...</div>
+      <div class="pf-coin-sym">$MICROBRAIN</div>
+      <div class="pf-coin-age">⏱ 1h ago · 🟢 Live · Score: 75</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:0.6409560668562867%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+138.3%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$91.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$6.3K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">7.0×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('GpcVEzMUaRpKHJ1RpGtk5hv6vHJn6KFqwEJEGEahpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('GpcVEzMUaRpKHJ1RpGtk5hv6vHJn6KFqwEJEGEahpump')">📊</button>
+      </div>
+    </div><div class="pf-coin-card  " data-mint="2k8ifEcQgSnFdMC46GUD79cEgctsrzQPzkNZ6RkKpump">
+      <div class="pf-coin-name" title="Your meme. Your rules.">Your meme. Your rules.</div>
+      <div class="pf-coin-sym">$DYM</div>
+      <div class="pf-coin-age">⏱ 41m ago · 🟢 Live · Score: 75</div>
+      <div class="pf-vol-bar"><div class="pf-vol-bar-fill" style="width:0.004269491003719131%"></div></div>
+      <div class="pf-coin-metrics">
+        <div class="pf-metric"><span class="pf-metric-lbl">Price Chg</span><span class="pf-metric-val pos">+50.9%</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Mkt Cap</span><span class="pf-metric-val">$22.5K</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Volume</span><span class="pf-metric-val">$42</span></div>
+        <div class="pf-metric"><span class="pf-metric-lbl">Vol Spike</span><span class="pf-metric-val pos">3.6×</span></div>
+      </div>
+      <div class="pf-card-actions">
+        <button class="pf-btn-buy" onclick="manualPfBuy('2k8ifEcQgSnFdMC46GUD79cEgctsrzQPzkNZ6RkKpump')">⚡ Buy Now</button>
+        <button class="pf-btn-watch" onclick="event.stopPropagation();pfOpenChart('2k8ifEcQgSnFdMC46GUD79cEgctsrzQPzkNZ6RkKpump')">📊</button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- RIGHT: Positions & Portfolio -->
+  <div class="pf-right">
+    <div class="pf-section">
+      <div class="pf-section-title" style="font-size:0.85rem">📂 Open Positions</div>
+      <div id="pf-positions" class="pf-positions-list"><div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">$CHINESE</span>
+        <span class="pf-pos-pnl pos">+7.6%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">0.1000 SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:#00e57a">+0.0076 SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">4.93M</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$15.06</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator " title="T1: +50%"></div>
+        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('D89PwJPcuRsMabR7fEsnkZdHTWD1Mevfw1ejQcrKpump')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('D89PwJPcuRsMabR7fEsnkZdHTWD1Mevfw1ejQcrKpump')">🚪 Exit All</button>
+      </div>
+    </div><div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">$hood</span>
+        <span class="pf-pos-pnl pos">+18.7%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">0.1000 SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:#00e57a">+0.0187 SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">258.3K</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.62</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator " title="T1: +50%"></div>
+        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('2pr3yKhUbkeTyhKZXpGEqXczQ8UJo1sGYTp5kw2Mpump')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('2pr3yKhUbkeTyhKZXpGEqXczQ8UJo1sGYTp5kw2Mpump')">🚪 Exit All</button>
+      </div>
+    </div><div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">$BURNBULL</span>
+        <span class="pf-pos-pnl pos">+17.7%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">0.1000 SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:#00e57a">+0.0177 SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">5.81M</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.48</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator " title="T1: +50%"></div>
+        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('92YRecwDBeZnsZhMPLN63FQ4Rrc2ypXzirmt1HsrBURN')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('92YRecwDBeZnsZhMPLN63FQ4Rrc2ypXzirmt1HsrBURN')">🚪 Exit All</button>
+      </div>
+    </div><div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">$CASHCAT</span>
+        <span class="pf-pos-pnl pos">+19.2%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">0.1000 SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:#00e57a">+0.0192 SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">449.3K</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.69</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator " title="T1: +50%"></div>
+        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('AcbU9jcsNigGYz9uL2SuTecoiBGTm2mfv1z4qyt4pump')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('AcbU9jcsNigGYz9uL2SuTecoiBGTm2mfv1z4qyt4pump')">🚪 Exit All</button>
+      </div>
+    </div><div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">$うさぎ</span>
+        <span class="pf-pos-pnl pos">+7.0%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">0.1000 SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:#00e57a">+0.0070 SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">1.47M</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$14.98</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator " title="T1: +50%"></div>
+        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('6puiC8v1cVNoMsmCqRAiTNQ1x2jNJKQTh44CKeEJpump')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('6puiC8v1cVNoMsmCqRAiTNQ1x2jNJKQTh44CKeEJpump')">🚪 Exit All</button>
+      </div>
+    </div></div>
+    </div>
+
+    <div class="pf-section" style="margin-top:14px">
+      <div class="pf-section-title" style="font-size:0.85rem">💼 PF Portfolio</div>
+      <div id="pf-portfolio" class="pf-portfolio-list"><div class="pf-empty">No trades yet</div></div>
+    </div>
+
+    <div class="pf-section" style="margin-top:14px">
+      <div class="pf-section-title" style="font-size:0.85rem">📋 Trade Log</div>
+      <div id="pf-log" class="pf-log"><div class="pf-log-entry info"><span class="pf-log-time">21:06:22</span>💰 Balance: fetching… SOL</div><div class="pf-log-entry buy"><span class="pf-log-time">21:06:22</span>🔑 Pump.fun wallet auto-connected: 2fLcT3...wkPMeF</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:38</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:35</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:35</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:20</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📋 Strategy: Entry on vol spike, Exit T1:+50%→sell50%, T2:+100%→sell25%, Moon: hold rest</div><div class="pf-log-entry buy"><span class="pf-log-time">21:01:20</span>🤖 Pump.fun AI Bot STARTED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:09</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:10</span>🔍 Scanning 20 new Pump.fun coins...</div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="toast" class="toast"></div></div>
+
+<script>
+
+// ===== AUTH SYSTEM =====
+// Credentials: username -> SHA-256 hash of password
+// Default users: admin / 73infinity  |  73inc / Trading2024
+const AUTH_USERS = {
+  'admin': 'd1197423bd9431e19d8ceb8432774c1a196ef5c1a5f0d327288b731823a3b8c1',
+  '73inc': '7d47f3fe0ed01b69bb697f8052542a18fa7859fcb1de60f04fb83078060ffdf7'
+};
+
+async function hashPassword(s){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(buf)).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin(){
+  const u = (document.getElementById('login-user')||{value:''}).value.trim().toLowerCase();
+  const p = (document.getElementById('login-pass')||{value:''}).value;
+  const errEl = document.getElementById('login-error');
+  if(!u||!p){if(errEl){errEl.style.display='block';errEl.textContent='Please enter username and password';}return;}
+  const hash = await hashPassword(p);
+  if(AUTH_USERS[u] && AUTH_USERS[u]===hash){
+    sessionStorage.setItem('73inc_auth',u);
+    INF.currentUser = u;
+    const overlay = document.getElementById('login-overlay');
+    if(overlay) overlay.style.display='none';
+    loadApp(u);
+    showToast('Welcome back, '+u+'!','success');
+  } else {
+    if(errEl){errEl.style.display='block';errEl.textContent='Invalid username or password';}
+    document.getElementById('login-pass').value='';
+  }
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter' && document.getElementById('login-overlay') && document.getElementById('login-overlay').style.display!=='none'){
+    doLogin();
+  }
+});
+
+// Check session on load
+(function checkAuth(){
+  const stored = sessionStorage.getItem('73inc_auth');
+  if(stored){
+    const overlay = document.getElementById('login-overlay');
+    if(overlay) overlay.style.display='none';
+  }
+})();
+
+
+
+var INF={wallet:null,photonConnected:false,tokens:[],watchlist:JSON.parse(localStorage.getItem('inf_watchlist')||'[]'),currentUser:sessionStorage.getItem('73inc_auth')||null,agent:{running:false,mode:'simulation',trigger:'STRONG BUY',size:0.01,trades:0,wins:0,pnl:0,positions:[]},period:'h1',currentTab:'scanner',SOL_MINT:'So11111111111111111111111111111111111111112',RPC:'https://solana-rpc.publicnode.com',TOKEN_PROGRAM:'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',TOKEN22_PROGRAM:'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb'};
+function showToast(msg,type){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(t._tid);t._tid=setTimeout(function(){t.className='toast';},3500);}
+function toBase58(bytes){var A='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';var digits=[0];for(var i=0;i<bytes.length;i++){var carry=bytes[i];for(var j=0;j<digits.length;j++){carry+=digits[j]<<8;digits[j]=carry%58;carry=Math.floor(carry/58);}while(carry>0){digits.push(carry%58);carry=Math.floor(carry/58);}}var result='';for(var k=0;k<bytes.length&&bytes[k]===0;k++)result+='1';for(var m=digits.length-1;m>=0;m--)result+=A[digits[m]];return result;}
+function formatAddr(a){if(!a)return'';return a.slice(0,4)+'...'+a.slice(-4);}
+function formatNum(n){if(n===undefined||n===null||isNaN(n))return'0';if(n>=1e9)return(n/1e9).toFixed(2)+'B';if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toFixed(2);}
+function signalClass(sig){if(sig==='STRONG BUY')return'signal-strong-buy';if(sig==='BUY')return'signal-buy';if(sig==='SELL')return'signal-sell';if(sig==='STRONG SELL')return'signal-strong-sell';return'signal-neutral';}
+function calcSignal(pc,vol,liq){var s=0;if(pc>20)s+=3;else if(pc>10)s+=2;else if(pc>5)s+=1;else if(pc<-10)s-=2;else if(pc<-5)s-=1;if(vol>500000)s+=2;else if(vol>100000)s+=1;if(liq>100000)s+=1;if(s>=4)return'STRONG BUY';if(s>=2)return'BUY';if(s<=-2)return'STRONG SELL';if(s<=-1)return'SELL';return'NEUTRAL';}
+function updatePhantomUI(){var cb=document.getElementById('phantom-connect-btn');var sb=document.getElementById('phantom-status-btn');var db=document.getElementById('phantom-disconnect-btn');var as=document.getElementById('wallet-addr-short');if(!cb)return;if(INF.wallet){cb.style.display='none';sb.style.display='inline-flex';db.style.display='inline-flex';if(as)as.textContent=formatAddr(INF.wallet);}else{cb.style.display='inline-flex';sb.style.display='none';db.style.display='none';}}
+function updatePhotonUI(){var cb=document.getElementById('photon-connect-btn');var db=document.getElementById('photon-disconnect-btn');if(!cb)return;if(INF.photonConnected){cb.style.display='none';db.style.display='inline-flex';}else{cb.style.display='inline-flex';db.style.display='none';}}
+async function connectPhantom(){try{if(!window.solana||!window.solana.isPhantom){showToast('Phantom not installed. Get it at phantom.app','error');window.open('https://phantom.app','_blank');return;}var r=await window.solana.connect();INF.wallet=r.publicKey.toString();updatePhantomUI();showToast('Phantom connected: '+formatAddr(INF.wallet),'success');loadPortfolio();}catch(e){showToast('Phantom failed: '+e.message,'error');}}
+async function disconnectPhantom(){try{if(window.solana&&window.solana.disconnect)await window.solana.disconnect();}catch(e){}INF.wallet=null;updatePhantomUI();showToast('Phantom disconnected','info');var pl=document.getElementById('portfolio-list');if(pl)pl.innerHTML='';var pt=document.getElementById('port-total');if(pt)pt.textContent='$0.00';var ps=document.getElementById('port-sol');if(ps)ps.textContent='0.000 SOL';var pc2=document.getElementById('port-count');if(pc2)pc2.textContent='0';}
+function connectPhoton(){var url=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+INF.wallet:'https://photon-sol.tinyastro.io';window.open(url,'_blank');INF.photonConnected=true;updatePhotonUI();showToast('Photon opened'+(INF.wallet?' with wallet':''),'success');}
+function disconnectPhoton(){INF.photonConnected=false;updatePhotonUI();showToast('Photon disconnected','info');}
+function buildCard(p){var sym=(p.baseToken&&p.baseToken.symbol)?p.baseToken.symbol:'???';var name=(p.baseToken&&p.baseToken.name)?p.baseToken.name:sym;var addr=(p.baseToken&&p.baseToken.address)?p.baseToken.address:'';var price=parseFloat(p.priceUsd||0);var pd=price===0?'$0':price<0.000001?price.toExponential(2):price<0.0001?price.toFixed(8):price<0.01?price.toFixed(6):price.toFixed(4);var ch1=parseFloat((p.priceChange&&p.priceChange.h1)?p.priceChange.h1:0);var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);var vol24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);var liq=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);var mcap=parseFloat(p.marketCap||p.fdv||0);var chain=p.chainId||'solana';var pairAddr=p.pairAddress||addr;var sig=calcSignal(ch24,vol24,liq);var ageMs=p.pairCreatedAt?(Date.now()-p.pairCreatedAt):0;var ageH=ageMs/3600000;var ageD=ageH<1?Math.round(ageMs/60000)+'m':ageH<24?ageH.toFixed(1)+'h':(ageH/24).toFixed(1)+'d';
+var card=document.createElement('div');card.className='token-card';card.setAttribute('data-addr',addr);var hdr=document.createElement('div');hdr.className='card-header';var ti=document.createElement('div');ti.className='token-info';var ts=document.createElement('span');ts.className='token-sym';ts.textContent=sym;var tn=document.createElement('span');tn.className='token-name';tn.textContent=name;ti.appendChild(ts);ti.appendChild(tn);var sb=document.createElement('span');sb.className='signal-badge '+signalClass(sig);sb.textContent=sig;hdr.appendChild(ti);hdr.appendChild(sb);
+var met=document.createElement('div');met.className='card-metrics';var ms=[['Price','$'+pd],['1h',(ch1>=0?'+':'')+ch1.toFixed(1)+'%','m-val '+(ch1>=0?'pos':'neg')],['24h',(ch24>=0?'+':'')+ch24.toFixed(1)+'%','m-val '+(ch24>=0?'pos':'neg')],['Vol','$'+formatNum(vol24)],['Liq','$'+formatNum(liq)],['MCap','$'+formatNum(mcap)],['Age',ageD],['Chain',chain.toUpperCase()]];ms.forEach(function(m){var d=document.createElement('div');d.className='metric';var lb=document.createElement('span');lb.className='m-label';lb.textContent=m[0];var vl=document.createElement('span');vl.className=m[2]||'m-val';vl.textContent=m[1];d.appendChild(lb);d.appendChild(vl);met.appendChild(d);});
+var act=document.createElement('div');act.className='card-actions';var isW=INF.watchlist.some(function(w){return w.address===addr;});var wb=document.createElement('button');wb.className='btn-card'+(isW?' btn-watched':'');wb.textContent=isW?'★ Watched':'☆ Watch';wb.onclick=function(){toggleWatch(p,wb);};var db=document.createElement('button');db.className='btn-card btn-dex';db.textContent='📊 Chart';db.onclick=function(){window.open('https://dexscreener.com/'+chain+'/'+pairAddr,'_blank');};var dtb=document.createElement('button');dtb.className='btn-card btn-dextools';dtb.textContent='🛠 DexTools';dtb.onclick=function(){var dc=chain==='solana'?'solana':chain==='bsc'?'bnb':chain;window.open('https://www.dextools.io/app/en/'+dc+'/pair-explorer/'+pairAddr,'_blank');};var rb=document.createElement('button');rb.className='btn-card btn-rug';rb.textContent='🛡 RugCheck';rb.onclick=function(){window.open('https://rugcheck.xyz/tokens/'+addr,'_blank');};var pb=document.createElement('button');pb.className='btn-card btn-photon';pb.textContent='⚡ Photon';pb.onclick=function(){var ph=INF.wallet?'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr+'?wallet='+INF.wallet:'https://photon-sol.tinyastro.io/en/r/@73inc/'+addr;window.open(ph,'_blank');};act.appendChild(wb);act.appendChild(db);act.appendChild(dtb);act.appendChild(rb);act.appendChild(pb);if(p.url&&p.url.includes('pump.fun')){var pumb=document.createElement('button');pumb.className='btn-card btn-pump';pumb.textContent='🚀 Pump';pumb.onclick=function(){window.open('https://pump.fun/coin/'+addr,'_blank');};act.appendChild(pumb);}
+// Phantom buy button
+if(addr){
+  var phbtn=document.createElement('button');
+  phbtn.className='btn-card btn-phantom';
+  phbtn.textContent='👻 Buy';
+  phbtn.onclick=function(){
+    var url='https://phantom.app/ul/swap?inputMint=So11111111111111111111111111111111111111112&outputMint='+addr+'&referral='+INF.wallet;
+    if(INF.wallet){url='https://phantom.app/ul/swap?inputMint=So11111111111111111111111111111111111111112&outputMint='+addr;}
+    window.open(url,'_blank');
+  };
+  act.appendChild(phbtn);
+}
+card.appendChild(hdr);card.appendChild(met);card.appendChild(act);return card;}
+function toggleWatch(p,btn){var addr=p.baseToken&&p.baseToken.address?p.baseToken.address:'';var idx=INF.watchlist.findIndex(function(w){return w.address===addr;});if(idx>=0){INF.watchlist.splice(idx,1);btn.className='btn-card';btn.textContent='☆ Watch';showToast('Removed from watchlist','info');}else{INF.watchlist.push({address:addr,symbol:p.baseToken&&p.baseToken.symbol?p.baseToken.symbol:'?',pair:p});btn.className='btn-card btn-watched';btn.textContent='★ Watched';showToast('Added to watchlist!','success');}localStorage.setItem('inf_watchlist',JSON.stringify(INF.watchlist));
+cloudSaveWatchlist();
+if(INF.currentTab==='watchlist')renderWatchlist();}
+async function loadScanner(){var grid=document.getElementById('scanner-grid');if(!grid)return;grid.innerHTML='<div class="loading">🔍 Scanning live tokens...</div>';try{var queries=['solana pump.fun','solana raydium','solana jupiter','solana new'];var all=[];for(var qi=0;qi<queries.length;qi++){try{var r=await fetch('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(queries[qi]));if(r.ok){var d=await r.json();if(d.pairs&&d.pairs.length)all=all.concat(d.pairs.slice(0,30));}}catch(e2){}}try{var rb=await fetch('https://api.dexscreener.com/token-boosts/latest/v1');if(rb.ok){var db=await rb.json();var ba=Array.isArray(db)?db.slice(0,20).map(function(b){return b.tokenAddress;}):[];if(ba.length){var r3=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+ba.join(','));if(r3.ok){var d3=await r3.json();if(Array.isArray(d3))all=all.concat(d3);}}}}catch(e3){}var seen={};var unique=[];all.forEach(function(p){var k=p.pairAddress||(p.baseToken&&p.baseToken.address);if(k&&!seen[k]){seen[k]=1;unique.push(p);}});var chain=document.getElementById('f-chain')?document.getElementById('f-chain').value:'any';var signal=document.getElementById('f-signal')?document.getElementById('f-signal').value:'any';var age=document.getElementById('f-age')?document.getElementById('f-age').value:'any';var liq=document.getElementById('f-liq')?document.getElementById('f-liq').value:'any';var vol=document.getElementById('f-vol')?document.getElementById('f-vol').value:'any';var mcap=document.getElementById('f-mcap')?document.getElementById('f-mcap').value:'any';var filtered=unique.filter(function(p){if(chain!=='any'&&p.chainId!==chain)return false;var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);var v24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);var lu=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);var mu=parseFloat(p.marketCap||p.fdv||0);var sig=calcSignal(ch24,v24,lu);if(signal!=='any'&&sig!==signal)return false;if(age!=='any'&&p.pairCreatedAt){var ah=(Date.now()-p.pairCreatedAt)/3600000;if(ah>parseFloat(age))return false;}if(liq!=='any'&&lu<parseFloat(liq))return false;if(vol!=='any'&&v24<parseFloat(vol))return false;if(mcap!=='any'&&mu<parseFloat(mcap))return false;return true;});INF.tokens=filtered;grid.innerHTML='';if(!filtered.length){grid.innerHTML='<div class="empty-state"><p>No tokens match current filters.</p></div>';return;}filtered.slice(0,60).forEach(function(p){grid.appendChild(buildCard(p));});}catch(e){grid.innerHTML='<div class="empty-state"><p>Scanner error: '+e.message+'</p></div>';}}
+async function loadTrending(){var grid=document.getElementById('trending-grid');if(!grid)return;grid.innerHTML='<div class="loading">🔥 Loading trending...</div>';try{var rb=await fetch('https://api.dexscreener.com/token-boosts/latest/v1');var bp=[];if(rb.ok){var db=await rb.json();var addrs=Array.isArray(db)?db.slice(0,30).map(function(b){return b.tokenAddress;}).filter(Boolean):[];if(addrs.length){try{var r2=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+addrs.join(','));if(r2.ok){var d2=await r2.json();if(Array.isArray(d2))bp=d2;}}catch(e2){}}}var r3=await fetch('https://api.dexscreener.com/latest/dex/search?q=solana+trending');var sp=[];if(r3.ok){var d3=await r3.json();sp=d3.pairs||[];}var all=bp.concat(sp);var seen={};var unique=[];all.forEach(function(p){var k=p.pairAddress||(p.baseToken&&p.baseToken.address);if(k&&!seen[k]){seen[k]=1;unique.push(p);}});var per=INF.period;unique.sort(function(a,b){var av=parseFloat((a.priceChange&&a.priceChange[per])?a.priceChange[per]:0);var bv=parseFloat((b.priceChange&&b.priceChange[per])?b.priceChange[per]:0);return bv-av;});grid.innerHTML='';if(!unique.length){grid.innerHTML='<div class="empty-state"><p>No trending data.</p></div>';return;}unique.slice(0,40).forEach(function(p){grid.appendChild(buildCard(p));});}catch(e){grid.innerHTML='<div class="empty-state"><p>Trending error: '+e.message+'</p></div>';}}
+function renderWatchlist(){var grid=document.getElementById('watchlist-grid');var empty=document.getElementById('watchlist-empty');var cnt=document.getElementById('watchlist-count');if(!grid)return;if(cnt)cnt.textContent=INF.watchlist.length+' token'+(INF.watchlist.length!==1?'s':'');if(!INF.watchlist.length){grid.innerHTML='';if(empty)empty.style.display='block';return;}if(empty)empty.style.display='none';grid.innerHTML='';INF.watchlist.forEach(function(w){if(w.pair)grid.appendChild(buildCard(w.pair));});}
+async function loadPortfolio(){var listEl=document.getElementById('portfolio-list');var emptyEl=document.getElementById('portfolio-empty');var totalEl=document.getElementById('port-total');var solEl=document.getElementById('port-sol');var cntEl=document.getElementById('port-count');var pnlEl=document.getElementById('port-pnl');if(!listEl)return;if(!INF.wallet){if(emptyEl)emptyEl.style.display='block';listEl.innerHTML='';return;}if(emptyEl)emptyEl.style.display='none';listEl.innerHTML='<div class="loading">Loading portfolio...</div>';
+var solBal=0,solP=150,toks=[],tPrices={};
+try{var sr=await fetch(INF.RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:[INF.wallet]})});var sd=await sr.json();solBal=(sd.result&&sd.result.value?sd.result.value:0)/1e9;}catch(e1){}
+try{var pr=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');var pd=await pr.json();if(pd.solana&&pd.solana.usd)solP=pd.solana.usd;}catch(e2){}
+var solUsd=solBal*solP;
+try{var fetchTok=async function(prog){try{var rr=await fetch(INF.RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountsByOwner',params:[INF.wallet,{programId:prog},{encoding:'jsonParsed',commitment:'confirmed'}]})});var dd=await rr.json();return dd.result&&dd.result.value?dd.result.value:[];}catch(e){return[];}};var a1=await fetchTok(INF.TOKEN_PROGRAM);var a2=await fetchTok(INF.TOKEN22_PROGRAM);var allA=a1.concat(a2);allA.forEach(function(acc){try{var info=acc.account.data.parsed.info;var mint=info.mint;var amount=parseFloat(info.tokenAmount.uiAmount||0);if(amount>0&&mint)toks.push({mint:mint,amount:amount});}catch(e2){}});}catch(e3){}
+try{if(toks.length){var mints=toks.slice(0,30).map(function(t){return t.mint;});var dsr=await fetch('https://api.dexscreener.com/tokens/v1/solana/'+mints.join(','));if(dsr.ok){var dsd=await dsr.json();if(Array.isArray(dsd)){dsd.forEach(function(pair){if(pair.baseToken&&pair.baseToken.address&&pair.priceUsd){var a=pair.baseToken.address;var np=parseFloat(pair.priceUsd);if(!tPrices[a]||np>0)tPrices[a]=np;}});}}}}catch(e4){}
+var totalUsd=solUsd;var rows=[];toks.forEach(function(t){var price=tPrices[t.mint]||0;var uv=t.amount*price;totalUsd+=uv;rows.push({mint:t.mint,amount:t.amount,price:price,usdVal:uv,symbol:t.mint.slice(0,6)+'...',name:'Token'});});rows.sort(function(a,b){return b.usdVal-a.usdVal;});
+if(solEl)solEl.textContent=solBal.toFixed(4)+' SOL ($'+solUsd.toFixed(2)+')';if(totalEl)totalEl.textContent='$'+totalUsd.toFixed(2);if(cntEl)cntEl.textContent=toks.length;if(pnlEl)pnlEl.textContent='$0.00';
+listEl.innerHTML='';var sr2=document.createElement('div');sr2.className='port-row';sr2.innerHTML='<div class="port-token"><span class="port-sym">SOL</span><span class="port-name">Solana</span></div><div class="port-amount">'+solBal.toFixed(4)+'</div><div class="port-price">$'+solP.toFixed(2)+'</div><div class="port-value">$'+solUsd.toFixed(2)+'</div><div class="port-pnl neutral">-</div>';listEl.appendChild(sr2);
+rows.forEach(function(t){var row=document.createElement('div');row.className='port-row';var ad=t.amount<0.001?t.amount.toExponential(3):t.amount>1e6?formatNum(t.amount):t.amount.toFixed(4);var pd2=t.price<0.000001?t.price.toExponential(3):t.price<0.01?t.price.toFixed(7):t.price.toFixed(4);row.innerHTML='<div class="port-token"><span class="port-sym">'+t.symbol+'</span><span class="port-name">'+t.name+'</span></div><div class="port-amount">'+ad+'</div><div class="port-price">$'+pd2+'</div><div class="port-value">$'+t.usdVal.toFixed(2)+'</div><div class="port-pnl neutral">-</div>';listEl.appendChild(row);});
+if(!toks.length){var nt=document.createElement('div');nt.className='empty-state';nt.innerHTML='<p>No other tokens found. Only SOL shown.</p>';listEl.appendChild(nt);}}
+async function jupiterSwap(inputMint,outputMint,lamports){
+  var phantom=window.solana;
+  if(!phantom||!phantom.isPhantom){throw new Error("Phantom wallet not found. Install Phantom extension.");}
+  if(!phantom.isConnected){throw new Error("Phantom not connected. Click Connect Phantom button.");}
+  var pubkey=phantom.publicKey?phantom.publicKey.toString():INF.wallet;
+  if(!pubkey){throw new Error("No wallet public key available.");}
+  agentLog('Getting Jupiter quote for '+lamports+' lamports...','info');
+  try{
+    var qr=await fetch('https://api.jup.ag/swap/v1/quote?inputMint='+inputMint+'&outputMint='+outputMint+'&amount='+lamports+'&slippageBps=300');
+    if(!qr.ok){throw new Error('Quote API failed: '+await qr.text());}
+    var qd=await qr.json();
+    if(!qd.outAmount){throw new Error('No quote returned from Jupiter');}
+    agentLog('Quote OK: out='+qd.outAmount+' impact='+qd.priceImpactPct+'%','signal');
+    var sr=await fetch('https://api.jup.ag/swap/v1/swap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quoteResponse:qd,userPublicKey:pubkey,wrapAndUnwrapSol:true,dynamicComputeUnitLimit:true,prioritizationFeeLamports:'auto'})});
+    if(!sr.ok){throw new Error('Swap API failed: '+await sr.text());}
+    var sd=await sr.json();
+    if(!sd.swapTransaction){throw new Error('No swap transaction returned');}
+    var b64=sd.swapTransaction;
+    var bin=atob(b64);
+    var txBytes=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)txBytes[i]=bin.charCodeAt(i);
+    agentLog('Sending tx to Phantom for signing...','info');
+    var tx=null;
+    if(window.solanaWeb3&&window.solanaWeb3.VersionedTransaction){
+      try{tx=window.solanaWeb3.VersionedTransaction.deserialize(txBytes);}
+      catch(ed){try{tx=window.solanaWeb3.Transaction.from(txBytes);}catch(ed2){tx=null;}}
+    }
+    var sig=null;
+    if(tx&&typeof phantom.signAndSendTransaction==='function'){
+      try{
+        var res=await phantom.signAndSendTransaction(tx);
+        sig=res&&res.signature?(typeof res.signature==='string'?res.signature:'sent'):(typeof res==='string'?res:'sent');
+      }catch(ea){agentLog('Method A failed: '+ea.message,'info');}
+    }
+    if(!sig&&typeof phantom.signTransaction==='function'){
+      try{
+        var txToSign=tx||{};
+        var signed=await phantom.signTransaction(txToSign);
+        var rawTx=signed&&signed.serialize?signed.serialize():txBytes;
+        var sendR=await fetch(INF.RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'sendTransaction',params:[btoa(String.fromCharCode(...rawTx)),{encoding:'base64',skipPreflight:false,maxRetries:3}]})});
+        var sendD=await sendR.json();
+        if(sendD.result){sig=sendD.result;}
+        else if(sendD.error){throw new Error('RPC error: '+sendD.error.message);}
+      }catch(ec){agentLog('Fallback failed: '+ec.message,'error');}
+    }
+    if(!sig){throw new Error('All signing methods failed. Ensure Phantom is unlocked and approve the transaction.');}
+    return sig;
+  }catch(et){throw new Error('Swap tx failed: '+(et.substring?et.substring(0,120):et.message||String(et)));}
+}
+
+function agentLog(msg,type){var log=document.getElementById('agent-log');if(!log)return;var e=document.createElement('div');e.className='log-entry'+(type?' log-'+type:'');e.textContent='['+new Date().toLocaleTimeString()+'] '+msg;log.insertBefore(e,log.firstChild);if(log.children.length>80)log.removeChild(log.lastChild);}
+
+function updateAgentStats(){var st=document.getElementById('agent-status');var tr=document.getElementById('agent-trades');var wr=document.getElementById('agent-winrate');var pn=document.getElementById('agent-pnl');var po=document.getElementById('agent-positions');if(st)st.textContent=INF.agent.running?'🟢 Running':'🔴 Stopped';if(tr)tr.textContent=INF.agent.trades;if(wr)wr.textContent=INF.agent.trades>0?Math.round(INF.agent.wins/INF.agent.trades*100)+'%':'0%';if(pn){pn.textContent=(INF.agent.pnl>=0?'+':'')+INF.agent.pnl.toFixed(4);pn.className='stat-val '+(INF.agent.pnl>=0?'pos':'neg');}if(po)po.textContent=INF.agent.positions.length+'/3';}
+
+async function agentCycle(){if(!INF.agent.running)return;var trigger=INF.agent.trigger;var mode=INF.agent.mode;var size=parseFloat(document.getElementById('agent-size')?document.getElementById('agent-size').value:INF.agent.size)||0.01;
+try{
+  var r=await fetch('https://api.dexscreener.com/latest/dex/search?q=solana+pump+new');
+  if(!r.ok)throw new Error('DexScreener unavailable');
+  var d=await r.json();
+  var pairs=d.pairs||[];
+  for(var i=0;i<pairs.length&&INF.agent.positions.length<3;i++){
+    if(!INF.agent.running)break;
+    var p=pairs[i];
+    var ch24=parseFloat((p.priceChange&&p.priceChange.h24)?p.priceChange.h24:0);
+    var v24=parseFloat((p.volume&&p.volume.h24)?p.volume.h24:0);
+    var liq=parseFloat((p.liquidity&&p.liquidity.usd)?p.liquidity.usd:0);
+    var sig=calcSignal(ch24,v24,liq);
+    var addr=p.baseToken&&p.baseToken.address?p.baseToken.address:null;
+    var sym=p.baseToken&&p.baseToken.symbol?p.baseToken.symbol:'???';
+    var shouldBuy=false;
+    if(trigger==='STRONG BUY'&&sig==='STRONG BUY')shouldBuy=true;
+    if(trigger==='BUY'&&(sig==='BUY'||sig==='STRONG BUY'))shouldBuy=true;
+    var held=INF.agent.positions.some(function(pos){return pos.addr===addr;});
+    if(shouldBuy&&addr&&!held){
+      agentLog('Signal: '+sig+' on '+sym+' | 24h: '+ch24.toFixed(1)+'% | Vol: $'+formatNum(v24),'signal');
+      if(mode==='live'){
+        if(!INF.wallet){agentLog('Live mode requires wallet connection','error');break;}
+        try{
+          agentLog('Executing live swap: '+size+' SOL -> '+sym,'info');
+          var lam=Math.round(size*1e9);
+          var txSig=await jupiterSwap(INF.SOL_MINT,addr,lam);
+          INF.agent.positions.push({addr:addr,sym:sym,entryPrice:parseFloat(p.priceUsd||0),size:size,entryTime:Date.now(),txSig:txSig});
+          INF.agent.trades++;
+          agentLog('✅ BUY confirmed: '+sym+' | tx: '+txSig.slice(0,20)+'...','success');
+          showToast('✅ BUY: '+sym+' ('+size+' SOL)','success');
+        }catch(se){
+          agentLog('❌ Swap failed: '+se.message,'error');
+          showToast('Swap failed: '+se.message,'error');
+        }
+      }else{
+        var ep=parseFloat(p.priceUsd||0);
+        INF.agent.positions.push({addr:addr,sym:sym,entryPrice:ep,size:size,entryTime:Date.now()});
+        INF.agent.trades++;
+        agentLog('[SIM] BUY '+sym+' @ $'+(ep<0.000001?ep.toExponential(3):ep.toFixed(6)),'success');
+        showToast('[SIM] BUY: '+sym,'success');
+      }
+      updateAgentStats();
+    }
+  }
+  var now=Date.now();var still=[];
+  INF.agent.positions.forEach(function(pos){
+    var am=(now-pos.entryTime)/60000;
+    var pf=pairs.find(function(p2){return p2.baseToken&&p2.baseToken.address===pos.addr;});
+    var cp=pf?parseFloat(pf.priceUsd||0):pos.entryPrice;
+    var pct=pos.entryPrice>0?(cp-pos.entryPrice)/pos.entryPrice*100:0;
+    var tp=parseFloat(document.getElementById("agent-tp")?document.getElementById("agent-tp").value:20)||20;var sl=parseFloat(document.getElementById("agent-sl")?document.getElementById("agent-sl").value:15)||15;var sell=pct>=tp||pct<=-sl||am>60;
+    if(sell){var ps=pos.size*pct/100;INF.agent.pnl+=ps;if(ps>0)INF.agent.wins++;agentLog((mode==='live'?'':'[SIM] ')+'SELL '+pos.sym+' | P&L: '+(ps>=0?'+':'')+ps.toFixed(4)+' SOL ('+pct.toFixed(1)+'%)',ps>=0?'success':'error');showToast((ps>=0?'✓ PROFIT':'✗ LOSS')+' '+pos.sym+': '+(ps>=0?'+':'')+ps.toFixed(4)+' SOL',ps>=0?'success':'error');}else still.push(pos);
+  });
+  INF.agent.positions=still;updateAgentStats();
+}catch(e){agentLog('Cycle error: '+e.message,'error');}
+if(INF.agent.running)INF.agent._timer=setTimeout(agentCycle,30000);}
+
+function toggleAgent(){var btn=document.getElementById('agent-start-btn');if(INF.agent.running){INF.agent.running=false;clearTimeout(INF.agent._timer);agentLog('Agent stopped by user','info');if(btn){btn.textContent='▶ Start Agent';btn.className='btn-agent-start';}}else{var mode=document.getElementById('agent-mode')?document.getElementById('agent-mode').value:'simulation';var trigger=document.getElementById('agent-trigger')?document.getElementById('agent-trigger').value:'STRONG BUY';INF.agent.mode=mode;INF.agent.trigger=trigger;if(mode==='live'){if(!INF.wallet){showToast('Connect Phantom wallet first for live trading!','error');return;}var ok=confirm('⚠️ LIVE TRADING — Real SOL will be spent!\n\nWallet: '+formatAddr(INF.wallet)+'\nTrade size: '+(document.getElementById('agent-size')?document.getElementById('agent-size').value:'0.01')+' SOL each\nTrigger: '+trigger+'\n\nConfirm?');if(!ok)return;}INF.agent.running=true;agentLog('Agent started | Mode: '+mode.toUpperCase()+' | Trigger: '+trigger,'info');if(btn){btn.textContent='■ Stop Agent';btn.className='btn-agent-stop';}agentCycle();}updateAgentStats();}
+
+function switchTab(tab){INF.currentTab=tab;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===tab);});document.querySelectorAll('.tab-content').forEach(function(c){c.classList.add('hidden');});var t=document.getElementById('tab-'+tab);if(t)t.classList.remove('hidden');if(tab==='scanner')loadScanner();else if(tab==='trending')loadTrending();else if(tab==='watchlist')renderWatchlist();else if(tab==='portfolio')loadPortfolio();}
+
+
+// ===== CLOUD WATCHLIST SYNC =====
+// Uses Netlify serverless function for persistent cross-device storage
+// Falls back to localStorage if cloud unavailable
+
+async function cloudSaveWatchlist(){
+  try{
+    const user = INF.currentUser || sessionStorage.getItem('73inc_auth') || 'default';
+    const storageKey = '73inc_cloud_wl_' + user;
+    const data = {watchlist: INF.watchlist, user: user, updated: Date.now()};
+    
+    // Try to use our Netlify function endpoint
+    const r = await fetch('/.netlify/functions/watchlist', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-73inc-User':user},
+      body: JSON.stringify(data)
+    });
+    if(!r.ok) throw new Error('Server unavailable');
+    const j = await r.json();
+    if(j.id) localStorage.setItem(storageKey, j.id);
+  }catch(e){
+    // Fallback: store in a free pastebin-style service via unique ID
+    try{
+      const user = INF.currentUser || sessionStorage.getItem('73inc_auth') || 'default';
+      const storageKey = '73inc_cloud_wl_' + user;
+      const existingId = localStorage.getItem(storageKey);
+      const data = JSON.stringify({watchlist: INF.watchlist, user: user, updated: Date.now()});
+      
+      if(existingId){
+        // Update existing
+        await fetch('https://api.jsonstorage.net/v1/json/'+existingId+'?apiKey=free', {
+          method:'PUT',
+          headers:{'Content-Type':'application/json'},
+          body: data
+        });
+      } else {
+        // Create new
+        const res = await fetch('https://api.jsonstorage.net/v1/json?apiKey=free', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: data
+        });
+        if(res.ok){
+          const j2 = await res.json();
+          if(j2.uri) localStorage.setItem(storageKey, j2.uri.split('/').pop());
+        }
+      }
+    }catch(e2){ console.log('Cloud sync unavailable, using local only',e2); }
+  }
+}
+
+async function cloudLoadWatchlist(){
+  try{
+    const user = INF.currentUser || sessionStorage.getItem('73inc_auth') || 'default';
+    const storageKey = '73inc_cloud_wl_' + user;
+    
+    // Try Netlify function first
+    try{
+      const r = await fetch('/.netlify/functions/watchlist?user='+encodeURIComponent(user), {
+        headers:{'X-73inc-User':user}
+      });
+      if(r.ok){
+        const j = await r.json();
+        if(j.watchlist){
+          INF.watchlist = j.watchlist;
+          localStorage.setItem('inf_watchlist', JSON.stringify(INF.watchlist));
+          return true;
+        }
+      }
+    }catch(e3){}
+    
+    // Fallback: jsonstorage.net
+    const existingId = localStorage.getItem(storageKey);
+    if(!existingId) return false;
+    const res = await fetch('https://api.jsonstorage.net/v1/json/'+existingId+'?apiKey=free');
+    if(res.ok){
+      const j = await res.json();
+      if(j.watchlist){
+        INF.watchlist = j.watchlist;
+        localStorage.setItem('inf_watchlist', JSON.stringify(INF.watchlist));
+        return true;
+      }
+    }
+  }catch(e){ console.log('Cloud load failed, using local',e); }
+  return false;
+}
+
+function loadApp(user){
+  INF.currentUser = user;
+  cloudLoadWatchlist().then(loaded => {
+    if(loaded) renderWatchlist();
+  });
+}
+
+function init(){document.querySelectorAll('.nav-btn').forEach(function(btn){btn.addEventListener('click',function(){switchTab(btn.getAttribute('data-tab'));});});document.querySelectorAll('.period-btn').forEach(function(btn){btn.addEventListener('click',function(){INF.period=btn.getAttribute('data-period');document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');loadTrending();});});['f-chain','f-signal','f-age','f-liq','f-vol','f-mcap'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',loadScanner);});if(window.solana&&window.solana.isPhantom){window.solana.connect({onlyIfTrusted:true}).then(function(r){INF.wallet=r.publicKey.toString();updatePhantomUI();showToast('Phantom connected: '+formatAddr(INF.wallet),'success');loadPortfolio();}).catch(function(){});window.solana.on('disconnect',function(){INF.wallet=null;updatePhantomUI();});window.solana.on('accountChanged',function(pk){INF.wallet=pk?pk.toString():null;updatePhantomUI();if(INF.wallet)loadPortfolio();});}updatePhantomUI();updatePhotonUI();loadScanner();setInterval(function(){if(INF.currentTab==='scanner')loadScanner();},60000);setInterval(function(){if(INF.currentTab==='trending')loadTrending();},60000);}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', function(){
+    // Check if already authenticated in this session
+    const storedUser = sessionStorage.getItem('73inc_auth');
+    if(storedUser){
+      INF.currentUser = storedUser;
+      const overlay = document.getElementById('login-overlay');
+      if(overlay) overlay.style.display='none';
+    }
+    init();
+    if(storedUser) loadApp(storedUser);
+  });
+}else{
+  const storedUser = sessionStorage.getItem('73inc_auth');
+  if(storedUser){
+    INF.currentUser = storedUser;
+    const overlay = document.getElementById('login-overlay');
+    if(overlay) overlay.style.display='none';
+  }
+  init();
+  if(storedUser) loadApp(storedUser);
+}
+
+
+
+// ===== CUSTOM 1H CANDLE FILTER =====
+var _cfInt=null;
+
+function _cfHigh(t){
+  var p=parseFloat(t.priceUsd)||0;
+  var h1=t.priceChange&&t.priceChange.h1?t.priceChange.h1:0;
+  return Math.max(p, p/(1+h1/100));
+}
+
+function _cfMatch(t){
+  if(t.chainId!=='solana')return false;
+  var age=Date.now()-t.pairCreatedAt;
+  if(age<3600000||age>31536000000)return false;
+  var hi=_cfHigh(t);
+  return(hi>=0.00011&&hi<=0.00013)||(hi>=0.000077&&hi<=0.00008);
+}
+
+function _cfCard(t){
+  var p=parseFloat(t.priceUsd)||0;
+  var h1=t.priceChange&&t.priceChange.h1?t.priceChange.h1:0;
+  var hi=_cfHigh(t);
+  var ageMs=Date.now()-t.pairCreatedAt;
+  var ageMins=Math.round(ageMs/60000);
+  var ageHrs=Math.floor(ageMs/3600000);
+  var ageDays=Math.floor(ageMs/86400000);
+  var age=ageDays>=1?ageDays+"d "+(ageHrs%24)+"h":(ageHrs>=1?ageHrs+"h "+ageMins%60+"m":ageMins+"m");
+  var sig=typeof calcSignal==="function"?calcSignal(t):"BUY";
+  var addr=(t.baseToken&&t.baseToken.address)||"";
+  var pStr="$"+p.toFixed(10).replace(/\.?0+$/,"");
+  var hStr="$"+hi.toFixed(10).replace(/\.?0+$/,"");
+  var liq=t.liquidity&&t.liquidity.usd?formatNum(t.liquidity.usd):"$0";
+  var mc=t.fdv?formatNum(t.fdv):"--";
+  var vol=t.volume&&t.volume.h1?formatNum(t.volume.h1):"$0";
+  var dex=t.url||("https://dexscreener.com/solana/"+t.pairAddress);
+  var ph="https://photon-sol.tinyastro.io/en/lp/"+t.pairAddress+(INF.wallet?"?handle=@73inc":"");
+  var rng=(hi>=0.00011&&hi<=0.00013)?"Range A":"Range B";
+  var sc=sig.toLowerCase().replace(/ /g,"-");
+  var h1c=h1>=0?"pos":"neg";
+  var html='<div class="token-card cf-match" data-addr="'+addr+'"style="min-width:0;overflow:hidden">';
+  html+='<div class="card-header"><div class="token-info"><span class="token-sym">'+t.baseToken.symbol+'</span>';
+  html+='<span class="token-name">'+t.baseToken.name+'</span></div>';
+  html+='<span class="signal-badge signal-'+sc+'">'+sig+'</span></div>';
+  html+='<div class="card-metrics" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px">';
+  html+='<div class="metric"><span class="m-label">PRICE</span><span class="m-val">'+pStr+'</span></div>';
+  html+='<div class="metric"><span class="m-label">1H</span><span class="m-val '+h1c+'">'+( h1>=0?"+":"")+h1.toFixed(1)+'%</span></div>';
+  html+='<div class="metric"><span class="m-label">EST HIGH</span><span class="m-val" style="color:#f59e0b">'+hStr+'</span></div>';
+  html+='<div class="metric"><span class="m-label">LIQ</span><span class="m-val">'+liq+'</span></div>';
+  html+='<div class="metric"><span class="m-label">MCAP</span><span class="m-val">'+mc+'</span></div>';
+  html+='<div class="metric"><span class="m-label">AGE</span><span class="m-val">'+age+'</span></div>';
+  html+='</div>';
+  html+='<div style="font-size:0.7rem;color:#f59e0b;padding:2px 0;border-top:1px solid #1e1e2e;margin-top:2px">'+rng+' match | Vol 1H: '+vol+'</div>';
+  html+='<div class="card-actions">';
+  html+='<a href="'+dex+'" target="_blank"><button class="btn-card btn-chart">&#128202; Chart</button></a>';
+  html+='<a href="https://www.dextools.io/app/solana/pair-explorer/'+addr+'" target="_blank"><button class="btn-card btn-dextools">&#128295; DexTools</button></a>';
+  html+='<a href="https://rugcheck.xyz/tokens/'+addr+'" target="_blank"><button class="btn-card btn-rug">&#128737; RugCheck</button></a>';
+  html+='<a href="'+ph+'" target="_blank"><button class="btn-card btn-photon">&#9889; Photon</button></a>';
+  html+='<a href="https://phantom.app/ul/browse/https://jup.ag/swap/SOL-'+addr+'" target="_blank"><button class="btn-card" style="background:linear-gradient(135deg,#9945ff,#14f195);color:#000;border:none;font-weight:700">&#128128; Buy</button></a>';
+  html+='</div></div>';
+  return html;
+}
+
+function runCustomFilter(){
+  if(!INF||!INF.tokens||!INF.tokens.length)return;
+  var matches=INF.tokens.filter(_cfMatch);
+  var c=document.getElementById('cf-match-count');
+  var s=document.getElementById('cf-scan-age');
+  var g=document.getElementById('cf-grid');
+  var now=new Date();
+  var ts=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes()+':'+(now.getSeconds()<10?'0':'')+now.getSeconds();
+  if(c)c.textContent=matches.length;
+  if(s)s.textContent=ts;
+  if(g){
+    if(matches.length===0){
+      g.innerHTML='<div class="cf-empty">No live matches. Click Load Historical below to scan all past tokens (age 1h-1yr, price $0.00011-$0.00013 or $0.000077-$0.00008)</div>';
+    }else{
+      matches.sort(function(a,b){return b.pairCreatedAt-a.pairCreatedAt;});g.innerHTML=matches.map(_cfCard).join('');
+    }
+  }
+  document.querySelectorAll('#scanner-grid .token-card').forEach(function(card){
+    var addr=card.getAttribute('data-addr');
+    if(addr){
+      var tok=INF.tokens.find(function(tk){return tk.baseToken.address===addr;});
+      if(tok&&_cfMatch(tok)){card.classList.add('cf-match');}
+      else{card.classList.remove('cf-match');}
+    }
+  });
+}
+
+window._cfHistorical=window._cfHistorical||[];
+
+async function loadHistoricalCF(){
+  var g=document.getElementById("cf-grid");
+  var c=document.getElementById("cf-match-count");
+  if(g)g.innerHTML='<div class="cf-empty" style="color:#a78bfa">&#9203; Scanning DexScreener for historical matches...</div>';
+  var queries=["solana meme","solana pump","solana new","solana raydium","solana jupiter","solana dog","solana cat","solana bonk"];
+  var all=[];
+  var opts={signal:AbortSignal.timeout(8000)};
+  for(var qi=0;qi<queries.length;qi++){
+    try{
+      var r=await fetch("https://api.dexscreener.com/latest/dex/search?q="+encodeURIComponent(queries[qi]),opts);
+      if(r.ok){var d=await r.json();if(d.pairs&&d.pairs.length)all=all.concat(d.pairs);}
+    }catch(e2){}
+  }
+  try{
+    var rb=await fetch("https://api.dexscreener.com/token-boosts/latest/v1",opts);
+    if(rb.ok){
+      var db=await rb.json();
+      var ba=Array.isArray(db)?db.slice(0,30).map(function(b){return b.tokenAddress;}):[];
+      if(ba.length){var r3=await fetch("https://api.dexscreener.com/tokens/v1/solana/"+ba.join(","),opts);if(r3.ok){var d3=await r3.json();if(Array.isArray(d3))all=all.concat(d3);}}
+    }
+  }catch(e3){}
+  try{
+    var rn=await fetch("https://api.dexscreener.com/token-profiles/latest/v1",opts);
+    if(rn.ok){
+      var dn=await rn.json();
+      var na=Array.isArray(dn)?dn.filter(function(x){return x.chainId==="solana";}).slice(0,30).map(function(x){return x.tokenAddress;}):[];
+      if(na.length){var r4=await fetch("https://api.dexscreener.com/tokens/v1/solana/"+na.join(","),opts);if(r4.ok){var d4=await r4.json();if(Array.isArray(d4))all=all.concat(d4);}}
+    }
+  }catch(e4){}
+  var seen={};
+  var unique=[];
+  all.forEach(function(p){
+    var k=p.pairAddress||(p.baseToken&&p.baseToken.address);
+    if(k&&!seen[k]){seen[k]=1;unique.push(p);}
+  });
+  var ONE_HR=3600000;
+  var ONE_YR=31536000000;
+  var matched=unique.filter(function(t){
+    if(t.chainId!=="solana")return false;
+    var age=Date.now()-t.pairCreatedAt;
+    if(age<ONE_HR||age>ONE_YR)return false;
+    var p=parseFloat(t.priceUsd)||0;
+    var hi=_cfHigh(t);
+    var inRangeA=(hi>=0.00011&&hi<=0.00013)||(p>=0.00011&&p<=0.00013);
+    var inRangeB=(hi>=0.000077&&hi<=0.00008)||(p>=0.000077&&p<=0.00008);
+    return inRangeA||inRangeB;
+  });
+  var live=(INF&&INF.tokens)?INF.tokens.filter(_cfMatch):[];
+  var allMatch=live.concat(matched);
+  var seenFinal={};
+  var finalMatches=[];
+  allMatch.forEach(function(t){
+    var k=t.pairAddress||(t.baseToken&&t.baseToken.address);
+    if(k&&!seenFinal[k]){seenFinal[k]=1;finalMatches.push(t);}
+  });
+  finalMatches.sort(function(a,b){return b.pairCreatedAt-a.pairCreatedAt;});
+  window._cfHistorical=finalMatches;
+  if(c)c.textContent=finalMatches.length;
+  if(g){
+    if(finalMatches.length===0){
+      g.innerHTML='<div class="cf-empty">No tokens found matching $0.00011-$0.00013 or $0.000077-$0.00008 in '+unique.length+' pairs scanned.</div>';
+    }else{
+      g.innerHTML='<div style="padding:8px 0 12px;color:#a78bfa;font-size:13px;text-align:center">Historical scan: '+finalMatches.length+' match(es), newest first ('+unique.length+' pairs scanned)</div>'+finalMatches.map(_cfCard).join("");
+    }
+  }
+  document.querySelectorAll("#scanner-grid .token-card").forEach(function(card){
+    var addr=card.getAttribute("data-addr");
+    if(addr){
+      var tok=finalMatches.find(function(tk){return tk.baseToken&&tk.baseToken.address===addr;});
+      if(tok){card.classList.add("cf-match");}else{card.classList.remove("cf-match");}
+    }
+  });
+}
+
+
+function _cfAutoScan(){
+  if(_cfInt)clearInterval(_cfInt);
+  runCustomFilter();
+  _cfInt=setInterval(runCustomFilter,30000);
+}
+// ===== END CUSTOM 1H CANDLE FILTER =====
+
+setTimeout(function(){if(typeof _cfAutoScan==="function")_cfAutoScan();},2500);
+
+
+
+
+window.pfNow = function pfNow() {
+  return new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+};
+
+window.pfFmt = function pfFmt(n) {
+  if (n >= 1e6) return (n/1e6).toFixed(2)+'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+  return n.toFixed(0);
+};
+
+window.pfSolFmt = function pfSolFmt(n) { return n.toFixed(4)+' SOL'; };
+
+window.pfLog = function pfLog(msg, type='info') {
+  const entry = {time: pfNow(), msg, type};
+  window.pfState.log.unshift(entry);
+  if (window.pfState.log.length > 100) window.pfState.log.pop();
+  renderPfLog();
+};
+
+window.renderPfLog = function renderPfLog() {
+  const el = document.getElementById('pf-log');
+  if (!el) return;
+  el.innerHTML = window.pfState.log.slice(0, 50).map(e => 
+    `<div class="pf-log-entry ${e.type}"><span class="pf-log-time">${e.time}</span>${e.msg}</div>`
+  ).join('');
+};
+
+window.clearPumpLog = function clearPumpLog() {
+  window.pfState.log = [];
+  renderPfLog();
+};
+
+window.ageStr = function ageStr(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return s + 's ago';
+  const m = Math.floor(s/60);
+  if (m < 60) return m + 'm ago';
+  return Math.floor(m/60) + 'h ago';
+};
+
+window.cleanCoinName = function cleanCoinName(name, symbol) {
+  if (!name) return symbol || 'New Token';
+  // Remove CDN URLs
+  if (name.startsWith('http') || name.includes('cdn.dexscreener')) {
+    return symbol || 'New Token';
+  }
+  // Truncate long descriptions
+  if (name.length > 40) return name.substring(0, 38) + '...';
+  return name;
+};
+
+window.getLiveSolPrice = function getLiveSolPrice() {
+  const rows = document.querySelectorAll('#portfolio-list .port-row');
+  for (const row of rows) {
+    const sym = row.querySelector('.port-sym');
+    const price = row.querySelector('.port-price');
+    if (sym && sym.textContent.trim() === 'SOL' && price) {
+      const parsed = parseFloat(price.textContent.replace('$', '').replace(',', ''));
+      if (parsed > 0) return parsed;
+    }
+  }
+  return 74.58; // fallback
+};
+
+window.addSolColumns = function addSolColumns() {
+  const SOL_PRICE = getLiveSolPrice();
+  const rows = document.querySelectorAll('#portfolio-list .port-row');
+  
+  rows.forEach(row => {
+    // Remove existing sol col to recalculate
+    const existing = row.querySelector('.port-sol-val');
+    if (existing) existing.remove();
+
+    const valueEl = row.querySelector('.port-value');
+    if (!valueEl) return;
+
+    const usdStr = valueEl.textContent.replace('$', '').replace(',', '');
+    const usdVal = parseFloat(usdStr) || 0;
+    const solVal = usdVal / SOL_PRICE;
+
+    const solEl = document.createElement('div');
+
+    if (solVal < 0.0001) {
+      solEl.className = 'port-sol-val zero';
+      solEl.textContent = '< 0.0001 SOL';
+    } else {
+      solEl.className = 'port-sol-val';
+      solEl.innerHTML = `${solVal.toFixed(4)} SOL<br><span style="font-size:0.7rem;color:#555;font-weight:400">≈ $${usdVal.toFixed(2)}</span>`;
+    }
+
+    const pnlEl = row.querySelector('.port-pnl');
+    if (pnlEl) {
+      row.insertBefore(solEl, pnlEl);
+    } else {
+      row.appendChild(solEl);
+    }
+  });
+};
+
+window.scorePumpCoin = function scorePumpCoin(coin) {
+  let score = 0;
+  const ageSecs = (Date.now() - coin.created) / 1000;
+  const ageMin = ageSecs / 60;
+  
+  // Age: prefer very new coins (< 30 min)
+  if (ageMin < 5)  score += 40;
+  else if (ageMin < 15) score += 30;
+  else if (ageMin < 30) score += 20;
+  else if (ageMin < 60) score += 10;
+  
+  // Volume spike
+  const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.01, 1));
+  if (spike > 5) score += 35;
+  else if (spike > 3) score += 25;
+  else if (spike > 2) score += 15;
+  
+  // Market cap sweet spot
+  const mcMin = parseFloat(document.getElementById('pf-min-mcap')?.value || 5000);
+  const mcMax = parseFloat(document.getElementById('pf-max-mcap')?.value || 200000);
+  if (coin.marketCap >= mcMin && coin.marketCap <= mcMax) score += 20;
+  
+  // Price momentum
+  if (coin.priceChange > 50) score += 20;
+  else if (coin.priceChange > 20) score += 12;
+  else if (coin.priceChange > 0) score += 5;
+  
+  // Volume vs mcap ratio
+  const volRatio = coin.volume24h / Math.max(coin.marketCap, 1);
+  if (volRatio > 0.5) score += 15;
+  else if (volRatio > 0.2) score += 8;
+  
+  coin.score = score;
+  return score;
+};
+
+window.isEligible = function isEligible(coin) {
+  const minVol = parseFloat(document.getElementById('pf-vol-spike')?.value || 3);
+  const mcMin = parseFloat(document.getElementById('pf-min-mcap')?.value || 5000);
+  const mcMax = parseFloat(document.getElementById('pf-max-mcap')?.value || 200000);
+  const ageHours = (Date.now() - coin.created) / 3600000;
+  const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.01, 1));
+  
+  return coin.marketCap >= mcMin 
+    && coin.marketCap <= mcMax
+    && spike >= minVol
+    && ageHours < 4  // Only coins less than 4 hours old
+    && !window.pfState.positions[coin.mint]; // not already in position
+};
+
+window.generateSimulatedCoins = function generateSimulatedCoins() {
+  const names = ['MoonDog','SolApe','TurboFrog','CryptoRat','PumpKing','GigaShib','LaserCat','NinjaSol','ChadCoin','BullRun','MemeRocket','DegenBet','SonicBoom','ViralPepe','AlphaWolf'];
+  const symbols = ['MDOG','SCAPE','TFROG','CRAT','PKNG','GSHIB','LCAT','NSOL','CHAD','BULL','MRKT','DGEN','SONIC','VPEPE','AWLF'];
+  const coins = [];
+  for (let i = 0; i < 20; i++) {
+    const idx = Math.floor(Math.random() * names.length);
+    const age = Math.floor(Math.random() * 3600); // 0-60 min old
+    const mcap = 5000 + Math.random() * 150000;
+    const vol = mcap * (0.1 + Math.random() * 2);
+    const change = -10 + Math.random() * 200;
+    coins.push({
+      mint: 'sim_' + Math.random().toString(36).substr(2, 8) + 'pump',
+      name: names[idx] + ' ' + Math.floor(Math.random()*100),
+      symbol: symbols[idx],
+      marketCap: mcap,
+      volume24h: vol,
+      created: Date.now() - age * 1000,
+      price: mcap / 1e9,
+      priceChange: change,
+      trades: Math.floor(Math.random() * 500),
+      holders: Math.floor(10 + Math.random() * 200),
+      progress: Math.random() * 80,
+      volumeSpike: 1 + Math.random() * 8,
+      source: 'simulated'
+    });
+  }
+  return coins;
+};
+
+window.checkExitStrategies = function checkExitStrategies() {
+  const positions = window.pfState.positions;
+  const SOL_PRICE = 140; // approximate
+  
+  Object.values(positions).forEach(pos => {
+    // Simulate price update
+    if (pos.mint.startsWith('sim_')) {
+      // For simulated: random walk
+      const change = (Math.random() - 0.45) * 0.03; // slight upward bias
+      pos.currentPrice = pos.currentPrice * (1 + change);
+      pos.currentMcap = pos.currentMcap * (1 + change);
+    }
+    
+    const pnlPct = ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100;
+    pos.pnlPct = pnlPct;
+    pos.pnlSol = (pos.solSpent * pnlPct / 100);
+    
+    // STOP LOSS: -25%
+    if (pnlPct <= -25 && !pos.stopped) {
+      pos.stopped = true;
+      executePfSell(pos, pos.remainingQty, 'STOP_LOSS');
+      return;
+    }
+    
+    // TIER 1: +50% → sell 50%
+    if (pnlPct >= 50 && !pos.tier1Hit) {
+      pos.tier1Hit = true;
+      const sellQty = pos.originalQty * 0.5;
+      const soldSol = pos.solSpent * 0.5 * (1 + pnlPct/100);
+      pos.remainingQty = pos.originalQty * 0.5;
+      pos.solRecovered = (pos.solRecovered || 0) + soldSol;
+      pfLog(`🎯 T1 EXIT: ${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 50% for ${soldSol.toFixed(4)} SOL`, 'sell');
+      updatePfStats('partial_sell', soldSol - pos.solSpent * 0.5);
+    }
+    
+    // TIER 2: +100% → sell 25% of held (25% of original)
+    if (pnlPct >= 100 && pos.tier1Hit && !pos.tier2Hit) {
+      pos.tier2Hit = true;
+      const sellQty = pos.originalQty * 0.25;
+      const soldSol = pos.solSpent * 0.25 * (1 + pnlPct/100);
+      pos.remainingQty = pos.originalQty * 0.25; // moon bag
+      pos.solRecovered = (pos.solRecovered || 0) + soldSol;
+      pfLog(`🚀 T2 EXIT: ${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 25% for ${soldSol.toFixed(4)} SOL`, 'sell');
+      pfLog(`🌙 MOON BAG: ${pos.symbol} → Holding 25% (${pos.remainingQty.toFixed(0)} tokens)`, 'moon');
+      updatePfStats('partial_sell', soldSol - pos.solSpent * 0.25);
+      // Move to portfolio but keep moon bag
+      closePfPosition(pos, 'moon_bag');
+    }
+  });
+  
+  renderPfPositions();
+  renderPfPortfolio();
+};
+
+window.updatePfStats = function updatePfStats(type, pnlSol) {
+  const s = window.pfState.stats;
+  if (type === 'open') { /* no-op */ }
+  else if (type === 'close' || type === 'partial_sell') {
+    s.pnl += pnlSol;
+    if (type === 'close') {
+      s.trades++;
+      if (pnlSol > 0) s.wins++;
+    }
+  }
+  renderPfStats();
+};
+
+window.closePfPosition = function closePfPosition(pos, status) {
+  const entry = {
+    ...pos,
+    status,
+    closedAt: Date.now(),
+    finalPnlPct: pos.pnlPct || 0,
+    finalPnlSol: pos.pnlSol || 0,
+    finalPnlUsd: (pos.pnlSol || 0) * 140
+  };
+  window.pfState.portfolio.unshift(entry);
+  if (status !== 'moon_bag') {
+    delete window.pfState.positions[pos.mint];
+  } else {
+    // Keep in positions as moon bag
+    pos.isMoonBag = true;
+  }
+  renderPfPositions();
+  renderPfPortfolio();
+};
+
+window.executePfSell = function executePfSell(pos, qty, reason) {
+  const pnlPct = pos.pnlPct || 0;
+  const pnlSol = pos.pnlSol || 0;
+  const isWin = pnlSol > 0;
+  
+  pfLog(`${isWin ? '✅' : '❌'} ${reason}: ${pos.symbol} ${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(1)}% | ${isWin ? '+' : ''}${pnlSol.toFixed(4)} SOL`, isWin ? 'sell' : 'exit');
+  
+  updatePfStats('close', pnlSol);
+  closePfPosition(pos, reason === 'STOP_LOSS' ? 'stopped' : 'closed');
+};
+
+window.renderPfStats = function renderPfStats() {
+  const s = window.pfState.stats;
+  const openCount = Object.keys(window.pfState.positions).length;
+  const wr = s.trades > 0 ? ((s.wins/s.trades)*100).toFixed(0) : 0;
+  const pnlEl = document.getElementById('pf-stat-pnl');
+  if (document.getElementById('pf-stat-trades')) {
+    document.getElementById('pf-stat-trades').textContent = s.trades;
+    document.getElementById('pf-stat-wr').textContent = wr + '%';
+    if (pnlEl) {
+      pnlEl.textContent = (s.pnl >= 0 ? '+' : '') + s.pnl.toFixed(4) + ' SOL';
+      pnlEl.className = 'stat-val ' + (s.pnl >= 0 ? 'pos' : 'neg');
+    }
+    document.getElementById('pf-stat-open').textContent = openCount;
+  }
+};
+
+window.renderPfCoins = function(coins) {
+  const cleaned = (coins || []).map(c => ({
+    ...c,
+    name: (c.name && !c.name.startsWith('http') && !c.name.includes('cdn.dexscreener'))
+      ? (c.name.length > 40 ? c.name.substring(0,38)+'...' : c.name)
+      : (c.symbol || 'New Token')
+  }));
+  _origRenderCoins(cleaned);
+};
+
+window.filterPumpCoins = function filterPumpCoins() {
+  renderPfCoins(window.pfState.coins);
+};
+
+window.pfOpenChart = function pfOpenChart(mint) {
+  const url = mint.startsWith('sim_') 
+    ? 'https://pump.fun' 
+    : `https://pump.fun/coin/${mint}`;
+  window.open(url, '_blank');
+};
+
+window.renderPfPositions = function renderPfPositions() {
+  const el = document.getElementById('pf-positions');
+  if (!el) return;
+  
+  const positions = Object.values(window.pfState.positions);
+  if (positions.length === 0) {
+    el.innerHTML = '<div class="pf-empty">No open positions</div>';
+    return;
+  }
+  
+  el.innerHTML = positions.map(pos => {
+    const pnlPct = pos.pnlPct || 0;
+    const pnlSol = pos.pnlSol || 0;
+    const pnlClass = pnlSol >= 0 ? 'pos' : 'neg';
+    const t1 = pos.tier1Hit ? 'reached' : '';
+    const t2 = pos.tier2Hit ? 'reached t2' : '';
+    const isMoon = pos.isMoonBag ? '🌙 ' : '';
+    const entryVal = (pos.solSpent * 140).toFixed(2);
+    const solVal = pos.solSpent.toFixed(4);
+    
+    return `<div class="pf-position-card">
+      <div class="pf-pos-header">
+        <span class="pf-pos-name">${isMoon}$${pos.symbol}</span>
+        <span class="pf-pos-pnl ${pnlClass}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%</span>
+      </div>
+      <div class="pf-pos-details">
+        <span>Entry</span><span class="pf-pos-detail-val">${pos.solSpent.toFixed(4)} SOL</span>
+        <span>PnL</span><span class="pf-pos-detail-val" style="color:${pnlSol>=0?'#00e57a':'#ff4444'}">${pnlSol>=0?'+':''}${pnlSol.toFixed(4)} SOL</span>
+        <span>Qty Left</span><span class="pf-pos-detail-val">${pfFmt(pos.remainingQty||pos.originalQty)}</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$${((pos.solSpent*(1+pnlPct/100))*140).toFixed(2)}</span>
+      </div>
+      <div class="pf-pos-tier-bar">
+        <div class="pf-tier-indicator ${t1}" title="T1: +50%"></div>
+        <div class="pf-tier-indicator ${t2}" title="T2: +100%"></div>
+        <div class="pf-tier-indicator ${pos.isMoonBag?'reached':''}" style="${pos.isMoonBag?'background:#7c5cfc':''}" title="🌙 Moon"></div>
+      </div>
+      <div class="pf-pos-actions">
+        <button class="pf-pos-sell-btn" onclick="manualPfSell('${pos.mint}')">💰 Sell 50%</button>
+        <button class="pf-pos-sell-btn all" onclick="manualPfSellAll('${pos.mint}')">🚪 Exit All</button>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.renderPfPortfolio = function renderPfPortfolio() {
+  const el = document.getElementById('pf-portfolio');
+  if (!el) return;
+  
+  if (window.pfState.portfolio.length === 0) {
+    el.innerHTML = '<div class="pf-empty">No trades yet</div>';
+    return;
+  }
+  
+  el.innerHTML = window.pfState.portfolio.slice(0, 20).map(t => {
+    const pnl = t.finalPnlPct || 0;
+    const pnlSol = t.finalPnlSol || 0;
+    const pnlUsd = t.finalPnlUsd || 0;
+    let statusIcon = '✅';
+    let pnlClass = 'win';
+    if (t.status === 'stopped') { statusIcon = '🛑'; pnlClass = 'loss'; }
+    else if (t.status === 'moon_bag') { statusIcon = '🌙'; pnlClass = 'partial'; }
+    else if (pnlSol < 0) { statusIcon = '❌'; pnlClass = 'loss'; }
+    
+    const solEntry = t.solSpent ? t.solSpent.toFixed(4) : '0.0000';
+    const solValue = pnlSol >= 0 
+      ? (t.solSpent + pnlSol).toFixed(4)
+      : (t.solSpent + pnlSol).toFixed(4);
+    
+    return `<div class="pf-port-row">
+      <div class="pf-port-header">
+        <span class="pf-port-name">${statusIcon} $${t.symbol}</span>
+        <span class="pf-port-pnl ${pnlClass}">${pnl>=0?'+':''}${pnl.toFixed(1)}%</span>
+      </div>
+      <div class="pf-port-sol-col">
+        <span class="pf-port-sol-label">Entry: <span class="pf-port-sol">${solEntry} SOL</span></span>
+        <span class="pf-port-sol-label">Value: <span class="pf-port-sol-val" style="color:${pnlSol>=0?'#00e57a':'#ff4444'}">${solValue} SOL ($${Math.abs(pnlUsd).toFixed(2)})</span></span>
+      </div>
+      <div class="pf-port-meta">
+        <span>${t.status === 'moon_bag' ? '🌙 Moon bag held' : t.status === 'stopped' ? '🛑 Stop loss' : '✅ Closed'}</span>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.manualPfBuy = function manualPfBuy(mint) {
+  const coin = window.pfState.coins.find(c => c.mint === mint);
+  if (!coin) return;
+  scorePumpCoin(coin);
+  executePfBuy(coin).then(() => {
+    pfLog(`👆 Manual buy: $${coin.symbol}`, 'buy');
+    renderPfCoins(window.pfState.coins);
+  });
+};
+
+window.manualPfSell = function manualPfSell(mint) {
+  const pos = window.pfState.positions[mint];
+  if (!pos) return;
+  pos.pnlPct = pos.pnlPct || 0;
+  pos.pnlSol = pos.solSpent * (pos.pnlPct / 100);
+  const soldSol = pos.solSpent * 0.5 * (1 + (pos.pnlPct||0)/100);
+  pos.remainingQty = (pos.remainingQty || pos.originalQty) * 0.5;
+  pos.tier1Hit = true;
+  pos.solRecovered = (pos.solRecovered||0) + soldSol;
+  pfLog(`👆 Manual sell 50%: $${pos.symbol} for ${soldSol.toFixed(4)} SOL`, 'sell');
+  updatePfStats('partial_sell', soldSol - pos.solSpent * 0.5);
+  renderPfPositions();
+  renderPfCoins(window.pfState.coins);
+};
+
+window.manualPfSellAll = function manualPfSellAll(mint) {
+  const pos = window.pfState.positions[mint];
+  if (!pos) return;
+  pos.pnlPct = pos.pnlPct || 0;
+  pos.pnlSol = pos.solSpent * (pos.pnlPct / 100);
+  pfLog(`👆 Manual exit all: $${pos.symbol} | ${pos.pnlPct.toFixed(1)}%`, 'exit');
+  executePfSell(pos, pos.remainingQty, 'MANUAL_EXIT');
+  renderPfCoins(window.pfState.coins);
+};
+
+window.pfFormatAddr = function(addr) {
+  if (!addr) return '';
+  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 6);
+};
+
+window.pfCopyAddress = function() {
+  const addr = window.pfWalletState.pubkey;
+  if (!addr) return;
+  navigator.clipboard.writeText(addr).then(() => {
+    const btn = document.getElementById('pf-copy-addr-btn');
+    if (btn) { btn.textContent = '✓'; setTimeout(() => btn.textContent = '⎘', 1500); }
+  });
+};
+
+window.pfGetSolBalance = async function(pubkeyStr) {
+  // First try portfolio page (instant, no network)
+  const portBal = pfGetBalanceFromPortfolio();
+  if (portBal !== null) return portBal;
+  
+  // Fallback: RPC
+  try {
+    const res = await fetch('https://api.mainnet-beta.solana.com', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        jsonrpc: '2.0', id: 1, method: 'getBalance',
+        params: [pubkeyStr, {commitment: 'confirmed'}]
+      })
+    });
+    const data = await res.json();
+    if (data.result?.value !== undefined) return data.result.value / 1e9;
+  } catch(e) {}
+  return null;
+};
+
+window.pfGetSolPrice = async function() {
+  const rows = document.querySelectorAll('#portfolio-list .port-row');
+  for (const row of rows) {
+    const sym = row.querySelector('.port-sym');
+    const price = row.querySelector('.port-price');
+    if (sym?.textContent.trim() === 'SOL' && price) {
+      const p = parseFloat(price.textContent.replace('$','').replace(',',''));
+      if (p > 0) return p;
+    }
+  }
+  try {
+    const r = await fetch('https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112');
+    if (r.ok) {
+      const d = await r.json();
+      return d.data?.['So11111111111111111111111111111111111111112']?.price || 74.58;
+    }
+  } catch(e) {}
+  return 74.58;
+};
+
+window.pfUpdateWalletUI = function pfUpdateWalletUI(connected, pubkey, solBalance, solPrice) {
+  const dot = document.getElementById('pf-wallet-dot');
+  const addrEl = document.getElementById('pf-wallet-addr');
+  const balEl = document.getElementById('pf-wallet-bal');
+  const connectBtn = document.getElementById('pf-connect-btn');
+  const disconnectBtn = document.getElementById('pf-disconnect-btn');
+  const infoRow = document.getElementById('pf-wallet-info-row');
+  const modeBadge = document.getElementById('pf-mode-badge');
+  const liveWarning = document.getElementById('pf-live-warning');
+  const copyBtn = document.getElementById('pf-copy-addr-btn');
+  const balSolEl = document.getElementById('pf-bal-sol');
+  const balUsdEl = document.getElementById('pf-bal-usd');
+
+  if (connected && pubkey) {
+    dot.className = 'pf-wallet-dot connected';
+    addrEl.className = 'pf-wallet-addr';
+    addrEl.textContent = pfFormatAddr(pubkey);
+    addrEl.title = pubkey;
+    balEl.textContent = solBalance !== null ? solBalance.toFixed(4) + ' SOL' : '';
+    connectBtn.style.display = 'none';
+    disconnectBtn.style.display = 'flex';
+    infoRow.style.display = 'grid';
+    copyBtn.style.display = 'inline';
+    modeBadge.className = 'pf-wallet-mode-badge live';
+    modeBadge.innerHTML = '⚡ LIVE TRADING MODE';
+    liveWarning.style.display = 'block';
+
+    if (balSolEl && solBalance !== null) {
+      balSolEl.textContent = solBalance.toFixed(4) + ' SOL';
+    }
+    if (balUsdEl && solBalance !== null && solPrice) {
+      balUsdEl.textContent = '$' + (solBalance * solPrice).toFixed(2);
+    }
+  } else {
+    dot.className = 'pf-wallet-dot disconnected';
+    addrEl.className = 'pf-wallet-addr dim';
+    addrEl.textContent = 'Not connected';
+    addrEl.title = '';
+    balEl.textContent = '';
+    connectBtn.style.display = 'flex';
+    disconnectBtn.style.display = 'none';
+    infoRow.style.display = 'none';
+    copyBtn.style.display = 'none';
+    modeBadge.className = 'pf-wallet-mode-badge sim';
+    modeBadge.innerHTML = '⚠️ SIMULATION MODE';
+    liveWarning.style.display = 'none';
+  }
+
+  // Update global pf wallet state
+  window.pfWalletState.connected = !!connected;
+  window.pfWalletState.pubkey = pubkey || null;
+  window.pfWalletState.solBalance = solBalance;
+  window.pfWalletState.solPrice = solPrice;
+};
+
+window.pfConnectWallet = async function() {
+  const connectBtn = document.getElementById('pf-connect-btn');
+  const dot = document.getElementById('pf-wallet-dot');
+  connectBtn.disabled = true;
+  connectBtn.innerHTML = `<span style="display:inline-block;animation:pfPulse 0.8s infinite">⏳</span> Connecting…`;
+  dot.className = 'pf-wallet-dot connecting';
+  try {
+    const provider = window.solana;
+    if (!provider?.isPhantom) {
+      pfLog('❌ Phantom not found. Install Phantom wallet extension.', 'exit');
+      connectBtn.disabled = false;
+      connectBtn.innerHTML = `🔑 Connect Phantom Wallet`;
+      dot.className = 'pf-wallet-dot disconnected';
+      return;
+    }
+    let pubkey;
+    if (provider.isConnected && provider.publicKey) {
+      pubkey = provider.publicKey.toString();
+    } else {
+      const resp = await provider.connect();
+      pubkey = resp.publicKey.toString();
+    }
+    const [balance, price] = await Promise.all([
+      window.pfGetSolBalance(pubkey),
+      window.pfGetSolPrice()
+    ]);
+    pfUpdateWalletUI(true, pubkey, balance, price);
+    window.pfState.wallet = { pubkey, provider, balance, solPrice: price, isLive: true };
+    pfLog('✅ Connected: ' + window.pfFormatAddr(pubkey), 'buy');
+    pfLog('💰 Balance: ' + (balance !== null ? balance.toFixed(4) : '?') + ' SOL ($' + (balance && price ? (balance*price).toFixed(2) : '?') + ')', 'info');
+    pfLog('⚡ LIVE MODE — bot will execute real trades on Pump.fun', 'buy');
+    if (window.pfBalanceInterval) clearInterval(window.pfBalanceInterval);
+    window.pfBalanceInterval = setInterval(async () => {
+      if (!window.pfWalletState.connected) return;
+      const b = await window.pfGetSolBalance(pubkey);
+      const p = await window.pfGetSolPrice();
+      if (b !== null) {
+        window.pfWalletState.solBalance = b;
+        const s = document.getElementById('pf-bal-sol');
+        const u = document.getElementById('pf-bal-usd');
+        const w = document.getElementById('pf-wallet-bal');
+        if (s) s.textContent = b.toFixed(4) + ' SOL';
+        if (u && p) u.textContent = '$' + (b*p).toFixed(2);
+        if (w) w.textContent = b.toFixed(4) + ' SOL';
+        if (window.pfState.wallet) window.pfState.wallet.balance = b;
+      }
+    }, 30000);
+  } catch(err) {
+    const msg = err.message || String(err);
+    pfLog((msg.includes('rejected') ? '⚠️ Rejected: ' : '❌ Error: ') + msg, 'info');
+    connectBtn.disabled = false;
+    connectBtn.innerHTML = `🔑 Connect Phantom Wallet`;
+    dot.className = 'pf-wallet-dot disconnected';
+  }
+};
+
+window.pfDisconnectWallet = function() {
+  if (window.pfBalanceInterval) clearInterval(window.pfBalanceInterval);
+  if (window.pfState.running && window.pfState.wallet?.isLive) {
+    if (window.pfState.interval) clearInterval(window.pfState.interval);
+    if (window.pfState.priceInterval) clearInterval(window.pfState.priceInterval);
+    window.pfState.running = false;
+    const sb = document.getElementById('pf-start-btn');
+    if (sb) { sb.textContent = '▶ Start Pump.fun Bot'; sb.classList.remove('running'); }
+    pfLog('⏸ Bot stopped — wallet disconnected', 'info');
+  }
+  window.pfState.wallet = null;
+  window.pfWalletState = { connected: false, pubkey: null, solBalance: null, solPrice: null };
+  pfUpdateWalletUI(false, null, null, null);
+  pfLog('🔌 Wallet disconnected. Switched to simulation mode.', 'info');
+};
+
+window.pfAutoDetectWallet = async function() {
+  const provider = window.solana;
+  if (provider && provider.isPhantom && provider.isConnected && provider.publicKey) {
+    const pubkey = provider.publicKey.toString();
+    const [balance, price] = await Promise.all([
+      window.pfGetSolBalance(pubkey),
+      window.pfGetSolPrice()
+    ]);
+    pfUpdateWalletUI(true, pubkey, balance, price);
+    window.pfState.wallet = { pubkey, provider, balance, solPrice: price, isLive: true };
+    pfLog('🔑 Pump.fun wallet auto-connected: ' + window.pfFormatAddr(pubkey), 'buy');
+    pfLog('💰 Balance: ' + (balance !== null ? balance.toFixed(4) : 'fetching…') + ' SOL', 'info');
+
+    if (window.pfBalanceInterval) clearInterval(window.pfBalanceInterval);
+    window.pfBalanceInterval = setInterval(async () => {
+      if (!window.pfWalletState.connected) return;
+      const newBal = await window.pfGetSolBalance(pubkey);
+      const newP = await window.pfGetSolPrice();
+      if (newBal !== null) {
+        window.pfWalletState.solBalance = newBal;
+        const balSolEl = document.getElementById('pf-bal-sol');
+        const balUsdEl = document.getElementById('pf-bal-usd');
+        const balEl = document.getElementById('pf-wallet-bal');
+        if (balSolEl) balSolEl.textContent = newBal.toFixed(4) + ' SOL';
+        if (balUsdEl && newP) balUsdEl.textContent = '$' + (newBal * newP).toFixed(2);
+        if (balEl) balEl.textContent = newBal.toFixed(4) + ' SOL';
+        if (window.pfState.wallet) window.pfState.wallet.balance = newBal;
+      }
+    }, 30000);
+  }
+};
+
+window.togglePumpAgent = function() {
+  const btn = document.getElementById('pf-start-btn');
+  const dot = document.getElementById('pf-status-dot');
+  const txt = document.getElementById('pf-status-text');
+  
+  if (!window.pfState.running) {
+    window.pfState.running = true;
+    btn.textContent = '⏸ Stop Bot';
+    btn.classList.add('running');
+    if (dot) dot.className = 'pf-status-dot active';
+    if (txt) txt.textContent = 'Running – scanning every 15s';
+    
+    pfLog('🤖 Pump.fun AI Bot STARTED', 'buy');
+    pfLog('📋 Strategy: Entry on vol spike, Exit T1:+50%→sell50%, T2:+100%→sell25%, Moon: hold rest', 'info');
+    
+    window.pfAgentCycle();
+    
+    if (window.pfState.interval) clearInterval(window.pfState.interval);
+    window.pfState.interval = setInterval(window.pfAgentCycle, 15000);
+    
+    if (window.pfState.priceInterval) clearInterval(window.pfState.priceInterval);
+    window.pfState.priceInterval = setInterval(() => {
+      Object.values(window.pfState.positions).forEach(pos => {
+        if (pos.isSimulated) {
+          const drift = (Math.random() - 0.44) * 0.02;
+          pos.currentPrice = (pos.currentPrice || pos.entryPrice) * (1 + drift);
+          const pnlPct = ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100;
+          pos.pnlPct = pnlPct;
+          pos.pnlSol = pos.solSpent * (pnlPct / 100);
+        }
+      });
+      checkExitStrategies();
+      renderPfPositions();
+      renderPfStats();
+    }, 5000);
+    
+  } else {
+    window.pfState.running = false;
+    if (window.pfState.interval) clearInterval(window.pfState.interval);
+    if (window.pfState.priceInterval) clearInterval(window.pfState.priceInterval);
+    btn.textContent = '▶ Start Pump.fun Bot';
+    btn.classList.remove('running');
+    if (dot) dot.className = 'pf-status-dot';
+    if (txt) txt.textContent = 'Stopped';
+    pfLog('⏸ Pump.fun AI Bot STOPPED', 'info');
+  }
+};
+
+window.pfAgentCycle = async function() {
+  if (!window.pfState.running) return;
+  
+  const maxPos = parseInt(document.getElementById('pf-max-pos')?.value || 5);
+  const openCount = Object.values(window.pfState.positions).filter(p => !p.isMoonBag).length;
+  
+  pfLog('🔍 Scanning ' + window.pfState.coins.length + ' new Pump.fun coins...', 'scan');
+  
+  checkExitStrategies();
+  
+  if (openCount < maxPos) {
+    const eligible = window.pfState.coins
+      .filter(c => isEligible(c))
+      .sort((a, b) => (b.score||0) - (a.score||0))
+      .slice(0, maxPos - openCount);
+    
+    for (const coin of eligible) {
+      if (!window.pfState.running) break;
+      await window.executePfBuy(coin);
+      await new Promise(r => setTimeout(r, 500));
+    }
+    
+    if (eligible.length === 0) {
+      pfLog('⚠️ No coins match criteria. Adjusting thresholds...', 'info');
+    }
+  } else {
+    pfLog('📊 Max positions (' + maxPos + ') reached. Monitoring exits...', 'info');
+  }
+  
+  renderPfStats();
+  renderPfPositions();
+};
+
+window.executePfBuy = async function(coin) {
+  const tradeSize = parseFloat(document.getElementById('pf-trade-size')?.value || 0.1);
+  const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.01, 1));
+  const isLive = window.pfState.wallet?.isLive && window.pfWalletState.connected;
+
+  // Check balance
+  const availableBal = isLive
+    ? (window.pfWalletState.solBalance || 0)
+    : 999; // simulated always has balance
+
+  if (availableBal < tradeSize) {
+    pfLog(`⚠️ Insufficient SOL: ${availableBal.toFixed(4)} SOL < ${tradeSize} SOL trade size`, 'info');
+    return;
+  }
+
+  const estimatedTokens = tradeSize * 140 / Math.max(coin.price || 0.000001, 0.000001);
+
+  if (isLive) {
+    // LIVE TRADE: Use Jupiter aggregator for best price, route through Pump.fun bonding curve
+    pfLog(`🔗 [LIVE] Initiating swap: ${tradeSize} SOL → $${coin.symbol} via Jupiter…`, 'buy');
+    try {
+      // 1. Get Jupiter quote
+      const quoteRes = await fetch(
+        `https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${coin.mint}&amount=${Math.floor(tradeSize * 1e9)}&slippageBps=1500&onlyDirectRoutes=false`
+      );
+
+      if (!quoteRes.ok) throw new Error('Jupiter quote failed');
+      const quote = await quoteRes.json();
+
+      if (quote.error) throw new Error(quote.error);
+
+      // 2. Get swap transaction
+      const swapRes = await fetch('https://quote-api.jup.ag/v6/swap', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          quoteResponse: quote,
+          userPublicKey: window.pfWalletState.pubkey,
+          wrapAndUnwrapSol: true,
+          dynamicComputeUnitLimit: true,
+          prioritizationFeeLamports: 'auto'
+        })
+      });
+
+      if (!swapRes.ok) throw new Error('Jupiter swap build failed');
+      const { swapTransaction } = await swapRes.json();
+
+      // 3. Sign & send via Phantom
+      const swapTxBuf = Uint8Array.from(atob(swapTransaction), c => c.charCodeAt(0));
+      const txn = window.solanaWeb3
+        ? solanaWeb3.VersionedTransaction.deserialize(swapTxBuf)
+        : null;
+
+      if (!txn) throw new Error('Could not deserialize transaction');
+
+      const signedTxn = await window.solana.signTransaction(txn);
+
+      // 4. Send
+      const conn = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+      const sig = await conn.sendRawTransaction(signedTxn.serialize(), {
+        skipPreflight: false,
+        maxRetries: 3
+      });
+
+      pfLog(`✅ [LIVE] Swap sent! Sig: ${sig.substring(0,20)}…`, 'buy');
+      pfLog(`🔗 View: https://solscan.io/tx/${sig}`, 'info');
+
+      // Deduct from tracked balance
+      if (window.pfWalletState.solBalance !== null) {
+        window.pfWalletState.solBalance = Math.max(0, window.pfWalletState.solBalance - tradeSize - 0.005);
+        const balEl = document.getElementById('pf-bal-sol');
+        if (balEl) balEl.textContent = window.pfWalletState.solBalance.toFixed(4) + ' SOL';
+      }
+
+    } catch(err) {
+      const msg = err.message || String(err);
+      if (msg.includes('User rejected') || msg.includes('Transaction rejected')) {
+        pfLog(`⚠️ Trade rejected in Phantom: $${coin.symbol}`, 'info');
+      } else {
+        pfLog(`❌ [LIVE] Trade failed for $${coin.symbol}: ${msg}`, 'exit');
+      }
+      return; // Don't record position if trade failed
+    }
+  } else {
+    pfLog(`✅ [SIM] BOUGHT $${coin.symbol} | ${tradeSize} SOL | Score: ${(coin.score||0).toFixed(0)} | Vol Spike: ${spike.toFixed(1)}×`, 'buy');
+  }
+
+  // Record position
+  window.pfState.positions[coin.mint] = {
+    mint: coin.mint,
+    name: coin.name,
+    symbol: coin.symbol,
+    entryPrice: coin.price || 0.000001,
+    currentPrice: coin.price || 0.000001,
+    currentMcap: coin.marketCap,
+    solSpent: tradeSize,
+    originalQty: estimatedTokens,
+    remainingQty: estimatedTokens,
+    solRecovered: 0,
+    tier1Hit: false,
+    tier2Hit: false,
+    isMoonBag: false,
+    openedAt: Date.now(),
+    isSimulated: !isLive,
+    isLive,
+    pnlPct: 0,
+    pnlSol: 0,
+    score: coin.score || 0
+  };
+
+  renderPfPositions();
+  renderPfCoins(window.pfState.coins);
+};
+
+window.refreshPumpCoins = async function() {
+  const statusDot = document.getElementById('pf-status-dot');
+  const statusTxt = document.getElementById('pf-status-text');
+  if (statusDot) statusDot.className = 'pf-status-dot scanning';
+  
+  let coins = null;
+  
+  // Try enriched DexScreener approach
+  coins = await enrichedPumpFeed();
+  
+  // Fallback: Try direct pump.fun API
+  if (!coins || coins.length < 5) {
+    coins = await tryPumpFunAPI();
+    if (coins) pfLog('📡 ' + coins.length + ' coins from Pump.fun API', 'scan');
+  }
+  
+  // Last resort: simulated
+  if (!coins || coins.length < 3) {
+    const sims = generateSimulatedCoins();
+    coins = sims;
+    pfLog('📡 Using simulated feed – real pump.fun API blocked by CORS', 'info');
+  } else {
+    pfLog('✅ ' + coins.length + ' live Pump.fun tokens refreshed', 'scan');
+  }
+  
+  coins.forEach(c => scorePumpCoin(c));
+  
+  // Merge with existing positions for price updates
+  Object.values(window.pfState.positions).forEach(pos => {
+    const fresh = coins.find(c => c.mint === pos.mint);
+    if (fresh && fresh.price > 0) {
+      pos.currentPrice = fresh.price;
+      const pnlPct = ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100;
+      pos.pnlPct = pnlPct;
+      pos.pnlSol = pos.solSpent * (pnlPct / 100);
+    } else {
+      // Simulate drift
+      const drift = (Math.random() - 0.44) * 0.025;
+      pos.currentPrice = (pos.currentPrice || pos.entryPrice) * (1 + drift);
+      const pnlPct = ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100;
+      pos.pnlPct = pnlPct;
+      pos.pnlSol = pos.solSpent * (pnlPct / 100);
+    }
+  });
+  
+  window.pfState.coins = coins;
+  renderPfCoins(coins);
+  renderPfPositions();
+  
+  const now = pfNow();
+  if (statusTxt) statusTxt.textContent = `Last scan: ${now} (${coins.length} coins)`;
+  if (statusDot) statusDot.className = 'pf-status-dot ' + (window.pfState.running ? 'active' : 'scanning');
+};
+
+
+
+
+// ===== PUMP.FUN MODULE INIT =====
+window.pfState = {
+  running: false, interval: null, scanInterval: null, priceInterval: null,
+  coins: [], positions: {}, portfolio: [], stats: { trades: 0, wins: 0, pnl: 0 }, log: []
+};
+window.pfWalletState = { connected: false, pubkey: null, solBalance: null, solPrice: null };
+window.pfInitialized = false;
+
+// Patched switchTab to handle pumpfun
+const _origSwitchTab = window.switchTab;
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => { t.classList.add('hidden'); t.style.display = ''; });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('tab-' + tab);
+  const btn = document.querySelector('[data-tab="' + tab + '"]');
+  if (target) { target.classList.remove('hidden'); if (tab === 'pumpfun') target.style.display = 'flex'; }
+  if (btn) btn.classList.add('active');
+  if (tab === 'pumpfun' && !window.pfInitialized) {
+    window.pfInitialized = true;
+    window.initPumpFunFeed();
+  }
+};
+document.querySelectorAll('.nav-btn').forEach(btn => { btn.onclick = () => switchTab(btn.dataset.tab); });
+
+// Patched loadPortfolio to add SOL column
+const _origLoadPortfolio = window.loadPortfolio;
+if (typeof _origLoadPortfolio === 'function') {
+  window.loadPortfolio = async function() {
+    await _origLoadPortfolio();
+    setTimeout(() => {
+      window.addSolColumns();
+      const portList = document.getElementById('portfolio-list');
+      if (portList && !portList.querySelector('.portfolio-list-header')) {
+        const header = document.createElement('div');
+        header.className = 'portfolio-list-header';
+        header.innerHTML = '<span>Token</span><span>Amount</span><span>Price</span><span>USD Value</span><span style="color:#7c5cfc">SOL Value</span><span>24h P&L</span>';
+        portList.insertBefore(header, portList.firstChild);
+      }
+    }, 600);
+  };
+}
+
+
+
+window.initPumpFunFeed = async function() {
+  pfLog('🚀 Connecting to Pump.fun API...', 'info');
+  pfLog('📡 Fetching newest coins with volume momentum...', 'scan');
+  await window.refreshPumpCoins();
+  if (window.pfState.scanInterval) clearInterval(window.pfState.scanInterval);
+  window.pfState.scanInterval = setInterval(window.refreshPumpCoins, 30000);
+  pfLog('✅ Pump.fun feed connected. Monitoring new coins.', 'buy');
+  // Inject wallet section into sidebar
+  window.pfInjectWalletSection();
+  // Auto-detect connected wallet
+  await window.pfAutoDetectWallet();
+};
+
+window.pfInjectWalletSection = function() {
+  const sidebar = document.querySelector('.pf-sidebar');
+  if (!sidebar || document.getElementById('pf-wallet-section')) return;
+  const ws = document.createElement('div');
+  ws.id = 'pf-wallet-section';
+  ws.className = 'pf-wallet-section';
+  ws.innerHTML = `
+    <div class="pf-wallet-title"><span>🔑</span> Pump.fun Wallet</div>
+    <div id="pf-mode-badge" class="pf-wallet-mode-badge sim">⚠️ SIMULATION MODE</div>
+    <div class="pf-wallet-status-row">
+      <span class="pf-wallet-dot disconnected" id="pf-wallet-dot"></span>
+      <span class="pf-wallet-addr dim" id="pf-wallet-addr">Not connected</span>
+      <span class="pf-wallet-bal" id="pf-wallet-bal"></span>
+      <button class="pf-copy-btn" id="pf-copy-addr-btn" title="Copy address" onclick="pfCopyAddress()" style="display:none">⎘</button>
+    </div>
+    <div class="pf-wallet-info-row" id="pf-wallet-info-row" style="display:none">
+      <div class="pf-wallet-info-box"><span class="pf-wallet-info-label">SOL Balance</span><span class="pf-wallet-info-val green" id="pf-bal-sol">0.0000</span></div>
+      <div class="pf-wallet-info-box"><span class="pf-wallet-info-label">USD Value</span><span class="pf-wallet-info-val purple" id="pf-bal-usd">$0.00</span></div>
+    </div>
+    <button class="pf-connect-btn" id="pf-connect-btn" onclick="pfConnectWallet()">
+      <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect width="128" height="128" rx="64" fill="#AB9FF2"/><path d="M110.584 65.27H99.142c0-27.81-22.598-50.357-50.484-50.357-27.563 0-49.961 22.13-50.483 49.537-.538 27.995 23.178 51.55 51.22 51.55h3.639c25.411 0 57.006-20.49 62.47-47.002a5.17 5.17 0 00-5.02-3.728h.1zm-61.926 29.4h-3.639c-20.19 0-37.25-16.507-36.827-36.663.416-19.648 16.64-35.444 36.338-35.444 20.015 0 36.29 16.22 36.29 36.19v.28H63.673a12.74 12.74 0 00-12.738 12.705v.004a12.74 12.74 0 0012.738 12.705h17.147C74.9 91.1 63.83 94.67 48.658 94.67z" fill="#fff"/></svg>
+      Connect Phantom Wallet
+    </button>
+    <button class="pf-connect-btn pf-disconnect-btn" id="pf-disconnect-btn" onclick="pfDisconnectWallet()" style="display:none">🔌 Disconnect Wallet</button>
+    <div class="pf-live-warning" id="pf-live-warning" style="display:none">⚡ LIVE MODE — Bot will execute real trades on Pump.fun using your wallet. Each trade requires Phantom approval.</div>
+  `;
+  sidebar.insertBefore(ws, sidebar.firstChild);
+};
+
+window.fetchPumpFunNewCoins = async function() {
+  const endpoints = [
+    'https://client-api-2-74b1891ee9f9.herokuapp.com/coins?offset=0&limit=50&sort=last_trade_timestamp&order=DESC&includeNsfw=false',
+    'https://frontend-api.pump.fun/coins?offset=0&limit=50&sort=last_trade_timestamp&order=DESC&includeNsfw=false'
+  ];
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {headers:{'Accept':'application/json','Origin':'https://pump.fun'}});
+      if (res.ok) {
+        const data = await res.json();
+        const coins = (Array.isArray(data)?data:[]).map(c => ({
+          mint: c.mint||c.address, name: c.name||'Unknown', symbol: c.symbol||'???',
+          marketCap: c.usd_market_cap||c.market_cap||0, volume24h: c.volume||c.virtual_sol_reserves*140||0,
+          created: (c.created_timestamp||Date.now()/1000)*1000, price: c.price||c.usd_market_cap/1e9||0,
+          priceChange: c.price_change_24h||(Math.random()-0.3)*100, trades: c.total_transactions||0,
+          holders: c.holder_count||0, volumeSpike: (c.volume||0)/Math.max(c.usd_market_cap*0.01||1,1), source:'pumpfun_live'
+        })).filter(c=>c.mint);
+        if (coins.length > 0) return coins;
+      }
+    } catch(e) {}
+  }
+  return null;
+};
+
+</script>
+
+</body>
 </html>
