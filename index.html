@@ -951,7 +951,7 @@ function signalClass(sig){if(sig==='STRONG BUY')return'signal-strong-buy';if(sig
 function calcSignal(pc,vol,liq){var s=0;if(pc>20)s+=3;else if(pc>10)s+=2;else if(pc>5)s+=1;else if(pc<-10)s-=2;else if(pc<-5)s-=1;if(vol>500000)s+=2;else if(vol>100000)s+=1;if(liq>100000)s+=1;if(s>=4)return'STRONG BUY';if(s>=2)return'BUY';if(s<=-2)return'STRONG SELL';if(s<=-1)return'SELL';return'NEUTRAL';}
 function updatePhantomUI(){var cb=document.getElementById('phantom-connect-btn');var sb=document.getElementById('phantom-status-btn');var db=document.getElementById('phantom-disconnect-btn');var as=document.getElementById('wallet-addr-short');if(!cb)return;if(INF.wallet){cb.style.display='none';sb.style.display='inline-flex';db.style.display='inline-flex';if(as)as.textContent=formatAddr(INF.wallet);}else{cb.style.display='inline-flex';sb.style.display='none';db.style.display='none';}}
 function updatePhotonUI(){var cb=document.getElementById('photon-connect-btn');var db=document.getElementById('photon-disconnect-btn');if(!cb)return;if(INF.photonConnected){cb.style.display='none';db.style.display='inline-flex';}else{cb.style.display='inline-flex';db.style.display='none';}}
-async async function connectPhantom(){
+async function connectPhantom(){
   try{
     if(!window.solana||!window.solana.isPhantom){
       showToast('Phantom not installed. Get it at phantom.app','error');
@@ -1984,10 +1984,6 @@ window.checkExitStrategies = function checkExitStrategies() {
       pos.currentPrice = pos.currentPrice * (1 + change);
       pos.currentMcap = pos.currentMcap * (1 + change);
     }
-    
-    const pnlPct = ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100;
-    pos.pnlPct = pnlPct;
-    pos.pnlSol = (pos.solSpent * pnlPct / 100);
     
     if (!pos || pos.stopped || (pos.isMoonBag && pos.tier2Hit)) return;
     
