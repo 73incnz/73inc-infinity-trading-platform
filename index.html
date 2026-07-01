@@ -239,7 +239,7 @@
   <!-- Connect button -->
   <button class="pf-connect-btn" id="pf-connect-btn" onclick="pfConnectWallet()" style="display: none;">
     <svg width="16" height="16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect width="128" height="128" rx="64" fill="#AB9FF2"></rect><path d="M110.584 65.27H99.142c0-27.81-22.598-50.357-50.484-50.357-27.563 0-49.961 22.13-50.483 49.537-.538 27.995 23.178 51.55 51.22 51.55h3.639c25.411 0 57.006-20.49 62.47-47.002a5.17 5.17 0 00-5.02-3.728h.1zm-61.926 29.4h-3.639c-20.19 0-37.25-16.507-36.827-36.663.416-19.648 16.64-35.444 36.338-35.444 20.015 0 36.29 16.22 36.29 36.19v.28H63.673a12.74 12.74 0 00-12.738 12.705v.004a12.74 12.74 0 0012.738 12.705h17.147C74.9 91.1 63.83 94.67 48.658 94.67z" fill="#fff"></path></svg>
-    Connect Phantom Wallet
+    Connect Phantom / Pump.fun
   </button>
 
   <!-- Disconnect button (hidden until connected) -->
@@ -249,7 +249,7 @@
 
   <!-- Warning when live -->
   <div class="pf-live-warning" id="pf-live-warning" style="display: block;">
-    ⚡ LIVE MODE — Bot will execute real trades on Pump.fun using your wallet. Each trade requires Phantom approval.
+    ⚡ REAL TRADING MODE — Bot will execute real trades on Pump.fun using your Phantom wallet. Entry: 0.1 SOL per trade. Each trade requires Phantom approval.
   </div>
 </div>
     <div class="pf-section">
@@ -282,11 +282,11 @@
       <div class="pf-exit-card">
         <div class="pf-exit-row">
           <span class="pf-exit-label">Tier 1 Exit</span>
-          <span class="pf-exit-val pf-exit-green">+50% gain → Sell 50%</span>
+          <span class="pf-exit-val pf-exit-green">+100% gain → Sell 50% of original</span>
         </div>
         <div class="pf-exit-row">
           <span class="pf-exit-label">Tier 2 Exit</span>
-          <span class="pf-exit-val pf-exit-yellow">+100% gain → Sell 25% of held</span>
+          <span class="pf-exit-val pf-exit-yellow">+150% total gain → Sell 25% more</span>
         </div>
         <div class="pf-exit-row">
           <span class="pf-exit-label">Moon Bag</span>
@@ -300,7 +300,13 @@
     </div>
 
     <div class="pf-section">
-      <button id="pf-start-btn" class="pf-start-btn" onclick="togglePumpAgent()">▶ Start Pump.fun Bot</button>
+      <div class="pf-section-title" style="font-size:0.82rem;margin-bottom:8px">🔀 Trading Mode</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button id="pf-mode-sim-btn" class="pf-mode-btn active-sim" onclick="pfSetMode('simulation')" style="flex:1;padding:8px 4px;border-radius:8px;border:2px solid #4ade80;background:#0a2010;color:#4ade80;cursor:pointer;font-size:0.78rem;font-weight:700">🧪 SIMULATION</button>
+        <button id="pf-mode-live-btn" class="pf-mode-btn" onclick="pfSetMode('live')" style="flex:1;padding:8px 4px;border-radius:8px;border:2px solid #333;background:#111;color:#555;cursor:pointer;font-size:0.78rem;font-weight:700">⚡ REAL TRADING</button>
+      </div>
+      <div id="pf-trading-mode-display" class="pf-mode-display sim" style="text-align:center;font-size:0.75rem;padding:4px;border-radius:6px;background:#0a2010;color:#4ade80;margin-bottom:8px">🧪 SIMULATION MODE</div>
+      <button id="pf-start-btn" class="pf-start-btn" onclick="togglePumpAgent()">▶ Start Bot</button>
       <button class="pf-clear-btn" onclick="clearPumpLog()" style="margin-top:8px">
         🗑 Clear Log
       </button>
@@ -320,18 +326,26 @@
   <!-- CENTER: New Coins Feed -->
   <div class="pf-center">
     <div class="pf-center-header">
-      <div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span class="pf-center-title">🆕 Live New Coins</span>
-        <span class="pf-live-badge">● LIVE</span>
+        <span class="pf-live-badge" id="pf-live-indicator" style="cursor:pointer" onclick="refreshPumpCoins&&refreshPumpCoins()">● LIVE</span>
+        <span id="pf-scan-counter" style="font-size:0.7rem;color:#aaa;background:#1a1a2e;padding:2px 8px;border-radius:10px;border:1px solid #333">0 tokens</span>
+        <span id="pf-refresh-anim" style="font-size:0.68rem;color:#555">⟳</span>
       </div>
-      <div class="pf-filter-row">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:3px">
+        <span id="pf-last-refresh" style="font-size:0.68rem;color:#444">Scanning for new tokens...</span>
+        <div id="pf-refresh-spinner" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#333;transition:background 0.3s"></div>
+      </div>
+      <div class="pf-filter-row" style="margin-top:6px">
         <input id="pf-search" class="pf-search" placeholder="Search coin..." oninput="filterPumpCoins()">
         <select id="pf-sort" class="pf-select" onchange="filterPumpCoins()">
+          <option value="score">AI Score ↓</option>
           <option value="volume">Volume ↓</option>
           <option value="mcap">Market Cap ↓</option>
           <option value="age">Newest First</option>
           <option value="gain">Gain % ↓</option>
         </select>
+        <button onclick="window.refreshPumpCoins&&refreshPumpCoins()" title="Force refresh scanner" style="background:#1a1a2e;border:1px solid #7c5cfc44;color:#7c5cfc;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.72rem">↺ Scan Now</button>
       </div>
     </div>
     <div id="pf-coins-grid" class="pf-coins-grid"><div class="pf-coin-card pf-hot " data-mint="591UdL6WMaEMEf641uJUwUTq1utX6zhBrjaiTqVCpump">
@@ -655,8 +669,8 @@
         <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$15.06</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator " title="T1: +50%"></div>
-        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator " title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -675,8 +689,8 @@
         <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.62</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator " title="T1: +50%"></div>
-        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator " title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -695,8 +709,8 @@
         <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.48</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator " title="T1: +50%"></div>
-        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator " title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -715,8 +729,8 @@
         <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$16.69</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator " title="T1: +50%"></div>
-        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator " title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -735,8 +749,8 @@
         <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$14.98</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator " title="T1: +50%"></div>
-        <div class="pf-tier-indicator " title="T2: +100%"></div>
+        <div class="pf-tier-indicator " title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator " title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator " style="" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -753,7 +767,7 @@
 
     <div class="pf-section" style="margin-top:14px">
       <div class="pf-section-title" style="font-size:0.85rem">📋 Trade Log</div>
-      <div id="pf-log" class="pf-log"><div class="pf-log-entry info"><span class="pf-log-time">21:06:22</span>💰 Balance: fetching… SOL</div><div class="pf-log-entry buy"><span class="pf-log-time">21:06:22</span>🔑 Pump.fun wallet auto-connected: 2fLcT3...wkPMeF</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:38</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:35</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:35</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:20</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📋 Strategy: Entry on vol spike, Exit T1:+50%→sell50%, T2:+100%→sell25%, Moon: hold rest</div><div class="pf-log-entry buy"><span class="pf-log-time">21:01:20</span>🤖 Pump.fun AI Bot STARTED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:09</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:10</span>🔍 Scanning 20 new Pump.fun coins...</div></div>
+      <div id="pf-log" class="pf-log"><div class="pf-log-entry info"><span class="pf-log-time">21:06:22</span>💰 Balance: fetching… SOL</div><div class="pf-log-entry buy"><span class="pf-log-time">21:06:22</span>🔑 Pump.fun wallet auto-connected: 2fLcT3...wkPMeF</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:38</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:35</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:35</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:01:20</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:20</span>📋 Strategy: Entry on signal, T1:+100%→sell50%, T2:+150%→sell25%, Moon: hold final 25%</div><div class="pf-log-entry buy"><span class="pf-log-time">21:01:20</span>🤖 Pump.fun AI Bot STARTED</div><div class="pf-log-entry info"><span class="pf-log-time">21:01:09</span>⏸ Pump.fun AI Bot STOPPED</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">21:00:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">21:00:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:59:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:59:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:58:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:58:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:57:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:57:10</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:55</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:55</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:40</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:40</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:25</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:25</span>🔍 Scanning 20 new Pump.fun coins...</div><div class="pf-log-entry info"><span class="pf-log-time">20:56:10</span>📊 Max positions (5) reached. Monitoring exits...</div><div class="pf-log-entry scan"><span class="pf-log-time">20:56:10</span>🔍 Scanning 20 new Pump.fun coins...</div></div>
     </div>
   </div>
 </div>
@@ -1450,9 +1464,198 @@ window.generateSimulatedCoins = function generateSimulatedCoins() {
   return coins;
 };
 
+// ===== PUMP.FUN LIVE SCANNER HELPERS =====
+window.pfGetLiveSolPriceSync = function() {
+  if (window.pfWalletState && window.pfWalletState.solPrice && window.pfWalletState.solPrice > 0) {
+    return window.pfWalletState.solPrice;
+  }
+  return getLiveSolPrice();
+};
+
+window.pfScannerState = window.pfScannerState || {
+  isLive: false, lastUpdate: null, tokenCount: 0, refreshInterval: null, pulseInterval: null
+};
+
+window.pfStartLiveScanner = function() {
+  if (window.pfScannerState.refreshInterval) clearInterval(window.pfScannerState.refreshInterval);
+  window.pfScannerState.isLive = true;
+  const indicator = document.getElementById('pf-live-indicator');
+  if (indicator) { indicator.textContent = '● LIVE'; indicator.style.color = '#00e57a'; }
+  refreshPumpCoins();
+  window.pfScannerState.refreshInterval = setInterval(refreshPumpCoins, 15000);
+  window.pfScannerState.pulseInterval = setInterval(() => {
+    const spinner = document.getElementById('pf-refresh-spinner');
+    if (spinner) { spinner.style.background = '#7c5cfc'; setTimeout(()=>{ spinner.style.background = '#333'; }, 300); }
+  }, 15000);
+  pfLog('🔴 Live scanner started — refreshing every 15s', 'scan');
+};
+
+window.pfStopLiveScanner = function() {
+  if (window.pfScannerState.refreshInterval) clearInterval(window.pfScannerState.refreshInterval);
+  if (window.pfScannerState.pulseInterval) clearInterval(window.pfScannerState.pulseInterval);
+  window.pfScannerState.isLive = false;
+  const indicator = document.getElementById('pf-live-indicator');
+  if (indicator) { indicator.textContent = '○ PAUSED'; indicator.style.color = '#555'; }
+};
+
+window.pfUpdateScannerStatus = function(count) {
+  window.pfScannerState.lastUpdate = new Date();
+  window.pfScannerState.tokenCount = count;
+  const ts = window.pfScannerState.lastUpdate.toLocaleTimeString();
+  const lr = document.getElementById('pf-last-refresh');
+  const sc = document.getElementById('pf-scan-counter');
+  const spinner = document.getElementById('pf-refresh-spinner');
+  if (lr) lr.textContent = 'Last update: ' + ts;
+  if (sc) sc.textContent = count + ' tokens';
+  if (spinner) { spinner.style.background = '#00e57a'; setTimeout(()=>{ spinner.style.background = '#333'; }, 500); }
+};
+
+// ===== ENHANCED BUY SIGNAL ENGINE =====
+// Returns a score 0-200 with details
+window.pfScoreEnhanced = function(coin) {
+  let score = 0;
+  const reasons = [];
+  const ageMs = Date.now() - coin.created;
+  const ageMins = ageMs / 60000;
+  const ageHours = ageMs / 3600000;
+  
+  // === AGE SCORING (max 40) ===
+  // Prefer brand new coins just starting to move
+  if (ageMins < 5)       { score += 40; reasons.push('🆕 <5min old'); }
+  else if (ageMins < 15) { score += 35; reasons.push('🆕 <15min old'); }
+  else if (ageMins < 30) { score += 25; reasons.push('⏱ <30min old'); }
+  else if (ageMins < 60) { score += 15; reasons.push('⏱ <1h old'); }
+  else if (ageHours < 2) { score += 8; reasons.push('⏱ <2h old'); }
+  else if (ageHours < 4) { score += 3; }
+  else { score -= 20; reasons.push('⚠️ Too old'); } // >4h - skip
+  
+  // === VOLUME SPIKE (max 50) ===
+  const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.005, 1));
+  if (spike >= 15)      { score += 50; reasons.push('🚀 Spike ' + spike.toFixed(1) + 'x'); }
+  else if (spike >= 10) { score += 40; reasons.push('🔥 Spike ' + spike.toFixed(1) + 'x'); }
+  else if (spike >= 5)  { score += 30; reasons.push('📈 Spike ' + spike.toFixed(1) + 'x'); }
+  else if (spike >= 3)  { score += 15; reasons.push('Vol ' + spike.toFixed(1) + 'x'); }
+  else if (spike >= 2)  { score += 5; }
+  else                  { score -= 10; } // Low volume - bad sign
+  
+  // === MARKET CAP SWEET SPOT (max 20) ===
+  const mcap = coin.marketCap || 0;
+  const mcMin = parseFloat(document.getElementById('pf-min-mcap')?.value || 5000);
+  const mcMax = parseFloat(document.getElementById('pf-max-mcap')?.value || 200000);
+  if (mcap >= mcMin && mcap <= mcMax) {
+    // Prefer low-mid mcap for higher upside
+    if (mcap <= 30000)       { score += 20; reasons.push('💎 Low mcap $' + (mcap/1000).toFixed(1) + 'K'); }
+    else if (mcap <= 80000)  { score += 15; reasons.push('Mcap $' + (mcap/1000).toFixed(1) + 'K'); }
+    else                     { score += 8; }
+  } else if (mcap < mcMin) { score -= 15; reasons.push('⚠️ Mcap too low'); }
+  else if (mcap > 500000) { score -= 20; reasons.push('⚠️ Mcap too high'); }
+  
+  // === PRICE MOMENTUM (max 30) ===
+  const pc = coin.priceChange || 0;
+  if (pc >= 100)      { score += 30; reasons.push('🚀 +' + pc.toFixed(0) + '% price'); }
+  else if (pc >= 50)  { score += 25; reasons.push('📈 +' + pc.toFixed(0) + '%'); }
+  else if (pc >= 20)  { score += 15; reasons.push('+' + pc.toFixed(0) + '%'); }
+  else if (pc >= 5)   { score += 8; }
+  else if (pc < -20)  { score -= 15; reasons.push('📉 -' + Math.abs(pc).toFixed(0) + '%'); }
+  else if (pc < -5)   { score -= 5; }
+  
+  // === LIQUIDITY CHECK (max 15) ===
+  const liq = coin.liquidity || 0;
+  if (liq >= 10000)      { score += 15; reasons.push('💧 Liq $' + (liq/1000).toFixed(1) + 'K'); }
+  else if (liq >= 5000)  { score += 10; }
+  else if (liq >= 1000)  { score += 5; }
+  else if (liq < 500)    { score -= 20; reasons.push('⚠️ Low liquidity'); } // DANGER
+  
+  // === HOLDER GROWTH (max 15) ===
+  const holders = coin.holders || 0;
+  if (holders >= 200)     { score += 15; reasons.push('👥 ' + holders + ' holders'); }
+  else if (holders >= 100){ score += 10; }
+  else if (holders >= 50) { score += 5; }
+  else if (holders < 10)  { score -= 10; reasons.push('⚠️ <10 holders'); }
+  
+  // === SAFETY / RUG CHECKS (max 20, can go very negative) ===
+  // Pump.fun bonding curve progress (higher = more bought in = safer from rug)
+  const progress = coin.progress || 0;
+  if (progress >= 50)      { score += 20; reasons.push('✅ Bonding ' + progress.toFixed(0) + '%'); }
+  else if (progress >= 20) { score += 12; }
+  else if (progress >= 5)  { score += 5; }
+  else if (progress < 1)   { score -= 15; reasons.push('🚨 <1% bonding'); } // Very early = high rug risk
+  
+  // Trades count (activity signal)
+  const trades = coin.trades || 0;
+  if (trades >= 1000)     { score += 10; }
+  else if (trades >= 200) { score += 5; }
+  else if (trades < 10)   { score -= 10; reasons.push('⚠️ <10 trades'); }
+  
+  coin.score = Math.max(0, score);
+  coin.signalReasons = reasons;
+  return score;
+};
+
+// Enhanced eligibility check with safety filters
+window.isEligible = function isEligible(coin) {
+  const minVol = parseFloat(document.getElementById('pf-vol-spike')?.value || 3);
+  const mcMin = parseFloat(document.getElementById('pf-min-mcap')?.value || 5000);
+  const mcMax = parseFloat(document.getElementById('pf-max-mcap')?.value || 200000);
+  const ageHours = (Date.now() - coin.created) / 3600000;
+  const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.005, 1));
+  const ageMins = ageHours * 60;
+  
+  // Hard filters - must pass ALL
+  if (ageHours >= 4) return false;           // Must be < 4 hours old
+  if (coin.marketCap < mcMin) return false;   // Min mcap
+  if (coin.marketCap > mcMax) return false;   // Max mcap
+  if (spike < minVol) return false;           // Min volume spike
+  if (window.pfState.positions[coin.mint]) return false; // Not already in position
+  
+  // Safety filters
+  if (coin.liquidity && coin.liquidity < 500) return false;  // Minimum liquidity
+  if (coin.holders && coin.holders < 5) return false;        // At least 5 holders
+  
+  // Must have minimum score
+  const score = pfScoreEnhanced(coin);
+  if (score < 50) return false;  // Minimum quality threshold
+  
+  return true;
+};
+
+// ===== SIMULATION / REAL TRADING MODE =====
+window.pfTradingMode = window.pfTradingMode || 'simulation'; // 'simulation' or 'live'
+
+window.pfSetMode = function(mode) {
+  window.pfTradingMode = mode;
+  const simBtn = document.getElementById('pf-mode-sim-btn');
+  const liveBtn = document.getElementById('pf-mode-live-btn');
+  const modeDisplay = document.getElementById('pf-trading-mode-display');
+  const liveWarning = document.getElementById('pf-live-warning');
+  
+  if (mode === 'live') {
+    // Check wallet connected
+    if (!window.pfWalletState || !window.pfWalletState.connected) {
+      pfLog('⚠️ Connect Phantom wallet first to enable REAL TRADING MODE', 'error');
+      showToast('Connect Phantom wallet first!', 'error');
+      window.pfTradingMode = 'simulation';
+      return;
+    }
+    if (simBtn) { simBtn.className = 'pf-mode-btn'; }
+    if (liveBtn) { liveBtn.className = 'pf-mode-btn active-live'; }
+    if (modeDisplay) { modeDisplay.textContent = '⚡ REAL TRADING MODE'; modeDisplay.className = 'pf-mode-display live'; }
+    if (liveWarning) liveWarning.style.display = 'block';
+    pfLog('⚡ Switched to REAL TRADING MODE — trades will use real SOL!', 'sell');
+    showToast('⚡ REAL TRADING MODE enabled!', 'success');
+  } else {
+    if (simBtn) { simBtn.className = 'pf-mode-btn active-sim'; }
+    if (liveBtn) { liveBtn.className = 'pf-mode-btn'; }
+    if (modeDisplay) { modeDisplay.textContent = '🧪 SIMULATION MODE'; modeDisplay.className = 'pf-mode-display sim'; }
+    if (liveWarning) liveWarning.style.display = 'none';
+    pfLog('🧪 Switched to SIMULATION MODE — no real trades', 'info');
+    showToast('🧪 Simulation mode active', 'info');
+  }
+};
+
 window.checkExitStrategies = function checkExitStrategies() {
   const positions = window.pfState.positions;
-  const SOL_PRICE = 140; // approximate
+  const SOL_PRICE = pfGetLiveSolPriceSync();
   
   Object.values(positions).forEach(pos => {
     // Simulate price update
@@ -1467,6 +1670,19 @@ window.checkExitStrategies = function checkExitStrategies() {
     pos.pnlPct = pnlPct;
     pos.pnlSol = (pos.solSpent * pnlPct / 100);
     
+    if (!pos || pos.stopped || (pos.isMoonBag && pos.tier2Hit)) return;
+    
+    // Simulate price update for simulated positions
+    if (pos.mint && pos.mint.startsWith('sim_')) {
+      const change = (Math.random() - 0.44) * 0.022; // slight upward bias
+      pos.currentPrice = pos.currentPrice * (1 + change);
+      pos.currentMcap = (pos.currentMcap || pos.entryMcap || pos.currentPrice*1e9) * (1 + change);
+    }
+    
+    const pnlPct = pos.entryPrice > 0 ? ((pos.currentPrice - pos.entryPrice) / pos.entryPrice) * 100 : 0;
+    pos.pnlPct = pnlPct;
+    pos.pnlSol = (pos.solSpent * pnlPct / 100);
+    
     // STOP LOSS: -25%
     if (pnlPct <= -25 && !pos.stopped) {
       pos.stopped = true;
@@ -1474,28 +1690,34 @@ window.checkExitStrategies = function checkExitStrategies() {
       return;
     }
     
-    // TIER 1: +50% → sell 50%
-    if (pnlPct >= 50 && !pos.tier1Hit) {
+    // TIER 1: +100% gain → sell 50% of ORIGINAL qty
+    // "At 100% profit, sell 50% of the tokens originally bought"
+    if (pnlPct >= 100 && !pos.tier1Hit) {
       pos.tier1Hit = true;
-      const sellQty = pos.originalQty * 0.5;
-      const soldSol = pos.solSpent * 0.5 * (1 + pnlPct/100);
-      pos.remainingQty = pos.originalQty * 0.5;
+      pos.tier1PricePct = pnlPct;
+      const soldSol = pos.solSpent * 0.5 * (1 + pnlPct/100); // value of 50% at current price
+      const profitSol = soldSol - (pos.solSpent * 0.5);
+      pos.remainingQty = pos.originalQty * 0.5; // 50% tokens remain
+      pos.remainingCostBasis = pos.solSpent * 0.5;
       pos.solRecovered = (pos.solRecovered || 0) + soldSol;
-      pfLog(`🎯 T1 EXIT: ${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 50% for ${soldSol.toFixed(4)} SOL`, 'sell');
-      updatePfStats('partial_sell', soldSol - pos.solSpent * 0.5);
+      pfLog(`🎯 T1 EXIT: $${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 50% for ${soldSol.toFixed(4)} SOL (+${profitSol.toFixed(4)} profit)`, 'sell');
+      updatePfStats('partial_sell', profitSol);
     }
     
-    // TIER 2: +100% → sell 25% of held (25% of original)
-    if (pnlPct >= 100 && pos.tier1Hit && !pos.tier2Hit) {
+    // TIER 2: On remaining 50% of tokens, once there is a FURTHER +50% profit
+    // = price is at +150% from entry total
+    // "On the remaining tokens, once there is a further 50% profit, sell 25% of the remaining tokens"
+    if (pos.tier1Hit && !pos.tier2Hit && pnlPct >= 150) {
       pos.tier2Hit = true;
-      const sellQty = pos.originalQty * 0.25;
+      // Sell 25% of original qty (= 50% of current remaining 50%)
       const soldSol = pos.solSpent * 0.25 * (1 + pnlPct/100);
-      pos.remainingQty = pos.originalQty * 0.25; // moon bag
+      const profitSol = soldSol - (pos.solSpent * 0.25);
+      pos.remainingQty = pos.originalQty * 0.25; // final 25% = moon bag
+      pos.remainingCostBasis = pos.solSpent * 0.25;
       pos.solRecovered = (pos.solRecovered || 0) + soldSol;
-      pfLog(`🚀 T2 EXIT: ${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 25% for ${soldSol.toFixed(4)} SOL`, 'sell');
-      pfLog(`🌙 MOON BAG: ${pos.symbol} → Holding 25% (${pos.remainingQty.toFixed(0)} tokens)`, 'moon');
-      updatePfStats('partial_sell', soldSol - pos.solSpent * 0.25);
-      // Move to portfolio but keep moon bag
+      pfLog(`🚀 T2 EXIT: $${pos.symbol} +${pnlPct.toFixed(1)}% → Sold 25% for ${soldSol.toFixed(4)} SOL (+${profitSol.toFixed(4)} profit)`, 'sell');
+      pfLog(`🌙 MOON BAG: $${pos.symbol} → Final 25% (${pfFmt(pos.remainingQty)} tokens) held forever!`, 'moon');
+      updatePfStats('partial_sell', profitSol);
       closePfPosition(pos, 'moon_bag');
     }
   });
@@ -1524,7 +1746,7 @@ window.closePfPosition = function closePfPosition(pos, status) {
     closedAt: Date.now(),
     finalPnlPct: pos.pnlPct || 0,
     finalPnlSol: pos.pnlSol || 0,
-    finalPnlUsd: (pos.pnlSol || 0) * 140
+    finalPnlUsd: (pos.pnlSol || 0) * (window.pfWalletState&&window.pfWalletState.solPrice?window.pfWalletState.solPrice:getLiveSolPrice())
   };
   window.pfState.portfolio.unshift(entry);
   if (status !== 'moon_bag') {
@@ -1614,11 +1836,11 @@ window.renderPfPositions = function renderPfPositions() {
         <span>Entry</span><span class="pf-pos-detail-val">${pos.solSpent.toFixed(4)} SOL</span>
         <span>PnL</span><span class="pf-pos-detail-val" style="color:${pnlSol>=0?'#00e57a':'#ff4444'}">${pnlSol>=0?'+':''}${pnlSol.toFixed(4)} SOL</span>
         <span>Qty Left</span><span class="pf-pos-detail-val">${pfFmt(pos.remainingQty||pos.originalQty)}</span>
-        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$${((pos.solSpent*(1+pnlPct/100))*140).toFixed(2)}</span>
+        <span>Value</span><span class="pf-pos-detail-val" style="color:#7c5cfc">$${((pos.solSpent*(1+pnlPct/100))*(window.pfWalletState&&window.pfWalletState.solPrice?window.pfWalletState.solPrice:getLiveSolPrice())).toFixed(2)}</span>
       </div>
       <div class="pf-pos-tier-bar">
-        <div class="pf-tier-indicator ${t1}" title="T1: +50%"></div>
-        <div class="pf-tier-indicator ${t2}" title="T2: +100%"></div>
+        <div class="pf-tier-indicator ${t1}" title="T1: +100% → Sell 50%"></div>
+        <div class="pf-tier-indicator ${t2}" title="T2: +150% → Sell 25%"></div>
         <div class="pf-tier-indicator ${pos.isMoonBag?'reached':''}" style="${pos.isMoonBag?'background:#7c5cfc':''}" title="🌙 Moon"></div>
       </div>
       <div class="pf-pos-actions">
@@ -1818,20 +2040,26 @@ window.pfConnectWallet = async function() {
   const connectBtn = document.getElementById('pf-connect-btn');
   const dot = document.getElementById('pf-wallet-dot');
   connectBtn.disabled = true;
-  connectBtn.innerHTML = `<span style="display:inline-block;animation:pfPulse 0.8s infinite">⏳</span> Connecting…`;
+  connectBtn.innerHTML = '<span style="display:inline-block;animation:pfPulse 0.8s infinite">⏳</span> Connecting…';
   dot.className = 'pf-wallet-dot connecting';
   try {
+    // Pump.fun uses Phantom wallet for authentication.
+    // The Phantom wallet address IS the Pump.fun wallet address on Solana.
+    // Pump.fun does not have a separate wallet - it uses your Phantom wallet directly.
     const provider = window.solana;
-    if (!provider?.isPhantom) {
-      pfLog('❌ Phantom not found. Install Phantom wallet extension.', 'exit');
+    if (!provider || !provider.isPhantom) {
+      pfLog('❌ Phantom not found. Install Phantom wallet from phantom.app', 'exit');
+      showToast('Install Phantom wallet to use Pump.fun trading', 'error');
       connectBtn.disabled = false;
-      connectBtn.innerHTML = `🔑 Connect Phantom Wallet`;
+      connectBtn.innerHTML = '🔑 Connect Phantom / Pump.fun';
       dot.className = 'pf-wallet-dot disconnected';
       return;
     }
+    // Connect Phantom (which IS the Pump.fun wallet)
     let pubkey;
     if (provider.isConnected && provider.publicKey) {
       pubkey = provider.publicKey.toString();
+      pfLog('🔑 Phantom already connected, using existing session', 'info');
     } else {
       const resp = await provider.connect();
       pubkey = resp.publicKey.toString();
@@ -1842,9 +2070,23 @@ window.pfConnectWallet = async function() {
     ]);
     pfUpdateWalletUI(true, pubkey, balance, price);
     window.pfState.wallet = { pubkey, provider, balance, solPrice: price, isLive: true };
-    pfLog('✅ Connected: ' + window.pfFormatAddr(pubkey), 'buy');
-    pfLog('💰 Balance: ' + (balance !== null ? balance.toFixed(4) : '?') + ' SOL ($' + (balance && price ? (balance*price).toFixed(2) : '?') + ')', 'info');
-    pfLog('⚡ LIVE MODE — bot will execute real trades on Pump.fun', 'buy');
+    // Also sync with main app wallet state
+    INF.wallet = pubkey;
+    updatePhantomUI();
+    // Update mode buttons to show live as available
+    const liveModeBtn = document.getElementById('pf-mode-live-btn');
+    if (liveModeBtn) {
+      liveModeBtn.style.borderColor = '#f5a623';
+      liveModeBtn.style.color = '#f5a623';
+      liveModeBtn.title = 'Click to enable real trading with your Phantom wallet';
+    }
+    pfLog('✅ Pump.fun / Phantom wallet connected: ' + window.pfFormatAddr(pubkey), 'buy');
+    pfLog('💰 Balance: ' + (balance !== null ? balance.toFixed(4) : 'loading') + ' SOL' + (balance && price ? ' ($' + (balance*price).toFixed(2) + ')' : ''), 'info');
+    pfLog('ℹ️ Note: Pump.fun uses your Phantom wallet address directly for all trades', 'info');
+    pfLog('🧪 Currently in SIMULATION MODE — click ⚡ REAL TRADING to enable live trades', 'info');
+    // Update SOL price in wallet state for use in calculations
+    if (price) window.pfWalletState.solPrice = price;
+    // Start balance polling
     if (window.pfBalanceInterval) clearInterval(window.pfBalanceInterval);
     window.pfBalanceInterval = setInterval(async () => {
       if (!window.pfWalletState.connected) return;
@@ -1852,6 +2094,7 @@ window.pfConnectWallet = async function() {
       const p = await window.pfGetSolPrice();
       if (b !== null) {
         window.pfWalletState.solBalance = b;
+        window.pfWalletState.solPrice = p;
         const s = document.getElementById('pf-bal-sol');
         const u = document.getElementById('pf-bal-usd');
         const w = document.getElementById('pf-wallet-bal');
@@ -1863,9 +2106,9 @@ window.pfConnectWallet = async function() {
     }, 30000);
   } catch(err) {
     const msg = err.message || String(err);
-    pfLog((msg.includes('rejected') ? '⚠️ Rejected: ' : '❌ Error: ') + msg, 'info');
+    pfLog((msg.includes('rejected') || msg.includes('User rejected') ? '⚠️ Cancelled: Wallet connection was rejected by user' : '❌ Connection error: ' + msg), 'info');
     connectBtn.disabled = false;
-    connectBtn.innerHTML = `🔑 Connect Phantom Wallet`;
+    connectBtn.innerHTML = '🔑 Connect Phantom / Pump.fun';
     dot.className = 'pf-wallet-dot disconnected';
   }
 };
@@ -1930,8 +2173,14 @@ window.togglePumpAgent = function() {
     if (dot) dot.className = 'pf-status-dot active';
     if (txt) txt.textContent = 'Running – scanning every 15s';
     
-    pfLog('🤖 Pump.fun AI Bot STARTED', 'buy');
-    pfLog('📋 Strategy: Entry on vol spike, Exit T1:+50%→sell50%, T2:+100%→sell25%, Moon: hold rest', 'info');
+    const mode = window.pfTradingMode || 'simulation';
+    const modeLabel = mode === 'live' ? '⚡ REAL TRADING' : '🧪 SIMULATION';
+    pfLog('🤖 Pump.fun AI Bot STARTED — ' + modeLabel + ' MODE', 'buy');
+    pfLog('📋 Strategy: Entry on signal, T1:+100%→sell50%, T2:+150%→sell25%, Moon: hold final 25%', 'info');
+    pfLog('🔍 Scanner active — refreshing every 15s for NEW token launches', 'scan');
+    
+    // Start live scanner
+    if (window.pfStartLiveScanner) pfStartLiveScanner();
     
     window.pfAgentCycle();
     
@@ -2002,7 +2251,7 @@ window.pfAgentCycle = async function() {
 window.executePfBuy = async function(coin) {
   const tradeSize = parseFloat(document.getElementById('pf-trade-size')?.value || 0.1);
   const spike = coin.volumeSpike || (coin.volume24h / Math.max(coin.marketCap * 0.01, 1));
-  const isLive = window.pfState.wallet?.isLive && window.pfWalletState.connected;
+  const isLive = (window.pfTradingMode === 'live') && window.pfWalletState.connected && window.pfWalletState.pubkey;
 
   // Check balance
   const availableBal = isLive
@@ -2163,8 +2412,11 @@ window.refreshPumpCoins = async function() {
   renderPfPositions();
   
   const now = pfNow();
-  if (statusTxt) statusTxt.textContent = `Last scan: ${now} (${coins.length} coins)`;
+  if (statusTxt) statusTxt.textContent = 'Last scan: ' + now + ' (' + coins.length + ' coins)';
   if (statusDot) statusDot.className = 'pf-status-dot ' + (window.pfState.running ? 'active' : 'scanning');
+  
+  // Update live scanner status UI
+  if (window.pfUpdateScannerStatus) pfUpdateScannerStatus(coins.length);
 };
 
 
@@ -2251,7 +2503,7 @@ window.pfInjectWalletSection = function() {
       Connect Phantom Wallet
     </button>
     <button class="pf-connect-btn pf-disconnect-btn" id="pf-disconnect-btn" onclick="pfDisconnectWallet()" style="display:none">🔌 Disconnect Wallet</button>
-    <div class="pf-live-warning" id="pf-live-warning" style="display:none">⚡ LIVE MODE — Bot will execute real trades on Pump.fun using your wallet. Each trade requires Phantom approval.</div>
+    <div class="pf-live-warning" id="pf-live-warning" style="display:none">⚡ REAL TRADING MODE — Bot will execute real trades on Pump.fun using your Phantom wallet. Entry: 0.1 SOL per trade. Each trade requires Phantom approval.</div>
   `;
   sidebar.insertBefore(ws, sidebar.firstChild);
 };
